@@ -121,7 +121,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_16_215117) do
     t.string "spontaneous", null: false
     t.boolean "has_china_reference", default: false, null: false
     t.json "extra_skills"
-    t.integer "user_id"
+    t.integer "user_id", null: false
     t.index ["language_id"], name: "index_experts_on_language_id"
     t.index ["user_id"], name: "index_experts_on_user_id"
     t.check_constraint "(has_china_reference = false OR china_reference IS NOT NULL)", name: "china_reference_null_constraint"

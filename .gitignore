@@ -1,0 +1,8 @@
+.DS_Store
+.vscode
+.vs
+.idea
+.fleet
+[tT]humbs.db
+.pnpm-store/
+node_modules/

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+document_one:
+  name: "Project Plan A"
+  path: "/documents/project_plan_a.pdf"
+
+document_two:
+  name: "Research Report"
+  path: "/documents/research_report.pdf"
+
+document_three:
+  name: "Project Plan B"
+  path: "/documents/project_plan_b.pdf"

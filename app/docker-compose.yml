@@ -1,0 +1,95 @@
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+---
+services:
+  elink-dev:
+    build: .
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - .:/app
+    tmpfs:
+      - /app/tmp
+    command: rails server -b 0.0.0.0
+    environment:
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      EMPLOYEE_USERNAME: ${EMPLOYEE_USERNAME}
+      EMPLOYEE_PASSWORD: ${EMPLOYEE_PASSWORD}
+      INTERN_USERNAME: ${INTERN_USERNAME}
+      INTERN_PASSWORD: ${INTERN_PASSWORD}
+    profiles:
+      - dev
+    restart: no
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      retries: 3
+      timeout: 5s
+
+  elink-prod:
+    build: .
+    volumes:
+      - .:/app
+      - /app/storage
+    tmpfs:
+      - /app/tmp
+    entrypoint: /bin/sh -c "rails db:migrate && rails tailwindcss:build && rails assets:precompile && rails server -b 0.0.0.0 -e production"
+    env_file:
+      - .env
+    profiles:
+      - ""
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      retries: 3
+      timeout: 5s
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.elink-prod.rule=Host(`expertlink.frankmayer.dev`)
+      - traefik.http.services.elink-prod.loadbalancer.server.port=3000
+      - traefik.http.routers.elink-prod.entrypoints=websecure
+      - traefik.http.routers.elink-prod.tls=true
+      - traefik.http.routers.elink-prod.tls.certresolver=letsencrypt
+      - traefik.docker.network=traefik_network
+    networks:
+      - traefik_network
+
+  bash:
+    build: .
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - .:/app
+    profiles:
+      - bash
+    restart: no
+
+  tailwind-watch:
+    build: .
+    volumes:
+      - .:/app
+    command: rails tailwindcss:watch
+    stdin_open: true
+    tty: true
+    profiles:
+      - dev
+    restart: unless-stopped
+
+networks:
+  traefik_network:
+    external: true

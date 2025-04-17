@@ -1,0 +1,93 @@
+<%
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+%>
+
+<header class="flex items-center p-2 bg-white shadow">
+  <% if current_user %>
+    <% if current_user.role == "expert" %>
+      <h1 class="text-xl text-red-700">ƎLink</h1>
+    <% else %>
+      <h1><%= link_to "ƎLink", root_path, class: "text-xl text-red-700" %></h1>
+    <% end %>
+
+    <ol class="mr-auto breadcrumbs">
+      <%= render_breadcrumbs tag: :li, separator: "" %>
+    </ol>
+
+    <!-- Main Navigation -->
+    <nav class="flex items-center space-x-3">
+      <% if current_user.role == "employee" || current_user.role == "intern" %>
+        <%= link_to root_path, class: "flex hover:bg-red-700 hover:text-white rounded-lg px-3 py-2" do %>
+          <%= image_tag("svg/home.svg", class: "mr-2") %>
+          <%= t("nav_bar.homepage") %>
+        <% end %>
+        <%= link_to experts_path, class: "flex hover:bg-red-700 hover:text-white rounded-lg px-3 py-2" do %>
+          <%= image_tag("svg/person.svg", class: "mr-2") %>
+          <%= t("nav_bar.experts") %>
+        <% end %>
+        <%= link_to projects_path, class: "flex hover:bg-red-700 hover:text-white rounded-lg px-3 py-2" do %>
+          <%= image_tag("svg/folder.svg", class: "mr-2") %>
+          <%= t("nav_bar.projects") %>
+        <% end %>
+      <% end %>
+
+      <!-- Dropdown for Other Options -->
+      <div class="relative">
+        <button id="menu-toggle" class="flex py-2 px-3 rounded-lg hover:bg-red-700">
+          <%= image_tag("svg/menu-bar.svg") %>
+        </button>
+
+        <!-- Dropdown Menu -->
+        <div id="menu" class="hidden absolute right-0 z-50 w-48 bg-white rounded-lg shadow-lg top-15">
+          <% if current_user.role == "employee" %>
+            <%= link_to new_category_path, class: "flex hover:bg-red-700 hover:text-white rounded-lg px-3 py-2" do %>
+              <%= image_tag("svg/grad-cap-black.svg", class: "mr-2") %>
+              <%= t("nav_bar.categories") %>
+            <% end %>
+            <%= link_to calendar_month_path, class: "flex items-center hover:bg-red-700 hover:text-white rounded-lg px-3 py-2" do %>
+              <%= image_tag("svg/calendar-blank.svg", class: "mr-2") %>
+              <%= t("nav_bar.calendar") %>
+            <% end %>
+          <% end %>
+          <%= link_to login_path, class: "flex items-center hover:bg-red-700 hover:text-white rounded-lg px-3 py-2" do %>
+            <%= image_tag("svg/log_out.svg", class: "mr-2") %>
+            <%= t("nav_bar.logout") %>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+         const menuToggle = document.getElementById("menu-toggle");
+         const menu = document.getElementById("menu");
+
+         menuToggle.addEventListener("click", () => {
+           menu.classList.toggle("hidden");
+         });
+
+         document.addEventListener("click", (event) => {
+           if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+             menu.classList.add("hidden");
+           }
+         });
+       });
+    </script>
+  <% else %>
+    <h1 class="text-xl text-red-700">ƎLink</h1>
+  <% end %>
+</header>

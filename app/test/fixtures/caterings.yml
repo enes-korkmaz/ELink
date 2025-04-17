@@ -1,0 +1,8 @@
+catering_one:
+  project: project_one
+  location_name: "Conference Catering"
+  status: "gebucht"
+  booking_deadline: 2023-12-01 15:00:00
+  address: 'Theodor-Fischer-Strasse 2, 74076 Heilbronn'
+  contact: '+491234567891'
+  notes: "Includes vegetarian options"

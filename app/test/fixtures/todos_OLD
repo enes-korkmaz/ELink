@@ -1,0 +1,26 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+todo_two:
+  name: "Conduct interviews"
+  checked: true
+  project: project_two
+
+todo_project_management:
+  name: "Projekt anlegen und löschen"
+  checked: false
+  project: project_one
+
+todo_expert_assignment:
+  name: "Experten für das China-Projekt finden"
+  checked: false
+  project: project_one
+
+todo_finance_analysis:
+  name: "Analyse von Regulierungsvorgaben"
+  checked: true
+  project: project_four
+
+todo_it_workshop:
+  name: "Workshop zu IT-Innovationen vorbereiten"
+  checked: false
+  project: project_five

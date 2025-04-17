@@ -1,0 +1,7 @@
+partner_one:
+  project: project_one
+  location_name: "Tech Partners Inc."
+  address: 'Robert-Bosch-Strasse 32, 74081 Heilbronn'
+  contact: 'contact@partners.com'
+  deadline: 2023-12-31 23:59:59
+  notes: "Lead partner for keynote organization"

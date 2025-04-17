@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+category_one:
+  name: "IT"
+
+category_two:
+  name: "Finance"
+
+category_three:
+  name: "Education"
+
+category_four:
+  name: "Health Tech"

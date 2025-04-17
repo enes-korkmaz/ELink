@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+language_one:
+  language: "English"
+  language_code: "en"
+
+language_two:
+  language: "German"
+  language_code: "de"
+
+language_three:
+  language: "Chines"
+  language_code: "zh"

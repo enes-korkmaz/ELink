@@ -1,0 +1,63 @@
+<%
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+%>
+
+<%= form_with url: login_path, local: true do |form| %>
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+  <div class="w-full max-w-md">
+    <div class="mb-6 sm:mx-auto sm:w-full sm:max-w-sm">
+      <img class="mx-auto w-auto" src="<%= asset_path 'logo.png' %>" alt="Logo">
+    </div>
+    <div class="container-second sm:w-[100%]">
+      <div class="flex flex-col gap-4 mt-4">
+        <!-- E-Mail -->
+        <div class="flex-1">
+          <div class="flex items-center">
+            <strong>
+              <label for="username"><%= t("login.username") %></label>
+            </strong>
+          </div>
+          <%= form.text_field :username,
+            style: "border: 1px solid #D1D5DB; border-radius: 0.375rem; padding: 0.5rem; outline: none;",
+            class: "w-full", id: "username" %>
+        </div>
+
+        <!-- Password -->
+        <div class="flex-1">
+          <div class="flex items-center">
+            <strong>
+              <label for="password"><%= t("login.password") %></label>
+            </strong>
+          </div>
+          <%= form.password_field :password,
+            style: "border: 1px solid #D1D5DB; border-radius: 0.375rem; padding: 0.5rem; outline: none;",
+            class: "w-full", id: "password" %>
+        </div>
+      </div>
+      <div class="mt-6 text-center">
+        <%= form.submit t("login.sign_in"), class: "bg-gray-900 text-white active:bg-gray-700 text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none w-full" %>
+      </div>
+    <% end %>
+    </div>
+    <div class="flex flex-wrap mt-6">
+      <div class="w-1/2">
+        <a href="#forgot-password" class="text-gray-700"><small><%= t("login.forgot_password") %></small></a>
+      </div>
+    </div>
+  </div>
+</div>

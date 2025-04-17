@@ -1,0 +1,322 @@
+<%
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+%>
+
+<div class="container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2 class="heading"><%= t("actions.title") %></h2>
+    <% if current_user.role == "employee" %>
+      <%= link_to edit_expert_path(@expert), class: "relative btn", id: "expert_edit_button" do %>
+        <%= image_tag("svg/edit.svg", class: "absolute left-4") %>
+        <%= t("actions.edit") %>
+      <% end %>
+      <%= button_to expert_path(@expert), 
+            method: :delete, 
+            class: "btn relative", 
+            id: "expert_delete_button", 
+            onclick: "return confirm('#{I18n.t("actions.expert.confirm_delete")}')" do %>
+        <%= image_tag("svg/delete.svg", class: "absolute left-4") %>
+        <%= t("actions.delete") %>
+      <% end %>
+      <%= link_to experts_path, class: "relative btn" do %>
+        <%= image_tag("svg/back.svg", class: "absolute left-4") %>
+        <%= t("actions.back") %>
+      <% end %>
+    <% elsif current_user.role == "intern" %>
+      <%= link_to experts_path, class: "relative btn" do %>
+        <%= image_tag("svg/back.svg", class: "absolute left-4") %>
+        <%= t("actions.back") %>
+      <% end %>
+    <% elsif current_user.role == "expert" %>
+      <%= link_to edit_expert_path(@expert), class: "relative btn" do %>
+        <%= image_tag("svg/edit.svg", class: "absolute left-4") %>
+        <%= t("actions.edit") %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="grid gap-2 w-full flex-[3]">
+    <div class="grid grid-cols-[repeat(auto-fill,_minmax(45%,_1fr))] gap-2 justify-between">
+      <!-- Contact information -->
+      <div class="flex flex-col-reverse gap-4 sm:flex-row sm:gap-6 sm:items-center container-second">
+      <!-- Other Information Container -->
+      <div class="flex flex-col gap-4 sm:flex-grow">
+        <!-- Name -->
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.name") %></span>
+          <span class="block font-bold">
+            <% unless expert.salutation == "mx" %>
+              <%= "#{t("activerecord.attributes.expert.salutations.#{expert.salutation}")} " %>
+            <% end %>
+            <%= "#{expert.title} #{expert.first_name} #{expert.last_name}" %>
+          </span>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.email") %></span>
+          <a class="block font-bold underline cursor-pointer" href="mailto:<%= expert.email %>"><%= expert.email %></a>
+        </div>
+
+        <!-- Phone Number -->
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.phone_number") %></span>
+          <a class="block font-bold underline cursor-pointer" href="tel:<%= expert.phone_number %>"><%= expert.phone_number %></a>
+        </div>
+
+        <!-- Current Location -->
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.current_location") %></span>
+          <span class="block font-bold"><%= expert.current_location %></span>
+        </div>
+      </div>
+
+      <!-- Profile Picture Container -->
+      <div class="flex overflow-hidden justify-center items-center w-32 h-32 bg-gray-200 rounded-full border border-gray-300 shadow-sm sm:w-48 sm:h-48">
+        <% if expert.profile_picture.attached? %>
+          <%= image_tag expert.profile_picture, class: "w-full h-full object-cover" %>
+        <% else %>
+          <%= image_tag("svg/profile_placeholder.svg", class: "w-full h-full object-cover") %>
+        <% end %>
+      </div>
+    </div>
+
+
+      <!-- Berufliche Details -->
+      <div class="flex flex-col gap-4 container-second">
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.institution") %></span>
+          <% if !expert.has_institution %>
+            <span class="block font-bold"><%= t("inputfield_placeholder.no_specification") %></span>
+          <% else %>
+            <span class="font-bold"><%= expert.institution_name %></span>
+            <% if expert.cooperation_options.present? %>
+              <span class="block"><%= t("activerecord.attributes.expert.reference") %></span>
+            <% end %>
+          <% end %>
+        </div>
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.hourly_rate") %></span>
+          <span class="block font-bold"><%= number_to_currency(expert.hourly_rate, unit: t("currency.hourly")) %></span>
+        </div>
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.daily_rate") %></span>
+          <span class="block font-bold"><%= number_to_currency(expert.daily_rate, unit: t("currency.daily")) %></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-[repeat(auto-fill,_minmax(45%,_1fr))] gap-2 justify-between">
+      <!-- Persönliche Präferenzen -->
+      <div class="flex flex-col gap-4 container-second">
+        <div>
+          <span class="text-xs text-neutral-400"><%= t("activerecord.attributes.expert.travel_willingness") %></span>
+            <% travel_willingness = [] %>
+
+            <% travel_willingness << t("activerecord.attributes.expert.travel_willingness_options.online") if expert.travel_willingness_online? %>
+            <% travel_willingness << t("activerecord.attributes.expert.travel_willingness_options.germany") if expert.travel_willingness_germany? %>
+            <% travel_willingness << t("activerecord.attributes.expert.travel_willingness_options.china") if expert.travel_willingness_china? %>
+
+          <span class="block font-bold">
+            <% if travel_willingness.length == 1 %>
+              <%= travel_willingness.first %>
+            <% elsif travel_willingness.length == 2 %>
+              <%= travel_willingness.join(" & ") %>
+            <% else %>
+              <%= travel_willingness[0..-2].join(", ") %> & <%= travel_willingness.last %>
+            <% end %>
+          </span>
+          <% if expert.travel_willingness_text.present? %>
+            <span class="block"><%= t("activerecord.attributes.expert.reference") %></span>
+          <% end %>
+        </div>
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.spontaneous") %></span>
+          <span class="block font-bold"><%= expert.spontaneous %></span>
+        </div>
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.china_reference") %></span>
+          <% if !expert.has_china_reference %>
+            <span class="block font-bold"><%= t("inputfield_placeholder.no_specification") %></span>
+          <% else %>
+            <span class="block font-bold"><%= expert.china_reference ? t("short_answers.positive") : t("short_answers.negative") %></span>
+            <span class="block"><%= t("activerecord.attributes.expert.reference") %></span>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Weitere Informationen -->
+      <div class="flex flex-col gap-4 container-second">
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.languages") %></span>
+          <ul class="pl-1 font-bold list-disc list-inside">
+          <% expert.languages.each do |language| %>
+            <li class="list-item"><%= t("language_names.#{language.language.downcase}") %></li>
+          <% end %>
+          </ul>
+        </div>
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.categories") %></span>
+          <ul class="pl-1 font-bold list-disc list-inside">
+            <% expert.categories.each do |category| %>
+              <li class="list-item"><%= category.name %></li>
+            <% end %>
+          </ul>
+        </div>
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.nationality") %></span>
+          <span class="block font-bold"><%= expert.nationality %></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cooperation Options -->
+    <% if expert.cooperation_options.present? %>
+      <div class="container-second">
+        <h2 class="heading"><%= t("activerecord.attributes.expert.cooperation_options") %></h2>
+        <p class="my-4"><%= expert.cooperation_options %></p>
+      </div>
+    <% end %>
+
+    <!-- Extra Skills -->
+    <div class="container-second">
+      <h2 class="heading"><%= t("activerecord.attributes.expert.extra_skills") %></h2>
+      <p class="my-4"><%= expert.extra_skills %></p>
+    </div>
+    
+    <% if expert.travel_willingness_text.present? %>
+      <div class="container-second">
+        <h2 class="heading"><%= t("activerecord.attributes.expert.travel_willingness_text") %></h2>
+        <p class="my-4"><%= expert.travel_willingness_text %></p>
+      </div>
+    <% end %>
+
+    <% if expert.has_china_reference? %>
+      <div class="container-second">
+        <h2 class="heading"><%= t("activerecord.attributes.expert.china_reference") %></h2>
+        <p class="my-4"><%= expert.china_reference %></p>
+      </div>
+    <% end %>
+
+    <!-- Frei Text -->
+    <div class="container-second">
+      <h2 class="heading"><%= t("activerecord.attributes.expert.free_text") %></h2>
+      <p class="my-4"><%= expert.free_text %></p>
+    </div>
+    <!-- Documents -->
+    <div class="container-second">
+      <h2 class="heading"><%= t("activerecord.attributes.expert.sections.documents") %></h2>
+      <div class="my-5">
+        <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.documents.profile_picture") %></span>
+        <div class="flex gap-8 items-center font-bold">
+          <% if expert.profile_picture.attached? %>
+            <strong>
+              <%= link_to truncate(File.basename(expert.profile_picture.filename.to_s, File.extname(expert.profile_picture.filename.to_s)), 
+                        length: 10, omission: '...') + File.extname(expert.profile_picture.filename.to_s), 
+                        rails_blob_path(expert.profile_picture, disposition: "attachment", cache_buster: Time.now.to_i),
+                        title: expert.profile_picture.filename.to_s,
+                        id: 'profile_picture_link' %>
+            </strong>
+            <!-- View document button -->
+            <%= link_to rails_blob_path(expert.profile_picture, disposition: "inline"), 
+                        target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto", 
+                        data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+              <%= image_tag("svg/open-eye.svg") %>
+            <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+            <% end %>
+            <!-- Download document button -->
+            <%= link_to rails_blob_path(expert.profile_picture, disposition: "attachment"), 
+                        class: "btn flex items-center justify-between w-auto", 
+                        data: { cache_buster: Time.now.to_i }, title: t("actions.download")  do %>
+              <%= image_tag("svg/doc-download.svg") %>
+              <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+            <% end %>
+          <% else %>
+            <span class="font-bold"><%= t("inputfield_placeholder.document_no_upload") %></span>
+          <% end %>
+        </div>  
+      </div>
+      
+      <div class="my-5">
+        <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.documents.resume") %></span>
+        <div class="flex gap-8 items-center font-bold">
+          <% if expert.resume.attached? %>
+            <strong>
+              <%= link_to truncate(File.basename(expert.resume.filename.to_s, File.extname(expert.resume.filename.to_s)), 
+                          length: 10, omission: '...') + File.extname(expert.resume.filename.to_s), 
+                          rails_blob_path(expert.resume, disposition: "attachment", cache_buster: Time.now.to_i),
+                          title: expert.resume.filename.to_s,
+                          id: 'resume_link' %>
+            </strong>
+            <!-- View document button -->
+            <%= link_to rails_blob_path(expert.resume, disposition: "inline"), 
+                        target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto", 
+                        data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+              <%= image_tag("svg/open-eye.svg") %>
+              <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+            <% end %>
+            <!-- Download document button -->
+            <%= link_to rails_blob_path(expert.resume, disposition: "attachment"), 
+                        class: "btn flex items-center justify-between w-auto", 
+                        data: { cache_buster: Time.now.to_i }, title: t("actions.download")  do %>
+              <%= image_tag("svg/doc-download.svg") %>
+              <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+            <% end %>
+          <% else %>
+            <span class="font-bold"><%= t("inputfield_placeholder.document_no_upload") %></span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="my-5">
+        <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.documents.certificates") %></span>
+        <div class="flex gap-8 items-center font-bold">
+          <% if expert.certificates.attached? %>
+            <% expert.certificates.each do |certificate| %>
+              <strong>
+                <!-- Truncate the file name with its extension -->
+                <%= link_to truncate(File.basename(certificate.filename.to_s, File.extname(certificate.filename.to_s)), 
+                            length: 10, omission: '...') + File.extname(certificate.filename.to_s), 
+                            rails_blob_path(certificate, disposition: "attachment", cache_buster: Time.now.to_i),
+                            title: certificate.filename.to_s,
+                            id: "certificates_link_#{certificate.id}" %>
+              </strong>
+              <!-- View document button -->
+              <%= link_to rails_blob_path(certificate, disposition: "inline"), 
+                          target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto", 
+                          data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+                <%= image_tag("svg/open-eye.svg") %>
+                <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+              <% end %>
+              <!-- Download document button -->
+              <%= link_to rails_blob_path(certificate, disposition: "attachment"), 
+                          class: "btn flex items-center justify-between w-auto", 
+                          data: { cache_buster: Time.now.to_i }, title: t("actions.download")  do %>
+                <%= image_tag("svg/doc-download.svg") %>
+                <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+              <% end %>
+            <% end %>
+          <% else %>
+            <span class="font-bold"><%= t("inputfield_placeholder.document_no_upload") %></span>
+          <% end %>
+        </div>        
+      </div>
+    </div>
+  </div>
+</div>

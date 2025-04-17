@@ -1,0 +1,11 @@
+key_topic_one:
+  topic_name: "AI"
+
+key_topic_two:
+  topic_name: "Robotics"
+
+key_topic_three:
+  topic_name: "Renewable Energy" 
+
+key_topic_four:
+  topic_name: "Sustainability"

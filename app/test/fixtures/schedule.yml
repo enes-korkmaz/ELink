@@ -1,0 +1,4 @@
+schedule_one:
+  project: project_one
+  flight_details: "Round trip Berlin - Frankfurt"
+  accompanying_person: 'John Doe'

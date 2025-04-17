@@ -1,0 +1,53 @@
+<%
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+%>
+
+<%= form_with(model: @user, url: register_path(@token), method: :post, local: true, class: "container-second md:w-96 w-full mx-auto my-16 flex flex-col gap-4") do |f| %>
+  <label>
+    <span class="block font-bold text-xm">
+      <%= t("activerecord.attributes.expert.email") %>
+    </span>
+    <%= f.email_field :username, required: true, class: "border border-gray-300 rounded-md p-2 outline-none w-full invalid:border-red-700", autocomplete: "new-username" %>
+  </label>
+
+  <label>
+    <span class="block font-bold text-xm">
+      <%= t("login.password") %>
+    </span>
+    <%= f.password_field :password, required: true, class: "border border-gray-300 rounded-md p-2 outline-none w-full invalid:border-red-700", autocomplete: "new-password" %>
+  </label>
+
+  <label>
+    <span class="block font-bold text-xm">
+      <%= t("login.password_repeat") %>
+    </span>
+    <%= f.password_field :password_confirmation, required: true, class: "border border-gray-300 rounded-md p-2 outline-none w-full invalid:border-red-700", autocomplete: "new-password" %>
+  </label>
+
+  <%= f.submit t("login.register"), class: "btn relative" %>
+
+  <script>
+    const pwdEls = document.querySelectorAll("input[type='password']")
+    const pwdEl = pwdEls.item(0)
+    const pwdConfEl = pwdEls.item(1)
+
+    pwdEl.addEventListener("input", () => {
+      pwdConfEl.pattern = pwdEl.value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+    })
+  </script>
+<% end %>

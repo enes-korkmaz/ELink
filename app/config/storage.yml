@@ -1,0 +1,51 @@
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+---
+test:
+  service: Disk
+  root: <%= Rails.root.join("tmp/storage") %>
+
+local:
+  service: Disk
+  root: <%= Rails.root.join("storage") %>
+
+# Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
+# amazon:
+#   service: S3
+#   access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
+#   secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
+#   region: us-east-1
+#   bucket: your_own_bucket-<%= Rails.env %>
+
+# Remember not to checkin your GCS keyfile to a repository
+# google:
+#   service: GCS
+#   project: your_project
+#   credentials: <%= Rails.root.join("path/to/gcs.keyfile") %>
+#   bucket: your_own_bucket-<%= Rails.env %>
+
+# Use bin/rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)
+# microsoft:
+#   service: AzureStorage
+#   storage_account_name: your_account_name
+#   storage_access_key: <%= Rails.application.credentials.dig(:azure_storage, :storage_access_key) %>
+#   container: your_container_name-<%= Rails.env %>
+
+# mirror:
+#   service: Mirror
+#   primary: local
+#   mirrors: [ amazon, google, microsoft ]

@@ -1,0 +1,24 @@
+expert_one:
+  username: "expert@one.com"
+  password_digest: <%= BCrypt::Password.create('expert123') %>
+  role: "expert"
+
+expert_thriteen:
+  username: "expert@thriteen.com"
+  password_digest: <%= BCrypt::Password.create('expert123') %>
+  role: "expert"
+
+expert_fourteen:
+  username: "expert@fourteen.com"
+  password_digest: <%= BCrypt::Password.create('expert123') %>
+  role: "expert"
+
+employee:
+  username: "employee"
+  password_digest: <%= BCrypt::Password.create('employee123') %>
+  role: "employee"
+
+intern:
+  username: "intern"
+  password_digest: <%= BCrypt::Password.create('intern123') %>
+  role: "intern"

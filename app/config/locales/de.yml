@@ -1,0 +1,719 @@
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+---
+de:
+  simple_calendar:
+    previous: "<<"
+    next: ">>"
+    week: Woche
+
+  weekdays:
+    abbr:
+      Mon: Mo
+      Tue: Di
+      Wed: Mi
+      Thu: Do
+      Fri: Fr
+      Sat: Sa
+      Sun: So
+
+  date:
+    span: "Zeitraum"
+    today: "Heute"
+    formats:
+      day_only: "%d"
+      month_and_year: "%B %Y"
+
+  inputfield_placeholder:
+    choice_box_select: "Bitte auswählen"
+    choice_box_select_mandatory: "Bitte auswählen*"
+    document_no_upload: "Kein Dokument vorhanden."
+    no_specification: "Keine Angaben"
+    no_schedule: "Kein Zeitplan"
+    add_term: "Einen Begriff hinzufügen"
+    choose_term: "Einen Begriff wählen"
+
+  optinal_tag: "(optinal)"
+
+  tabs:
+    details: "Details"
+    schedule: "Zeitplan"
+    partners: "Partner*innen"
+    accommodations: "Unterkünfte"
+    catering: "Catering"
+    transport: "Transport"
+    experts: "Expert*innen"
+
+  login:
+    forgot_password: "Passwort vergessen?"
+    create_new_account: "Neuen Account erstellen"
+    user: "Benutzer*innen"
+    username: "Benutzername/E-Mail"
+    password: "Passwort"
+    password_repeat: "Passwort wiederholen"
+    sign_in: "Anmelden"
+    register: "Registrieren"
+    welcome_expert: "Willkommen auf dem Profil, %{username}!"
+    welcome_role: "Willkommen, %{role}!"
+    invalid_credentials: "Ungültiger Benutzername oder Passwort"
+    logged_out: "Erfolgreich abgemeldet!"
+    remember_me: "Angemeldet bleiben"
+
+  flash:
+    login_required: "Sie müssen eingeloggt sein, um auf diesen Bereich zuzugreifen."
+    access_denied: "Zugang verweigert"
+    access_denied2: "Zugang verweigert. Sie haben keine Berechtigung, diese Seite anzuzeigen."
+    expert_created: "Expert*in wurde erfolgreich erstellt."
+    expert_updated: "Expert*in wurde erfolgreich aktualisiert."
+    expert_destroyed: "Expert*in wurde erfolgreich gelöscht."
+    settings_saved: "Einstellungen wurden erfolgreich gespeichert."
+    profile_updated: "Profil wurde erfolgreich aktualisiert."
+    category_created: "Fachgebiet wurde erfolgreich erstellt."
+    category_updated: "Fachgebiet wurde erfolgreich aktualisiert."
+
+  nav_bar:
+    homepage: "Startseite"
+    settings: "Einstellungen"
+    logout: "Abmelden"
+    experts: "Expert*innen"
+    projects: "Projekte"
+    documentation: "Dokumentation"
+    admin: "Admin"
+    categories: "Fachgebiete"
+    calendar: "Kalender"
+
+  homepage:
+    create_new_expert: "Expert*in erstellen"
+    create_new_project: "Projekt erstellen"
+    copy_invite_link: Kopiere Einladungslink
+    expert_browser: "Expert*innen-Liste"
+    project_browser: "Projekten-Liste"
+    projekt_overview: "Projekt-Überblick"
+    recently_invoked: "Kürzlich Aufgerufen"
+    recently_added: "Kürzlich hinzugefügt"
+    in_planing: "In Planung"
+    recently_finished: "Kürzlich Abgeschlossen"
+    experts_overview: "Expert*innen-Überblick"
+    recently_registered: "Kürzlich registriert"
+    recently_updated: "Kürzlich aktualisiert"
+    no_recent: "Keine neuen Einträge"
+
+  index:
+    name_contact: "Name - Kontakt"
+    rates: "Sätze"
+    mobility: "Mobilität"
+    spontaneity: "Spontanität"
+    china_reference: "China - Bezug"
+    categories: "Kategorien"
+    languages: "Sprachen"
+    project_name: "Projektname"
+    customer: "Kund*innen"
+    type: "Typ"
+    adress: "Adresse"
+    project_date_from: "Von"
+    project_date_to: "Bis"
+    date_created: "Erstellungsdatum"
+    more: "(mehr)"
+    select: "Auswählen"
+
+  language_names:
+    german: "Deutsch"
+    english: "Englisch"
+    chinese: "Chinesisch"
+
+  actions:
+    add: "Hinzufügen"
+    title: "Aktionen"
+    edit: "Bearbeiten"
+    back: "Zurück"
+    update: "Aktualisieren"
+    delete: "Löschen"
+    cancel: "Abbrechen"
+    save: "Speichern"
+    create: "Erstellen"
+    download: "Herunterladen"
+    view: "Anzeigen"
+    unassign: "Zuweisung aufheben"
+    add_to_project: "Zum Projekt hinzufügen"
+    suche: "Suche"
+    expert_overview: "Expert*innen Übersicht"
+    project_overview: "Projekt Übersicht"
+    confirm_delete: "Sind Sie sicher, dass Sie dieses Element löschen möchten?"
+    project:
+      confirm_delete: "Möchten Sie dieses Projekt wirklich unwiderruflich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+      confirm_cancel:
+        creating: "Möchten Sie die Erstellung dieses Projekts wirklich abbrechen? Alle nicht gespeicherten Änderungen gehen verloren."
+        editing: "Möchten Sie die Bearbeitung dieses Projekts wirklich beenden? Alle nicht gespeicherten Änderungen gehen verloren."
+      confirm_unassign: "Möchten Sie die Zuweisung dieses Experten wirklich aufheben?"
+    expert:
+      confirm_delete: "Möchten Sie diese Expert*innen wirklich unwiderruflich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+      confirm_cancel:
+        creating: "Möchten Sie die Erstellung dieses Profils wirklich abbrechen? Alle nicht gespeicherten Änderungen gehen verloren."
+        editing: "Möchten Sie die Bearbeitung dieses Profils wirklich beenden? Alle nicht gespeicherten Änderungen gehen verloren."
+    confirm_delete_doc: "Sind Sie sicher, dass Sie dieses Dokument löschen möchten - %{document}?"
+    creating_a_new_expert: "Erstellen einer neuen Expert*in"
+    editing_expert_profile: "Expert*innen-Profil bearbeiten"
+    editing_project: "Bearbeiten des Projekts"
+    creating_a_new_project: "Ein neues Projekt erstellen"
+    duplicate: "Duplizieren"
+
+  notices:
+    delete_success: "Das Dokument %{document} wurde erfolgreich gelöscht."
+    delete_failed: "Das Dokument %{document} konnte nicht gelöscht werden."
+    update_success: "Das Projekt wurde erfolgreich aktualisiert."
+    update_failed: "Das Projekt konnte nicht aktualisiert werden."
+    project_created_success: "Das Projekt wurde erfolgreich angelegt."
+    project_destroy: "Das Projekt wurde erfolgreich gelöscht."
+    profile_saved: "Das Profil wurde erfolgreich gespeichert."
+    expert_created_success: "Expert*in wurde erfolgreich angelegt."
+    expert_update_failed: "Expert*in konnte nicht aktualisiert werden."
+    no_changes_detected: "Es wurden keine Änderungen erkannt."
+
+  projects:
+    index:
+      title: "Projektübersicht"
+
+  short_answers:
+    # yes and no seem to be reserved
+    positive: "Ja"
+    negative: "Nein"
+
+  currency:
+    hourly: "€/Std"
+    daily: "€/Tag"
+
+  activerecord:
+    models:
+      expert: "Expert*in"
+      project: "Projekt"
+
+    attributes:
+      project:
+        project_status: "Projekt-Status"
+        project_name: "Projektname"
+        key_topic: "Schwerpunktthema"
+        project_client: "Kund*innen"
+        execution_location: "Ausführungsadresse"
+        certificate_status: "Zertifikatsstatus"
+        invitation_status: "Einladungsstatus"
+        project_type: "Projektart"
+        project_date_from: "Von"
+        project_date_to: "Bis"
+        project_details: "Projektdetails"
+        target_audience: "Zielgruppe"
+        flight_data: "Fluginfo"
+        schedule: "Zeitplan"
+        partner: "Partner*innen"
+        accommodations: "Unterkünfte"
+        catering: "Catering"
+        transport: "Transport"
+        new_project_type: "Neue Projektart hinzufügen"
+        new_key_topic: "Neues Schwerpunktthema hinzufügen"
+
+        documents:
+          participant_list: "Teilnehmer*innen-Liste"
+          invitation_document: "Einladung"
+          certificate_document: "Zertifikat"
+
+        certificate_statuses:
+          in_progress: "In Bearbeitung"
+          sent: "gesendet"
+
+        invitation_statuses:
+          in_progress: "In Bearbeitung"
+          sent: "gesendet"
+
+        project_statuses:
+          planning: "In Planung"
+          in_progress: "In Arbeit"
+          blocked: "Blockiert"
+          review: "In Überprüfung"
+          completed: "Abgeschlossen"
+          cancelled: "Abgebrochen"
+        workflow: "Arbeitsstand"
+
+        sections:
+          required_info: "Allgemeine Informationen"
+          additional_info: "Zusätzliche Informationen"
+          documents: "Dokumente"
+
+      info_project:
+        project_status: "Geben Sie den aktuellen Status des Projekts an (Pflicht)."
+        project_name: "Geben Sie den Namen des Projekts, der es eindeutig beschreibt an (Pflicht)."
+        key_topic: "Wählen Sie Schwerpunktthemen des Projekts aus der Liste oder erstellen Sie weitere (siehe Info unten) (Pflicht)."
+        project_client: "Geben Sie den Namen des Kunden oder der Organisation, für die das Projekt durchgeführt wird an (Pflicht)."
+        execution_location: "Geben Sie den Ort oder die Adresse(n) an, an dem das Projekt veranstalltet wird. Falls zutreffend: z.B. Online, in Teams (Pflicht)."
+        documents: "Klicken Sie auf 'Datei auswählen', um ein neues Dokument hochzuladen. Nach dem Absenden des Formulars durch 'Aktualisieren oder Erstellen' wird das Dokument dauerhaft gespeichert. Falls zutreffend, wird die bestehende Datei ersetzt."
+        invitation_status: "Geben Sie den aktuellen Status der Einladung(en) an (Pflicht)."
+        certificate_status: "Geben Sie den Status des/der Zertifikats/Zertifikate an (Pflicht)."
+        project_type: "Wählen Sie die Projekart(en) aus der Liste oder erstellen Sie weitere (siehe Info unten) (Pflicht)."
+        new_project_type: "Um eine neue Projektart hinzuzufügen, geben Sie den Begriff in das Textfeld ein und klicken Sie auf den '+'-Button (bzw. 'Hinzufügen'). Die neue Projektart wird der Liste hinzugefügt und bleibt dauerhaft erhalten."
+        new_key_topic: "Um ein neues Schwerpunktthema hinzuzufügen, geben Sie den Begriff in das Textfeld ein und klicken Sie auf den '+'-Button (bzw. 'Hinzufügen'). Das neue Schwerpunktthema wird der Liste hinzugefügt und bleibt dauerhaft erhalten."
+        project_date_from: "Geben Sie das Startdatum des Projekts an."
+        project_date_to: "Geben Sie das Enddatum des Projekts an."
+        target_audience: "Geben Sie die Zielgruppe(n) des Projekts an."
+        flight_data: "Geben Sie allgemeine Informationen zum Flug an."
+
+      tab_docs:
+        quotation_document: "Angebot"
+        invoice_document: "Rechnung"
+
+      schedule:
+        flight_details: "Fluginformationen"
+        accompanying_person: "Begleitende Person"
+
+      partner:
+        location_name: "Standortname"
+        address: "Standortadresse"
+        contact: "Kontakt"
+        deadline: "Projektfrist"
+        notes: "Zusätzliche Notizen"
+
+        info:
+          location_name: "Der Standortname des Partners, der das Unternehmen oder die Einrichtung identifiziert, beispielsweise Hauptbüro München."
+          address: "Die physische Adresse des Standorts."
+          contact: " Angaben zur Kontaktperson oder den Kontaktinformationen, wie Telefon oder E-Mail."
+          deadline: "Projektbezogene Frist oder Deadlines, die den Partner betreffen, wie etwa Einreichungsfristen."
+          notes: "Allgemeine Notizen oder wichtige zusätzliche Informationen, die nicht in andere Kategorien passen, wie spezielle Hinweise oder Bedingungen."
+
+      accommodation:
+        location_name: "Unterkunftsstandort"
+        name: "Unterkunftsname"
+        status: "Buchungsstatus"
+        address: "Unterkunftsadresse"
+        contact: "Kontakt"
+        booking_deadline: "Buchungsfrist"
+        notes: "Zusätzliche Notizen"
+
+        info:
+          location_name: "Der Standortname, der die geografische Lage oder spezifische Bezeichnung der Unterkunft beschreibt, z.B. Mailand Zentrum."
+          name: "Der Name der Unterkunft, wie Galleria Vik Milano"
+          status: "Der aktuelle Buchungsstatus."
+          address: "Die vollständige Adresse der Unterkunft."
+          contact: "Angaben zur Kontaktperson oder allgemeinen Kontaktinformationen der Unterkunft, wie Telefonnummer oder E-Mail."
+          booking_deadline: "Die Frist für die Buchung der Unterkunft."
+          notes: "Wichtige Hinweise oder zusätzliche Informationen zur Unterkunft, wie Kostenübernahme durch Firma, Frühstück inklusive oder Zimmerkategorie."
+
+      catering:
+        location_name: "Standortname"
+        status: "Buchungsstatus"
+        booking_deadline: "Buchungsfrist"
+        address: "Catering-Adresse"
+        contact: "Kontakt"
+        notes: "Zusätzliche Notizen"
+
+        info:
+          location_name: "Spezifische Gegend oder der Veranstaltungsort, an dem der Catering-Service bereitgestellt wird."
+          status: "Der aktuelle Status der Catering-Vereinbarungen."
+          booking_deadline: "Die Frist zur Bestätigung des Catering-Services."
+          address: "Die vollständige Adresse des Catering-Anbieters oder des Veranstaltungsortes."
+          contact: "Details zur Kontaktperson des Catering-Services, wie Telefonnummer oder E-Mail."
+          notes: "Zusätzliche Informationen oder spezielle Anforderungen zum Catering, z.B. Vegetarische Optionen erforderlich."
+
+      transport:
+        transport_type: "Transportart"
+        company_name: "Firmenname"
+        status: "Status"
+        booking_deadline: "Buchungsfrist"
+        contact: "Kontakt"
+        notes: "Zusätzliche Notizen"
+
+        info:
+          transport_type: "Die Art des Transports, z.B. Taxi, Bus-Shuttle, Mietwagen."
+          company_name: "Der Name des Transportunternehmens oder Anbieters."
+          status: "Der aktuelle Status der Transportbuchung."
+          booking_deadline: "Die Frist für die Buchung des Transports."
+          contact: "Kontaktdaten des Transportunternehmens oder der zuständigen Person (z.B. Telefonnummer, E-Mail)."
+          notes: "Wichtige Hinweise oder zusätzliche Informationen zum Transport, z.B. Abholung am Flughafen, Fahrzeuggröße."
+
+      expert:
+        name: "Name"
+        institution: "Institution"
+        salutation: "Anrede"
+        title: "Titel"
+        first_name: "Vorname"
+        last_name: "Nachname"
+        email: "E-Mail"
+        phone_number: "Telefonnummer"
+        current_location: "Wohnsitz"
+        nationality: "Staatsangehörigkeit"
+        travel_willingness: "Reisebereitschaft"
+        travel_willingness_text: "Anmerkung zur Reisebereitschaft"
+        has_institution: "Institution"
+        institution_name: "Name der Institution"
+        cooperation_options: "Kooperationsmöglichkeiten"
+        hourly_rate: "Stundensatz"
+        daily_rate: "Tagessatz"
+        language: "Korrespondenzsprache"
+        languages: "Unterrichtssprachen"
+        categories: "Fachgebiete"
+        extra_skills: "Weitere Fachgebiete"
+        new_extra_skills: "Neue Fähigkeit hinzufügen"
+        free_text: "Sonstige Anmerkungen"
+        spontaneous: "Spontaneität"
+        china_reference: "China-Bezug"
+        editing_expert_profile: "Expert*innen Profil bearbeiten"
+
+        salutations:
+          mr: "Herr"
+          ms: "Frau"
+          mx: "Keine Angabe"
+
+        travel_willingness_options:
+          online: "Online"
+          germany: "Deutschland"
+          china: "China"
+
+        sections:
+          personal_information: "Persönliche-Informationen"
+          professionall_detail: "Berufliche-Details"
+          travel_preferences: "Reisepräferenzen"
+          additional_detail: "Zusätzliche-Details"
+          documents: "Dokumente"
+
+        questions:
+          institution_question: "Gehören Sie einer Institution an?"
+          spontaneous_question: "Minimale Vorlaufzeit?"
+          china_reference_question: "Haben Sie Erfahrungen im Zusammenhang mit China?"
+
+        documents:
+          profile_picture: "Profilbild"
+          resume: "Lebenslauf"
+          certificates: "Nachweise"
+
+        reference: "(Details siehe unten.)"
+
+
+
+      info_expert:
+        salutation: "Wählen Sie die für Sie passende Anrede aus, wie z.B. Frau, Herr oder eine andere Option (Pflicht)."
+        title: "Geben Sie Ihren akademischen oder beruflichen Titel an, falls vorhanden. Dieser wird in offiziellen Dokumenten und Korrespondenzen verwendet."
+        first_name: "Geben Sie bitte Ihren Vornamen an. Falls gewünscht, können Sie hier auch weitere Vornamen angeben, wie sie in Ihren offiziellen Dokumenten erscheinen (Pflicht)."
+        last_name: "Geben Sie Ihren Nachnamen an. Dieser ist für formelle Korrespondenzen erforderlich (Pflicht)."
+        email: "Geben Sie eine gültige E-Mail-Adresse an, z.B. max.musterman@example.com. Sie wird für die Kommunikation verwendet (Pflicht)."
+        phone_number: "Geben Sie Ihre Telefonnummer an, inklusive Ländervorwahl (z.B. +49 für Deutschland oder +86 für China) (Pflicht)."
+        current_location: "Nennen Sie Ihren aktuellen Wohnsitz (Land und Stadt), um Ihre Reiseverfügbarkeit besser einzuschätzen zu können (Pflicht)."
+        nationality: "Geben Sie Ihre Staatsangehörigkeit(en) an. Diese Information wird für Reise- und Visumsfragen benötigt (Pflicht)."
+        hourly_rate: "Geben Sie Ihren Vorschlag für das Stundenhonorar an. Nennen Sie den Betrag in EURO ohne Währungsangabe, z.B. 50 (auch 0 ist möglich - Pflicht)."
+        daily_rate: "Geben Sie Ihren Vorschlag für das Tageshonorar an. Nennen Sie den Betrag in EURO ohne Währungsangabe, z.B. 400 (auch 0 ist möglich - Pflicht)."
+        categories: "Wählen Sie die Fachgebiete aus, in denen Sie Ihre Dienstleistung(en) anbieten (Pflicht)."
+        extra_skills: "Fügen Sie hier zusätzliche Fähigkeiten oder Spezialisierungen hinzu. Dies können Soft Skills, technische Kenntnisse oder branchenspezifische Erfahrungen sein."
+        new_extra_skill: "Um eine neue Fähigkeit hinzuzufügen, geben Sie den Begriff in das Textfeld ein und klicken Sie auf den '+'-Button (bzw. 'Hinzufügen'). Die neue Fähigkeit wird der Liste hinzugefügt, wenn sie nur aus Buchstaben, Zahlen und Leerzeichen besteht und maximal 30 Zeichen lang ist. Sie können bis zu 20 Fähigkeiten hinzufügen."
+        language: "Wählen Sie die Sprache, in der Sie zukünftig mit uns kommunizieren möchten (Pflicht)."
+        languages: "Geben Sie die Sprache(n) an, in denen Sie Ihre Dienstleistung(en) anbieten können (Pflicht)."
+        travel_willingness: "Geben Sie an, ob Sie bereit sind, Ihre Dienstleistungen regional, national, international oder online anzubieten (Pflicht)."
+        travel_willingness_text: "Beschreiben Sie Ihre Reisepräferenzen genauer, falls gewünscht."
+        spontaneous: "Geben Sie an, wie kurzfristig Sie für neue Projekte verfügbar sind, z.B. 2 Wochen (Pflicht)."
+        has_institution: "Sind Sie Mitglied einer Institution oder eines Unternehmens? Kreuzen Sie das Kästchen an, falls dies zutrifft. Weitere Fragen werden dann angezeigt."
+        institution_name: "Geben Sie den Namen der Institution oder des Unternehmens an (Pflicht)."
+        cooperation_options: "Erläutern Sie mögliche Kooperationsmöglichkeiten, die für Sie oder Ihr Unternehmen relevant sein könnten. Zum Beispiel: Werksführungen oder andere Kooperationsformen."
+        has_china_reference: "Haben Sie berufliche oder private Erfahrungen in oder im Zusammenhang mit China?  Kreuzen Sie das Kästchen an, falls dies zutrifft. Weitere Fragen werden dann angezeigt."
+        china_reference: "Nennen Sie Ihre beruflichen oder privaten Erfahrungen in oder im Zusammenhang mit China. Beispiele können frühere Projekte, Positionen oder Arbeitgeber in China umfassen (Pflicht)."
+        free_text: "Nutzen Sie dieses Feld, um weitere relevante Informationen zu Ihrer Person, Expertise oder anderen Aspekten hinzuzufügen, die nicht explizit abgefragt wurden."
+        documents: "Klicken Sie auf 'Datei auswählen', um ein neues Dokument hochzuladen. Nach dem Absenden des Formulars durch 'Aktualisieren oder Erstellen' wird das Dokument dauerhaft gespeichert. Falls zutreffend, wird die bestehende Datei ersetzt."
+        documents_multi: "Klicken Sie auf 'Datei auswählen', um neue Dokumente hochzuladen. Sie können mehrere Dateien auswählen und hinzufügen. Nach dem Absenden des Formulars durch 'Aktualisieren oder Erstellen' werden die Dokumente dauerhaft gespeichert. Falls ein Dokument mit gleichem Namen hochgeladen wird, wird die bestehende Datei ersetzt."
+
+        travel_willingness_options:
+          online: "Online"
+          germany: "Deutschland"
+          china: "China"
+
+        sections:
+          personal_information: "Persönliche-Informationen"
+          professionall_detail: "Berufliche-Details"
+          travel_preferences: "Reisepräferenzen"
+          additional_detail: "Zusätzliche-Details"
+          documents: "Dokumente"
+
+        questions:
+          institution_question: "Gehören Sie einer Institution an?"
+          spontaneous_question: "Minimale Vorlaufzeit?"
+          china_reference_question: "Haben Sie Erfahrungen im Zusammenhang mit China?"
+
+        documents:
+          profile_picture: "Profilbild"
+          resume: "Lebenslauf"
+          certificates: "Nachweise"
+
+        reference: "(Details siehe unten.)"
+
+
+
+      info_expert:
+        salutation: "Wählen Sie die für Sie passende Anrede aus, wie z.B. Frau, Herr oder eine andere Option (Pflicht)."
+        title: "Geben Sie Ihren akademischen oder beruflichen Titel an, falls vorhanden. Dieser wird in offiziellen Dokumenten und Korrespondenzen verwendet."
+        first_name: "Geben Sie bitte Ihren Vornamen an. Falls gewünscht, können Sie hier auch weitere Vornamen angeben, wie sie in Ihren offiziellen Dokumenten erscheinen (Pflicht)."
+        last_name: "Geben Sie Ihren Nachnamen an. Dieser ist für formelle Korrespondenzen erforderlich (Pflicht)."
+        email: "Geben Sie eine gültige E-Mail-Adresse an, z.B. max.musterman@example.com. Sie wird für die Kommunikation verwendet (Pflicht)."
+        phone_number: "Geben Sie Ihre Telefonnummer an, inklusive Ländervorwahl (z.B. +49 für Deutschland oder +86 für China) (Pflicht)."
+        current_location: "Nennen Sie Ihren aktuellen Wohnsitz (Land und Stadt), um Ihre Reiseverfügbarkeit besser einzuschätzen zu können (Pflicht)."
+        nationality: "Geben Sie Ihre Staatsangehörigkeit(en) an. Diese Information wird für Reise- und Visumsfragen benötigt (Pflicht)."
+        hourly_rate: "Geben Sie Ihren Vorschlag für das Stundenhonorar an. Nennen Sie den Betrag in EURO ohne Währungsangabe, z.B. 50 (auch 0 ist möglich - Pflicht)."
+        daily_rate: "Geben Sie Ihren Vorschlag für das Tageshonorar an. Nennen Sie den Betrag in EURO ohne Währungsangabe, z.B. 400 (auch 0 ist möglich - Pflicht)."
+        categories: "Wählen Sie die Fachgebiete aus, in denen Sie Ihre Dienstleistung(en) anbieten (Pflicht)."
+        extra_skills: "Fügen Sie hier zusätzliche Fähigkeiten oder Spezialisierungen hinzu. Dies können Soft Skills, technische Kenntnisse oder branchenspezifische Erfahrungen sein."
+        new_extra_skill: "Um eine neue Fähigkeit hinzuzufügen, geben Sie den Begriff in das Textfeld ein und klicken Sie auf den '+'-Button (bzw. 'Hinzufügen'). Die neue Fähigkeit wird der Liste hinzugefügt, wenn sie nur aus Buchstaben, Zahlen und Leerzeichen besteht und maximal 30 Zeichen lang ist. Sie können bis zu 20 Fähigkeiten hinzufügen."
+        language: "Wählen Sie die Sprache, in der Sie zukünftig mit uns kommunizieren möchten (Pflicht)."
+        languages: „Geben Sie die Sprache(n) an, in denen Sie Ihre Dienstleistung(en) anbieten können (Pflicht).
+        travel_willingness: "Geben Sie an, ob Sie bereit sind, Ihre Dienstleistungen regional, national, international oder online anzubieten (Pflicht)."
+        travel_willingness_text: "Beschreiben Sie Ihre Reisepräferenzen genauer, falls gewünscht."
+        spontaneous: "Geben Sie an, wie kurzfristig Sie für neue Projekte verfügbar sind, z.B. 2 Wochen (Pflicht)."
+        has_institution: "Sind Sie Mitglied einer Institution oder eines Unternehmens? Kreuzen Sie das Kästchen an, falls dies zutrifft. Weitere Fragen werden dann angezeigt."
+        institution_name: "Geben Sie den Namen der Institution oder des Unternehmens an (Pflicht)."
+        cooperation_options: "Erläutern Sie mögliche Kooperationsmöglichkeiten, die für Sie oder Ihr Unternehmen relevant sein könnten. Zum Beispiel: Werksführungen oder andere Kooperationsformen."
+        has_china_reference: "Haben Sie berufliche oder private Erfahrungen in oder im Zusammenhang mit China?  Kreuzen Sie das Kästchen an, falls dies zutrifft. Weitere Fragen werden dann angezeigt."
+        china_reference: "Nennen Sie Ihre beruflichen oder privaten Erfahrungen in oder im Zusammenhang mit China. Beispiele können frühere Projekte, Positionen oder Arbeitgeber in China umfassen (Pflicht)."
+        free_text: "Nutzen Sie dieses Feld, um weitere relevante Informationen zu Ihrer Person, Expertise oder anderen Aspekten hinzuzufügen, die nicht explizit abgefragt wurden."
+        documents: "Klicken Sie auf 'Datei auswählen', um ein neues Dokument hochzuladen. Nach dem Absenden des Formulars durch 'Aktualisieren oder Erstellen' wird das Dokument dauerhaft gespeichert. Falls zutreffend, wird die bestehende Datei ersetzt."
+        documents_multi: "Klicken Sie auf 'Datei auswählen', um neue Dokumente hochzuladen. Sie können mehrere Dateien auswählen und hinzufügen. Nach dem Absenden des Formulars durch 'Aktualisieren oder Erstellen' werden die Dokumente dauerhaft gespeichert. Falls ein Dokument mit gleichem Namen hochgeladen wird, wird die bestehende Datei ersetzt."
+
+      category:
+        list: "Liste der bestehenden Fachgebiete"
+        skill_list: "Liste der bestehenden Fähigkeiten"
+        new_category: "Neues Fachgebiet hinzufügen"
+        update_category: "Fachgebiet aktualisieren"
+
+        sections:
+          categories: "Fachgebiete verwalten"
+          extra_skills: "Zusätzliche Fähigkeiten der Experten"
+
+        info:
+          list: "Begriffe sind nach zuletzt aktualisiert geordnet."
+          skill_list: "Um eine Fähigkeit als Fachgebiet zu speichern, wählen Sie den entsprechenden Begriff und klicken Sie auf den '+'-Button (bzw. 'Hinzufügen'). Fähigkeiten, die bereits einem Fachgebiet zugeordnet sind, werden nicht mehr in dieser Liste angezeigt. Die Begriffe sind nach Häufigkeit des Vorkommens und alphabetisch sortiert."
+          new_category: "Um ein neues Fachgebiet hinzuzufügen, geben Sie den Begriff in das Textfeld ein und klicken Sie auf den '+'-Button (bzw. 'Hinzufügen'). Das neue Fachgebiet wird am Anfang der Liste hinzugefügt, sofern es nur aus Buchstaben, Zahlen und Leerzeichen besteht und maximal 30 Zeichen lang ist."
+          update_category: "Um ein Fachgebiet zu ändern, klicken Sie auf den Begriff in der Liste. Der Begriff wird im Textfeld angezeigt und kann dort bearbeitet werden. Klicken Sie auf das Speichern-Symbol (bzw. 'Speichern'), um die Änderung zu speichern. Die geänderte Version wird am Anfang der Liste angezeigt."
+
+    errors:
+      models:
+        project:
+          header: "Fehlende oder fehlerhafte Angaben in den markierten Eingabefeldern"
+          attributes:
+            project_status:
+              blank: "Bitte wählen Sie den Projektstatus aus."
+            project_name:
+              blank: "Bitte geben Sie einen Projektnamen ein."
+            project_client:
+              blank: "Bitte geben Sie den Namen des/der Kund*in ein."
+            execution_locations:
+              blank: "Bitte wählen Sie einen Ausführungsort aus."
+            invitation_status:
+              blank: "Bitte wählen Sie den Status der Einladung aus."
+            certificate_status:
+              blank: "Bitte wählen Sie den Status des Zertifikates aus."
+            project_type:
+              blank: "Bitte wählen Sie mindestens eine Projektart aus."
+              max_types: "Sie können nur bis zu %{max_types} Projektarten hinzufügen."
+              too_many_types: "Die angegebene Anzahl von Begriffen übertrifft 15, bitte wählen Sie die Differenz von %{count} Begriff(en) ab."
+              too_short_or_too_long: "Jeder Begriff muss zwischen 2 und 30 Zeichen lang sein. Bitte wählen Sie die betroffenen Begriffe ab."
+              invalid: "Ungültige Eingabe, nur Buchstaben, Zahlen und Leerzeichen sind erlaubt. Bitte wählen Sie die betroffenen Begriffe ab."
+              format: "Bitte entfernen Sie alle zusätzlichen Kommata, indem Sie die betroffenen Begriffe abwählen und sie ohne Kommata erneut hinzufügen."
+            key_topic:
+              blank: "Bitte wählen Sie mindestens ein Schwerpunktthema aus."
+              max_topics: "Sie können nur bis zu %{max_topics} Schwerpunktthemen hinzufügen."
+              too_many_topics: "Die angegebene Anzahl von Begriffen übertrifft 15, bitte wählen Sie die Differenz von %{count} Begriff(en) ab."
+              too_short_or_too_long: "Jeder Begriff muss zwischen 2 und 30 Zeichen lang sein. Bitte wählen Sie die betroffenen Begriffe ab."
+              invalid: "Ungültige Eingabe, nur Buchstaben, Zahlen und Leerzeichen sind erlaubt. Bitte wählen Sie die betroffenen Begriffe ab."
+              format: "Bitte entfernen Sie alle zusätzlichen Kommata, indem Sie die betroffenen Begriffe abwählen und sie ohne Kommata erneut hinzufügen."
+
+        expert:
+          header: "Fehlende oder fehlerhafte Angaben in den markierten Eingabefeldern."
+          attributes:
+            first_name:
+              blank: "Bitte geben Sie einen Vornamen ein."
+            last_name:
+              blank: "Bitte geben Sie einen Nachnamen ein."
+            email:
+              blank: "Bitte geben Sie eine E-Mail-Adresse ein."
+              invalid: "Bitte geben Sie eine gültige E-Mail-Adresse an."
+            phone_number:
+              blank: "Bitte geben Sie eine Telefonnummer ein."
+              invalid: "Bitte wählen Sie ein gültiges Telefonnummernformat, z.B. +49 170 1234567 für Deutschland."
+            current_location:
+              blank: "Bitte geben Sie Ihren aktuellen Wohnsitz ein."
+            nationality:
+              blank: "Bitte geben Sie Ihre Nationalität an."
+            travel_willingness:
+              blank: "Bitte geben Sie Ihre Reisebereitschaft an."
+            institution_name:
+              blank: "Bitte geben Sie den Namen der Institution an, der Sie angehören."
+            hourly_rate:
+              blank: "Bitte geben Sie einen Stundensatz an."
+              not_a_number: "Der Stundensatz muss eine Zahl sein."
+              greater_than_or_equal_to: "Der Stundensatz darf nicht negativ sein."
+            daily_rate:
+              blank: "Bitte geben Sie einen Tagessatz an."
+              not_a_number: "Der Tagessatz muss eine Zahl sein."
+              greater_than_or_equal_to: "Der Tagessatz darf nicht negativ sein."
+            language:
+              blank: "Bitte wählen Sie eine Kommunikationssprache aus."
+            languages:
+              blank: "Mindestens eine Unterrichtssprache muss ausgewählt werden."
+            categories:
+              blank: "Mindestens eine Kategorie muss ausgewählt werden."
+            salutation:
+              blank: "Bitte wählen Sie eine Anrede aus."
+            spontaneous:
+              blank: "Bitte geben Sie Ihre Verfügbarkeit ein."
+            china_reference:
+              blank: "Bitte geben Sie Ihre Chinaerfahrung ein."
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+            extra_skills:
+              max_skills: "Sie können nur bis zu %{max_skills} Fähigkeiten hinzufügen."
+              too_many_skills: "Die angegebene Anzahl von Begriffen übertrifft 20, bitte entfernen Sie die Differenz von %{count} Begriffen."
+              too_short_or_too_long: "Jeder Begriff muss zwischen 2 und 30 Zeichen lang sein. Bitte entfernen Sie die betroffenen Begriffe."
+              invalid: "Ungültige Eingabe, nur Buchstaben, Zahlen und Leerzeichen sind erlaubt. Bitte entfernen Sie die betroffenen Begriffe."
+              format: "Bitte entfernen Sie alle zusätzlichen Kommata, indem Sie die betroffenen Begriffe löschen und sie ohne Kommata erneut hinzufügen."
+            travel_willingness_text:
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+            cooperation_options:
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+            free_text:
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+            profile_picture:
+              invalid: "Das Profilbild muss eine %{types} Datei sein."
+              size: "Das Profilbild darf nicht größer als %{size} MB sein."
+              dimension: "Das Profilbild muss Abmessungen zwischen %{min_width}x%{min_height} und %{max_width}x%{max_height} haben."
+            resume:
+              blank: "Bitte laden Sie einen Lebenslauf als PDF-Datei hoch."
+              invalid: "Der Lebenslauf muss als %{type} hochgeladen werden."
+              size: "Der Lebenslauf darf nicht größer als %{size} MB sein."
+            certificates:
+              invalid: "Zertifikate müssen als %{types} oder %{pdf} Datei hochgeladen werden."
+              limit: "Es dürfen maximal %{max_files} Zertifikate hochgeladen werden."
+              total_size: "Die Gesamtgröße der Zertifikate darf %{max_size} MB nicht überschreiten."
+
+
+        partner:
+          header: "Fehlende oder fehlerhafte Angaben in den markierten Eingabefeldern."
+          attributes:
+            location_name:
+              blank: "Bitte geben Sie den Standortnamen an."
+            notes:
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+
+        accommodation:
+          header: "Fehlende oder fehlerhafte Angaben in den markierten Eingabefeldern."
+          attributes:
+            name:
+              blank: "Bitte geben Sie den Namen der Unterkunft an."
+            status:
+              blank: "Wählen Sie bitte den Buchungsstatus aus. Andernfalls wird In Bearbeitung als Standard gesetzt."
+              inclusion: "Bitte wählen Sie einen gültigen Buchungsstatus aus"
+            notes:
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+
+        catering:
+          header: "Fehlende oder fehlerhafte Angaben in den markierten Eingabefeldern."
+          attributes:
+            location_name:
+              blank: "Bitte geben Sie den Standortnamen an."
+            status:
+              blank: "Wählen Sie bitte den Buchungsstatus aus. Andernfalls wird In Bearbeitung als Standard gesetzt."
+              inclusion: "Bitte wählen Sie einen gültigen Buchungsstatus aus."
+            notes:
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+
+        transport:
+          header: "Fehlende oder fehlerhafte Angaben in den markierten Eingabefeldern."
+          attributes:
+            transport_type:
+              blank: "Bitte geben Sie die Transportart an."
+            company_name:
+              blank: "Bitte geben Sie den Firmennamen an."
+            status:
+              blank: "Wählen Sie bitte den Buchungsstatus aus. Andernfalls wird In Bearbeitung als Standard gesetzt."
+              inclusion: "Bitte wählen Sie einen gültigen Buchungsstatus aus."
+            notes:
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+
+              blank: "Bitte geben Sie Ihre Chinaerfahrung ein."
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+            extra_skills:
+              max_skills: "Sie können nur bis zu %{max_skills} Fähigkeiten hinzufügen."
+              too_many_skills: "Die angegebene Anzahl von Begriffen übertrifft 20, bitte entfernen Sie die Differenz von %{count} Begriffen."
+              too_short_or_too_long: "Jeder Begriff muss zwischen 2 und 30 Zeichen lang sein. Bitte entfernen Sie die betroffenen Begriffe."
+              invalid: "Ungültige Eingabe, nur Buchstaben, Zahlen und Leerzeichen sind erlaubt. Bitte entfernen Sie die betroffenen Begriffe."
+              format: "Bitte entfernen Sie alle zusätzlichen Kommata, indem Sie die betroffenen Begriffe löschen und sie ohne Kommata erneut hinzufügen."
+            travel_willingness_text:
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+            cooperation_options:
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+            free_text:
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+            profile_picture:
+              invalid: "Das Profilbild muss eine %{types} Datei sein."
+              size: "Das Profilbild darf nicht größer als %{size} MB sein."
+              dimension: "Das Profilbild muss Abmessungen zwischen %{min_width}x%{min_height} und %{max_width}x%{max_height} haben."
+            resume:
+              blank: "Bitte laden Sie einen Lebenslauf als PDF-Datei hoch."
+              invalid: "Der Lebenslauf muss als %{type} hochgeladen werden."
+              size: "Der Lebenslauf darf nicht größer als %{size} MB sein."
+            certificates:
+              invalid: "Zertifikate müssen als %{types} oder %{pdf} Datei hochgeladen werden."
+              limit: "Es dürfen maximal %{max_files} Zertifikate hochgeladen werden."
+              total_size: "Die Gesamtgröße der Zertifikate darf %{max_size} MB nicht überschreiten."
+
+
+        partner:
+          header: "Fehlende oder fehlerhafte Angaben in den markierten Eingabefeldern."
+          attributes:
+            location_name:
+              blank: "Bitte geben Sie den Standortnamen an."
+            notes:
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+
+        accommodation:
+          header: "Fehlende oder fehlerhafte Angaben in den markierten Eingabefeldern."
+          attributes:
+            name:
+              blank: "Bitte geben Sie den Namen der Unterkunft an."
+            status:
+              blank: "Wählen Sie bitte den Buchungsstatus aus. Andernfalls wird In Bearbeitung als Standard gesetzt."
+              inclusion: "Bitte wählen Sie einen gültigen Buchungsstatus aus"
+            notes:
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+
+        catering:
+          header: "Fehlende oder fehlerhafte Angaben in den markierten Eingabefeldern."
+          attributes:
+            location_name:
+              blank: "Bitte geben Sie den Standortnamen an."
+            status:
+              blank: "Wählen Sie bitte den Buchungsstatus aus. Andernfalls wird In Bearbeitung als Standard gesetzt."
+              inclusion: "Bitte wählen Sie einen gültigen Buchungsstatus aus."
+            notes:
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+
+        transport:
+          header: "Fehlende oder fehlerhafte Angaben in den markierten Eingabefeldern."
+          attributes:
+            transport_type:
+              blank: "Bitte geben Sie die Transportart an."
+            company_name:
+              blank: "Bitte geben Sie den Firmennamen an."
+            status:
+              blank: "Wählen Sie bitte den Buchungsstatus aus. Andernfalls wird In Bearbeitung als Standard gesetzt."
+              inclusion: "Bitte wählen Sie einen gültigen Buchungsstatus aus."
+            notes:
+              too_long: "Die Eingabe überschreitet die maximale Zeichenanzahl."
+
+        category:
+          header: "Fehlende oder fehlerhafte Angaben in den markierten Eingabefeldern."
+          attributes:
+            name:
+              blank: "Bitte geben Sie einen Begriff ein."
+              invalid: "Ungültige Eingabe, nur Buchstaben, Zahlen und Leerzeichen sind erlaubt (mindestens 2 bis maximal 30 Zeichen)."

@@ -1,0 +1,924 @@
+<%
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+%>
+
+<%= javascript_include_tag "project_details" %>
+
+<div class="container flex flex-wrap">
+  <!-- Flash Messages -->
+  <div id="flash-messages" style="position: fixed; top: 10px; right: 10px; z-index: 1000;"></div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2 class="heading"><%= t("actions.title") %></h2>
+    <% if current_user.role == "employee" %>
+      <%= link_to edit_project_path(@project), class: "relative btn" do %>
+        <%= image_tag("svg/edit.svg", class: "absolute left-4") %>
+        <%= t("actions.edit") %>
+      <% end %>
+      <%= button_to project_path(@project),
+            method: :delete,
+            class: "btn relative",
+            data: { testid: "delete-project-#{@project.id}"},
+            onclick: "return confirm('#{I18n.t("actions.project.confirm_delete")}')" do %>
+        <%= image_tag("svg/delete.svg", class: "absolute left-4") %>
+        <%= t("actions.delete") %>
+      <% end %>
+      <%= link_to projects_path, class: "relative btn" do %>
+        <%= image_tag("svg/back.svg", class: "absolute left-4") %>
+        <%= t("actions.back") %>
+      <% end %>
+    <% elsif current_user.role == "intern" %>
+      <%= link_to projects_path, class: "relative btn" do %>
+        <%= image_tag("svg/back.svg", class: "absolute left-4") %>
+        <%= t("actions.back") %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-[3]">
+    <!-- Tabs Navigation -->
+    <div class="container mb-5" id="tabs-navigation">
+      <%= link_to t("tabs.details"), project_path(@project, tab: 'details'),
+          class: "btn #{@active_tab == 'details' ? 'active' : ''}" %>
+      <%= link_to t("tabs.schedule"), project_path(@project, tab: 'schedule'),
+          class: "btn #{@active_tab == 'schedule' ? 'active' : ''}" %>
+      <%= link_to t("tabs.partners"), project_path(@project, tab: 'partners'),
+          class: "btn #{@active_tab == 'partners' ? 'active' : ''}" %>
+      <%= link_to t("tabs.accommodations"), project_path(@project, tab: 'accommodations'),
+          class: "btn #{@active_tab == 'accommodations' ? 'active' : ''}" %>
+      <%= link_to t("tabs.catering"), project_path(@project, tab: 'catering'),
+          class: "btn #{@active_tab == 'catering' ? 'active' : ''}" %>
+      <%= link_to t("tabs.transport"), project_path(@project, tab: 'transport'),
+          class: "btn #{@active_tab == 'transport' ? 'active' : ''}" %>
+      <%= link_to t("tabs.experts"), project_path(@project, tab: 'expert'),
+          class: "btn #{@active_tab == 'expert' ? 'active' : ''}" %>
+    </div>
+
+    <!-- Details Tab -->
+    <div id="details" class="container-second tab-content" style="<%= @active_tab == 'details' ? '' : 'display: none;' %>">
+      <h2 class="heading"><%= t("activerecord.attributes.project.project_details") %></h2>
+      <div class="flex flex-col gap-4" id="<%= dom_id project %>">
+        <!-- Project Name -->
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.project.project_name") %></span>
+          <span class="block font-bold"><%= project.project_name %></span>
+        </div>
+
+        <!-- Key Topics -->
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.project.key_topic") %></span>
+          <span class="block font-bold"><%= project.key_topic || t("inputfield_placeholder.no_specification") %></span>
+        </div>
+
+        <!-- Project Start Date -->
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.project.project_date_from") %></span>
+          <span class="block font-bold"><%= project.project_date_from %></span>
+        </div>
+
+        <!-- Project End Date -->
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.project.project_date_to") %></span>
+          <span class="block font-bold"><%= project.project_date_to %></span>
+        </div>
+
+        <!-- Project Type -->
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.project.project_type") %></span>
+          <span class="block font-bold"><%= project.project_type %></span>
+        </div>
+
+        <!-- Project Client -->
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.project.project_client") %></span>
+          <span class="block font-bold"><%= project.project_client %></span>
+        </div>
+
+        <!-- Execution Locations -->
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.project.execution_location") %></span>
+          <span class="block font-bold"><%= project.execution_locations %></span>
+        </div>
+
+        <!-- Target Audience -->
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.project.target_audience") %></span>
+          <span class="block font-bold"><%= project.target_audience || t("inputfield_placeholder.no_specification") %></span>
+        </div>
+
+        <!-- Flight Data -->
+        <div>
+          <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.project.flight_data") %></span>
+          <span class="block font-bold"><%= project.flight_data || t("inputfield_placeholder.no_specification") %></span>
+        </div>
+      </div>
+
+      <!-- Documents Section -->
+      <div class="my-5">
+        <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.project.documents.participant_list") %></span>
+        <div class="flex gap-8 items-center font-bold">
+          <% if project.participant_list.attached? %>
+            <!-- we do this to see the file extension when the file name is relativly long -->
+            <%= link_to "#{truncate(File.basename(project.participant_list.filename.to_s, File.extname(project.participant_list.filename.to_s)), length: 14, omission: '...')}#{File.extname(project.participant_list.filename.to_s)}",
+                      rails_blob_path(project.participant_list, disposition: "attachment", cache_buster: Time.now.to_i),
+                      title: project.participant_list.filename.to_s %>
+            <!-- View document button -->
+            <%= link_to rails_blob_path(project.participant_list, disposition: "inline"),
+                        target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                        data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+              <%= image_tag("svg/open-eye.svg") %>
+              <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+            <% end %>
+            <!-- Download document button -->
+            <%= link_to rails_blob_path(project.participant_list, disposition: "attachment"),
+                        class: "btn flex items-center justify-between w-auto",
+                        data: { cache_buster: Time.now.to_i }, title: t("actions.download") do %>
+              <%= image_tag("svg/doc-download.svg") %>
+              <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+            <% end %>
+          <% else %>
+            <span class="font-bold"><%= t("inputfield_placeholder.document_no_upload") %></span>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Invitation Document Section -->
+      <div class="my-5">
+        <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.project.documents.invitation_document") %></span>
+        <div class="flex gap-8 items-center">
+          <% if project.invitation_document.attached? %>
+              <%= link_to "#{truncate(File.basename(project.invitation_document.filename.to_s, File.extname(project.invitation_document.filename.to_s)), length: 14, omission: '...')}#{File.extname(project.invitation_document.filename.to_s)}",
+                        rails_blob_path(project.invitation_document, disposition: "attachment", cache_buster: Time.now.to_i),
+                        title: project.invitation_document.filename.to_s %>
+            <!-- View document button -->
+            <%= link_to rails_blob_path(project.invitation_document, disposition: "inline"),
+                        target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                        data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+              <%= image_tag("svg/open-eye.svg") %>
+              <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+            <% end %>
+            <!-- Download document button -->
+            <%= link_to rails_blob_path(project.invitation_document, disposition: "attachment"),
+                        class: "btn flex items-center justify-between w-auto",
+                        data: { cache_buster: Time.now.to_i }, title: t("actions.download") do %>
+              <%= image_tag("svg/doc-download.svg") %>
+              <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+            <% end %>
+          <% else %>
+            <span class="font-bold"><%= t("inputfield_placeholder.document_no_upload") %></span>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Certificate Document Section -->
+      <div class="my-5">
+        <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.project.documents.certificate_document") %></span>
+        <div class="flex items-center" style="gap: 2.0rem;">
+          <% if project.certificate_document.attached? %>
+            <%= link_to "#{truncate(File.basename(project.certificate_document.filename.to_s, File.extname(project.certificate_document.filename.to_s)), length: 14, omission: '...')}#{File.extname(project.certificate_document.filename.to_s)}",
+                      rails_blob_path(project.certificate_document, disposition: "attachment", cache_buster: Time.now.to_i),
+                      title: project.certificate_document.filename.to_s %>
+            <!-- View document button -->
+            <%= link_to rails_blob_path(project.certificate_document, disposition: "inline"),
+                        target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                        data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+              <%= image_tag("svg/open-eye.svg") %>
+              <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+            <% end %>
+            <!-- Download document button -->
+            <%= link_to rails_blob_path(project.certificate_document, disposition: "attachment"),
+                        class: "btn flex items-center justify-between w-auto",
+                        data: { cache_buster: Time.now.to_i }, title: t("actions.download") do %>
+              <%= image_tag("svg/doc-download.svg") %>
+              <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+            <% end %>
+          <% else %>
+            <div><strong><%= t("inputfield_placeholder.document_no_upload") %></strong></div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Schedule -->
+    <div id="schedule" class="container-second tab-content" style="<%= @active_tab == 'schedule' ? '' : 'display: none;' %>">
+      <h2 class="heading"><%= t("activerecord.attributes.project.schedule") %></h2>
+      <% if @project.schedule %>
+        <div class="my-5">
+          <%= t("activerecord.attributes.schedule.flight_details") %>
+          <strong class="block mb-1 font-medium"><%= @project.schedule.flight_details || t("inputfield_placeholder.no_specification") %></strong>
+        </div>
+        <div class="my-5">
+          <%= t("activerecord.attributes.schedule.accompanying_person") %>
+          <strong class="block mb-1 font-medium"><%= @project.schedule.accompanying_person || t("inputfield_placeholder.no_specification") %></strong>
+        </div>
+      <% else %>
+        <p><%= t("inputfield_placeholder.no_schedule") %></p>
+      <% end %>
+    </div>
+
+    <!-- Partners Tab -->
+    <div id="partners" class="container-second tab-content" style="<%= @active_tab == 'partners' ? '' : 'display: none;' %>">
+      <h2 class="heading"><%= t("activerecord.attributes.project.partner") %></h2>
+
+      <div class="flex flex-wrap">
+        <% @project.partners.each_with_index do |partner, index| %>
+          <!-- Partner Item -->
+          <div class="inner-container" id="partner-item-<%= partner.id %>" style="width: 48%; padding: 10px; margin-right: 2%; margin-bottom: 20px; border: 1px solid #ddd; background: #fff; border-radius: 5px; position: relative;">
+          <% if current_user.role == "employee" %>
+            <!-- Edit Button -->
+            <button
+                type="button"
+                class="flex justify-between items-center w-auto edit-btn btn"
+                style="position: absolute; top: 10px; right: 65px;"
+                title="<%= t("actions.edit") %>"
+                data-id="<%= partner.id %>"
+                data-url="<%= edit_partner_project_path(@project, partner_id: partner.id) %>"
+                data-type="partner">
+              <%= image_tag("svg/edit.svg", alt: t("actions.edit"), style: "width: 16px; height: 16px;") %>
+            </button>
+
+            <!-- Delete Button -->
+            <button
+              type="button"
+              class="flex justify-between items-center w-auto btn"
+              style="position: absolute; top: 10px; right: 10px;"
+              title="<%= t("actions.delete") %>"
+              data-url="<%= delete_partner_project_path(@project, partner_id: partner.id) %>"
+              onclick="deleteItem('<%= t('actions.confirm_delete') %>', '<%= partner.id %>', this.dataset.url)">
+              <%= image_tag("svg/delete.svg", alt: t("actions.delete"), style: "width: 16px; height: 16px;") %>
+            </button>
+          <% end %>
+
+            <!-- Partner Location Name -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.partner.location_name") %></span>
+              <span class="block font-bold"><%= partner.location_name.present? ? partner.location_name : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Partner Address -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.partner.address") %></span>
+              <span class="block font-bold"><%= partner.address.present? ? partner.address : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Partner Contact -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.partner.contact") %></span>
+              <span class="block font-bold"><%= partner.contact.present? ? partner.contact : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Partner Deadline -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.partner.deadline") %></span>
+              <span class="block font-bold"><%= partner.deadline.present? ? partner.deadline : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Partner Notes -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.partner.notes") %></span>
+              <span class="block font-bold"><%= partner.notes.present? ? partner.notes : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Quotation Document Section -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.tab_docs.quotation_document") %></span>
+              <div class="flex gap-8 items-center">
+                <% if partner.quotation_document.attached? %>
+                    <%= link_to "#{truncate(File.basename(partner.quotation_document.filename.to_s, File.extname(partner.quotation_document.filename.to_s)), length: 14, omission: '...')}#{File.extname(partner.quotation_document.filename.to_s)}",
+                              rails_blob_path(partner.quotation_document, disposition: "attachment", cache_buster: Time.now.to_i),
+                              title: partner.quotation_document.filename.to_s %>
+                  <!-- View document button -->
+                  <%= link_to rails_blob_path(partner.quotation_document, disposition: "inline"),
+                              target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+                    <%= image_tag("svg/open-eye.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+                  <% end %>
+                  <!-- Download document button -->
+                  <%= link_to rails_blob_path(partner.quotation_document, disposition: "attachment"),
+                              class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.download") do %>
+                    <%= image_tag("svg/doc-download.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+                  <% end %>
+                <% else %>
+                  <span class="font-bold"><%= t("inputfield_placeholder.document_no_upload") %></span>
+                <% end %>
+              </div>
+            </div>
+
+            <!-- Invoice Document Section -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.tab_docs.invoice_document") %></span>
+              <div class="flex gap-8 items-center">
+                <% if partner.invoice_document.attached? %>
+                  <%= link_to "#{truncate(File.basename(partner.invoice_document.filename.to_s, File.extname(partner.invoice_document.filename.to_s)), length: 14, omission: '...')}#{File.extname(partner.invoice_document.filename.to_s)}",
+                            rails_blob_path(partner.invoice_document, disposition: "attachment", cache_buster: Time.now.to_i),
+                            title: partner.invoice_document.filename.to_s %>
+                  <!-- View document button -->
+                  <%= link_to rails_blob_path(partner.invoice_document, disposition: "inline"),
+                              target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+                    <%= image_tag("svg/open-eye.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+                  <% end %>
+                  <!-- Download document button -->
+                  <%= link_to rails_blob_path(partner.invoice_document, disposition: "attachment"),
+                              class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.download") do %>
+                    <%= image_tag("svg/doc-download.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+                  <% end %>
+                <% else %>
+                  <span class="font-bold"><%= t("inputfield_placeholder.document_no_upload") %></span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add button only after last partner -->
+          <% if current_user.role == "employee" && index == @project.partners.length - 1 %>
+            <div class="inner-container add-container" id="add-container-partners"
+                style="width: 48%; padding: 10px; margin-right: 2%; margin-bottom: 20px; border: 1px solid #ddd; background: #fff; border-radius: 5px; display: flex; justify-content: center; align-items: center;"
+                data-form-template="<%= add_partner_project_path(@project) %>">
+              <button class="btn add-btn">
+                <%= t("actions.add") %>
+              </button>
+            </div>
+          <% end %>
+        <% end %>
+
+        <!-- If no partner, show the "Add" button in the first container -->
+        <% if current_user.role == "employee" && @project.partners.empty? %>
+            <div class="inner-container add-container"  id="add-container-partners"
+                style="width: 48%; padding: 10px; margin-right: 2%; margin-bottom: 20px; border: 1px solid #ddd; background: #fff; border-radius: 5px; display: flex; justify-content: center; align-items: center;"
+                data-form-template="<%= add_partner_project_path(@project) %>">
+              <button class="btn add-btn">
+                <%= t("actions.add") %>
+              </button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+    <!-- Accommodations Tab -->
+    <div id="accommodations" class="container-second tab-content" style="<%= @active_tab == 'accommodations' ? '' : 'display: none;' %>">
+      <h2 class="heading"><%= t("activerecord.attributes.project.accommodations") %></h2>
+
+      <div class="flex flex-wrap">
+        <% @project.accommodations.each_with_index do |accommodation, index| %>
+          <!-- Accommodation Item -->
+          <div class="inner-container" id="accommodation-item-<%= accommodation.id %>" style="width: 48%; padding: 10px; margin-right: 2%; margin-bottom: 20px; border: 1px solid #ddd; background: #fff; border-radius: 5px; position: relative;">
+
+          <% if current_user.role == "employee" %>
+            <!-- Edit Button -->
+            <button
+                type="button"
+                class="flex justify-between items-center w-auto edit-btn btn"
+                style="position: absolute; top: 10px; right: 65px;"
+                title="<%= t("actions.edit") %>"
+                data-id="<%= accommodation.id %>"
+                data-url="<%= edit_accommodation_project_path(@project, accommodation_id: accommodation.id) %>"
+                data-type="accommodation">
+              <%= image_tag("svg/edit.svg", alt: t("actions.edit"), style: "width: 16px; height: 16px;") %>
+            </button>
+
+            <!-- Delete Button -->
+            <button
+                type="button"
+                class="flex justify-between items-center w-auto btn"
+                style="position: absolute; top: 10px; right: 10px;"
+                title="<%= t('actions.delete') %>"
+                data-url="<%= delete_accommodation_project_path(@project, accommodation_id: accommodation.id) %>"
+                onclick="deleteItem('<%= t('actions.confirm_delete') %>', '<%= accommodation.id %>', this.dataset.url)">
+                <%= image_tag('svg/delete.svg', alt: t('actions.delete'), style: 'width: 16px; height: 16px;') %>
+            </button>
+          <% end %>
+
+            <!-- Accommodation Name -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.accommodation.location_name") %></span>
+              <span class="block font-bold"><%= accommodation.name.present? ? accommodation.name : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Accommodation Status -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.accommodation.status") %></span>
+              <span class="block font-bold"><%= accommodation.status.present? ? accommodation.status : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Accommodation Address -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.accommodation.address") %></span>
+              <span class="block font-bold"><%= accommodation.address.present? ? accommodation.address : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Accommodation Contact -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.accommodation.contact") %></span>
+              <span class="block font-bold"><%= accommodation.contact.present? ? accommodation.contact : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Accommodation Booking Deadline -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.accommodation.booking_deadline") %></span>
+              <span class="block font-bold"><%= accommodation.booking_deadline.present? ? accommodation.booking_deadline : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Accommodation Notes -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.accommodation.notes") %></span>
+              <span class="block font-bold"><%= accommodation.notes.present? ? accommodation.notes : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Quotation Document Section -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.tab_docs.quotation_document") %></span>
+              <div class="flex gap-8 items-center">
+                <% if accommodation.quotation_document.attached? %>
+                    <%= link_to "#{truncate(File.basename(accommodation.quotation_document.filename.to_s, File.extname(accommodation.quotation_document.filename.to_s)), length: 14, omission: '...')}#{File.extname(accommodation.quotation_document.filename.to_s)}",
+                              rails_blob_path(accommodation.quotation_document, disposition: "attachment", cache_buster: Time.now.to_i),
+                              title: accommodation.quotation_document.filename.to_s %>
+                  <!-- View document button -->
+                  <%= link_to rails_blob_path(accommodation.quotation_document, disposition: "inline"),
+                              target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+                    <%= image_tag("svg/open-eye.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+                  <% end %>
+                  <!-- Download document button -->
+                  <%= link_to rails_blob_path(accommodation.quotation_document, disposition: "attachment"),
+                              class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.download") do %>
+                    <%= image_tag("svg/doc-download.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+                  <% end %>
+                <% else %>
+                  <span class="font-bold"><%= t("inputfield_placeholder.document_no_upload") %></span>
+                <% end %>
+              </div>
+            </div>
+
+            <!-- Invoice Document Section -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.tab_docs.invoice_document") %></span>
+              <div class="flex gap-8 items-center">
+                <% if accommodation.invoice_document.attached? %>
+                    <%= link_to "#{truncate(File.basename(accommodation.invoice_document.filename.to_s, File.extname(accommodation.invoice_document.filename.to_s)), length: 14, omission: '...')}#{File.extname(accommodation.invoice_document.filename.to_s)}",
+                              rails_blob_path(accommodation.invoice_document, disposition: "attachment", cache_buster: Time.now.to_i),
+                              title: accommodation.invoice_document.filename.to_s %>
+                  <!-- View document button -->
+                  <%= link_to rails_blob_path(accommodation.invoice_document, disposition: "inline"),
+                              target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+                    <%= image_tag("svg/open-eye.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+                  <% end %>
+                  <!-- Download document button -->
+                  <%= link_to rails_blob_path(accommodation.invoice_document, disposition: "attachment"),
+                              class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.download") do %>
+                    <%= image_tag("svg/doc-download.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+                  <% end %>
+                <% else %>
+                  <span class="font-bold"><%= t("inputfield_placeholder.document_no_upload") %></span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add button only after last accommodation -->
+          <% if current_user.role == "employee" && index == @project.accommodations.length - 1 %>
+            <div class="inner-container add-container" id="add-container-accommodations"
+                style="width: 48%; padding: 10px; margin-right: 2%; margin-bottom: 20px; border: 1px solid #ddd; background: #fff; border-radius: 5px; display: flex; justify-content: center; align-items: center;"
+                data-form-template="<%= add_accommodation_project_path(@project) %>">
+              <button class="btn add-btn">
+                <%= t("actions.add") %>
+              </button>
+            </div>
+          <% end %>
+        <% end %>
+
+        <!-- If no accommodations, show the "Add" button in the first container -->
+        <% if current_user.role == "employee" && @project.accommodations.empty? %>
+          <div class="inner-container add-container" id="add-container-accommodations"
+              style="width: 48%; padding: 10px; margin-right: 2%; margin-bottom: 20px; border: 1px solid #ddd; background: #fff; border-radius: 5px; display: flex; justify-content: center; align-items: center;"
+              data-form-template="<%= add_accommodation_project_path(@project) %>">
+            <button class="btn add-btn" onclick="showAccommodationForm()">
+              <%= t("actions.add") %>
+            </button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+
+    <!-- Catering Tab -->
+    <div id="catering" class="container-second tab-content" style="<%= @active_tab == 'catering' ? '' : 'display: none;' %>">
+      <h2 class="heading"><%= t("activerecord.attributes.project.catering") %></h2>
+
+      <div class="flex flex-wrap">
+        <% @project.caterings.each_with_index do |catering, index| %>
+          <!-- Catering Item -->
+          <div class="inner-container" id="catering-item-<%= catering.id %>" style="width: 48%; padding: 10px; margin-right: 2%; margin-bottom: 20px; border: 1px solid #ddd; background: #fff; border-radius: 5px; position: relative;">
+          <% if current_user.role == "employee" %>
+            <!-- Edit Button -->
+            <button
+                type="button"
+                class="flex justify-between items-center w-auto edit-btn btn"
+                style="position: absolute; top: 10px; right: 65px;"
+                title="<%= t("actions.edit") %>"
+                data-id="<%= catering.id %>"
+                data-url="<%= edit_catering_project_path(@project, catering_id: catering.id) %>"
+                data-type="catering">
+              <%= image_tag("svg/edit.svg", alt: t("actions.edit"), style: "width: 16px; height: 16px;") %>
+            </button>
+
+            <!-- Delete Button -->
+            <button
+              type="button"
+              class="flex justify-between items-center w-auto btn"
+              style="position: absolute; top: 10px; right: 10px;"
+              title="<%= t('actions.delete') %>"
+              data-url="<%= delete_catering_project_path(@project, catering_id: catering.id) %>"
+              onclick="deleteItem('<%= t('actions.confirm_delete') %>', '<%= catering.id %>', this.dataset.url)">
+              <%= image_tag('svg/delete.svg', alt: t('actions.delete'), style: 'width: 16px; height: 16px;') %>
+            </button>
+          <% end %>
+
+            <!-- Catering Location Name -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.catering.location_name") %></span>
+              <span class="block font-bold"><%= catering.location_name.present? ? catering.location_name : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Catering Status -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.catering.status") %></span>
+              <span class="block font-bold"><%= catering.status.present? ? catering.status : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Catering Address -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.catering.address") %></span>
+              <span class="block font-bold"><%= catering.address.present? ? catering.address : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Catering Contact -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.catering.contact") %></span>
+              <span class="block font-bold"><%= catering.contact.present? ? catering.contact : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Catering Booking Deadline -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.catering.booking_deadline") %></span>
+              <span class="block font-bold"><%= catering.booking_deadline.present? ? catering.booking_deadline : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Catering Notes -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.catering.notes") %></span>
+              <span class="block font-bold"><%= catering.notes.present? ? catering.notes : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Quotation Document Section -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.tab_docs.quotation_document") %></span>
+              <div class="flex gap-8 items-center">
+                <% if catering.quotation_document.attached? %>
+                  <%= link_to "#{truncate(File.basename(catering.quotation_document.filename.to_s, File.extname(catering.quotation_document.filename.to_s)), length: 14, omission: '...')}#{File.extname(catering.quotation_document.filename.to_s)}",
+                            rails_blob_path(catering.quotation_document, disposition: "attachment", cache_buster: Time.now.to_i),
+                            title: catering.quotation_document.filename.to_s %>
+                  <!-- View document button -->
+                  <%= link_to rails_blob_path(catering.quotation_document, disposition: "inline"),
+                              target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+                    <%= image_tag("svg/open-eye.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+                  <% end %>
+                  <!-- Download document button -->
+                  <%= link_to rails_blob_path(catering.quotation_document, disposition: "attachment"),
+                              class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.download") do %>
+                    <%= image_tag("svg/doc-download.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+                  <% end %>
+                <% else %>
+                  <span class="font-bold"><%= t("inputfield_placeholder.document_no_upload") %></span>
+                <% end %>
+              </div>
+            </div>
+
+            <!-- Invoice Document Section -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.tab_docs.invoice_document") %></span>
+              <div class="flex gap-8 items-center">
+                <% if catering.invoice_document.attached? %>
+                  <%= link_to "#{truncate(File.basename(catering.invoice_document.filename.to_s, File.extname(catering.invoice_document.filename.to_s)), length: 14, omission: '...')}#{File.extname(catering.invoice_document.filename.to_s)}",
+                            rails_blob_path(catering.invoice_document, disposition: "attachment", cache_buster: Time.now.to_i),
+                            title: catering.invoice_document.filename.to_s %>
+                  <!-- View document button -->
+                  <%= link_to rails_blob_path(catering.invoice_document, disposition: "inline"),
+                              target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+                    <%= image_tag("svg/open-eye.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+                  <% end %>
+                  <!-- Download document button -->
+                  <%= link_to rails_blob_path(catering.invoice_document, disposition: "attachment"),
+                              class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.download") do %>
+                    <%= image_tag("svg/doc-download.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+                  <% end %>
+                <% else %>
+                  <span class="font-bold"><%= t("inputfield_placeholder.document_no_upload") %></span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+            <!-- Add button only after last catering -->
+            <% if current_user.role == "employee" && index == @project.caterings.length - 1 %>
+              <div class="inner-container add-container" id="add-container-catering"
+                  style="width: 48%; padding: 10px; margin-right: 2%; margin-bottom: 20px; border: 1px solid #ddd; background: #fff; border-radius: 5px; display: flex; justify-content: center; align-items: center;"
+                  data-form-template="<%= add_catering_project_path(@project) %>">
+                <button class="btn add-btn" onclick="showCateringForm()">
+                  <%= t("actions.add") %>
+                </button>
+              </div>
+            <% end %>
+          <% end %>
+
+          <!-- If no catering, show the "Add" button in the first container -->
+          <% if current_user.role == "employee" &&@project.caterings.empty? %>
+            <div class="inner-container add-container" id="add-container-catering"
+                style="width: 48%; padding: 10px; margin-right: 2%; margin-bottom: 20px; border: 1px solid #ddd; background: #fff; border-radius: 5px; display: flex; justify-content: center; align-items: center;"
+                data-form-template="<%= add_catering_project_path(@project) %>">
+              <button class="btn add-btn">
+                <%= t("actions.add") %>
+              </button>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+
+    <!-- Transport Tab -->
+    <div id="transport" class="container-second tab-content" style="<%= @active_tab == 'transport' ? '' : 'display: none;' %>">
+      <h2 class="heading"><%= t("activerecord.attributes.project.transport") %></h2>
+
+      <div class="flex flex-wrap">
+        <% @project.transports.each_with_index do |transport, index| %>
+          <!-- Transport Item -->
+          <div class="inner-container" id="transport-item-<%= transport.id %>" style="width: 48%; padding: 10px; margin-right: 2%; margin-bottom: 20px; border: 1px solid #ddd; background: #fff; border-radius: 5px; position: relative;">
+          <% if current_user.role == "employee" %>
+            <!-- Edit Button -->
+            <button
+                type="button"
+                class="flex justify-between items-center w-auto edit-btn btn"
+                style="position: absolute; top: 10px; right: 65px;"
+                title="<%= t("actions.edit") %>"
+                data-id="<%= transport.id %>"
+                data-url="<%= edit_transport_project_path(@project, transport_id: transport.id) %>"
+                data-type="transport">
+              <%= image_tag("svg/edit.svg", alt: t("actions.edit"), style: "width: 16px; height: 16px;") %>
+            </button>
+
+            <!-- Delete Button -->
+            <button
+              type="button"
+              class="flex justify-between items-center w-auto btn"
+              style="position: absolute; top: 10px; right: 10px;"
+              title="<%= t("actions.delete") %>"
+              data-id="<%= transport.id %>"
+              data-url="<%= delete_transport_project_path(@project, transport_id: transport.id) %>"
+              onclick="deleteItem('<%= t('actions.project.confirm_delete') %>', '<%= transport.id %>', '<%= delete_transport_project_path(@project, transport_id: transport.id) %>')">
+              <%= image_tag("svg/delete.svg", alt: t("actions.delete"), style: "width: 16px; height: 16px;") %>
+            </button>
+          <% end %>
+
+            <!-- Transport Type -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.transport.transport_type") %></span>
+              <strong class="block font-bold"><%= transport.transport_type.present? ? transport.transport_type : t("inputfield_placeholder.no_specification") %></strong>
+            </div>
+
+            <!-- Transport Name -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.transport.company_name") %></span>
+              <span class="block font-bold"><%= transport.company_name.present? ? transport.company_name : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Transport Status -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.transport.status") %></span>
+              <span class="block font-bold"><%= transport.status.present? ? transport.status : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Transport Contact -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.transport.contact") %></span>
+              <span class="block font-bold"><%= transport.contact.present? ? transport.contact : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Transport Booking Deadline -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.transport.booking_deadline") %></span>
+              <span class="block font-bold"><%= transport.booking_deadline.present? ? transport.booking_deadline : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+            <!-- Transport Notes -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.transport.notes") %></span>
+              <span class="block font-bold"><%= transport.notes.present? ? transport.notes : t("inputfield_placeholder.no_specification") %></span>
+            </div>
+
+             <!-- Quotation Document Section -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.tab_docs.quotation_document") %></span>
+              <div class="flex gap-8 items-center">
+                <% if transport.quotation_document.attached? %>
+                  <%= link_to "#{truncate(File.basename(transport.quotation_document.filename.to_s, File.extname(transport.quotation_document.filename.to_s)), length: 14, omission: '...')}#{File.extname(transport.quotation_document.filename.to_s)}",
+                            rails_blob_path(transport.quotation_document, disposition: "attachment", cache_buster: Time.now.to_i),
+                            title: transport.quotation_document.filename.to_s %>
+                  <!-- View document button -->
+                  <%= link_to rails_blob_path(transport.quotation_document, disposition: "inline"),
+                              target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+                    <%= image_tag("svg/open-eye.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+                  <% end %>
+                  <!-- Download document button -->
+                  <%= link_to rails_blob_path(transport.quotation_document, disposition: "attachment"),
+                              class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.download") do %>
+                    <%= image_tag("svg/doc-download.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+                  <% end %>
+                <% else %>
+                  <span class="font-bold"><%= t("inputfield_placeholder.document_no_upload") %></span>
+                <% end %>
+              </div>
+            </div>
+
+            <!-- Invoice Document Section -->
+            <div class="my-5">
+              <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.tab_docs.invoice_document") %></span>
+              <div class="flex gap-8 items-center">
+                <% if transport.invoice_document.attached? %>
+                  <%= link_to "#{truncate(File.basename(transport.invoice_document.filename.to_s, File.extname(transport.invoice_document.filename.to_s)), length: 14, omission: '...')}#{File.extname(transport.invoice_document.filename.to_s)}",
+                            rails_blob_path(transport.invoice_document, disposition: "attachment", cache_buster: Time.now.to_i),
+                            title: transport.invoice_document.filename.to_s %>
+                  <!-- View document button -->
+                  <%= link_to rails_blob_path(transport.invoice_document, disposition: "inline"),
+                              target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+                    <%= image_tag("svg/open-eye.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+                  <% end %>
+                  <!-- Download document button -->
+                  <%= link_to rails_blob_path(transport.invoice_document, disposition: "attachment"),
+                              class: "btn flex items-center justify-between w-auto",
+                              data: { cache_buster: Time.now.to_i }, title: t("actions.download") do %>
+                    <%= image_tag("svg/doc-download.svg") %>
+                    <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+                  <% end %>
+                <% else %>
+                  <span class="font-bold"><%= t("inputfield_placeholder.document_no_upload") %></span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add button only after last transport -->
+          <% if current_user.role == "employee" && index == @project.transports.length - 1 %>
+            <div class="inner-container add-container" id="add-container-transport"
+                style="width: 48%; padding: 10px; margin-right: 2%; margin-bottom: 20px; border: 1px solid #ddd; background: #fff; border-radius: 5px; display: flex; justify-content: center; align-items: center;"
+                data-form-template="<%= add_transport_project_path(@project) %>">
+              <button class="btn add-btn">
+                <%= t("actions.add") %>
+              </button>
+            </div>
+          <% end %>
+        <% end %>
+
+        <!-- If no transport, show the "Add" button in the first container -->
+        <% if current_user.role == "employee" && @project.transports.empty? %>
+          <div class="inner-container add-container" id="add-container-transport"
+              style="width: 48%; padding: 10px; margin-right: 2%; margin-bottom: 20px; border: 1px solid #ddd; background: #fff; border-radius: 5px; display: flex; justify-content: center; align-items: center;"
+              data-form-template="<%= add_transport_project_path(@project) %>">
+            <button class="btn add-btn">
+              <%= t("actions.add") %>
+            </button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+
+    <!-- Experts Tab -->
+    <div id="expert" class="container-second tab-content" style="<%= @active_tab == 'expert' ? '' : 'display: none;' %>">
+      <h2 class="heading"><%= t("tabs.experts") %></h2>
+
+
+      <div class="flex flex-wrap">
+        <% @project.experts.each_with_index do |expert, index| %>
+          <!-- Expert Item -->
+          <div class="inner-container" id="expert-item-<%= expert.id %>" style="width: 48%; padding: 10px; margin-right: 2%; margin-bottom: 20px; border: 1px solid #ddd; background: #fff; border-radius: 5px; position: relative;">
+          <% if current_user.role == "employee" %>
+            <!-- View Button (Redirect to Expert Page) -->
+            <button
+              type="button"
+              class="flex justify-between items-center w-auto view-btn btn"
+              style="position: absolute; top: 10px; right: 65px;"
+              title="<%= t("actions.view") %>"
+              onclick="window.location='<%= expert_path(expert) %>'">
+              <%= image_tag("svg/person_white.svg", alt: t("actions.view"), style: "width: 16px; height: 16px;") %>
+            </button>
+
+            <!-- Unassign Button -->
+            <button
+              class="flex justify-between items-center w-auto btn"
+              style="position: absolute; top: 10px; right: 10px;"
+              title="<%= t("actions.unassign") %>"
+              data-id="<%= expert.id %>"
+              data-project-id="<%= @project.id %>"
+              onclick="unassignExpert(<%= expert.id %>, '<%= t('actions.project.confirm_unassign') %>')">
+              <%= image_tag("svg/delete.svg", alt: t('actions.unassign'), style: "width: 16px; height: 16px;") %>
+            </button>
+          <% end %>
+
+          <!-- Expert Name -->
+          <div class="my-5">
+            <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.name") %></span>
+            <span class="block font-bold">
+              <% unless expert.salutation == "mx" %>
+                <%= "#{t("activerecord.attributes.expert.salutations.#{expert.salutation}")} " %>
+              <% end %>
+              <%= "#{expert.title} #{expert.first_name} #{expert.last_name}" %>
+            </span>
+          </div>
+
+          <!-- Expert Categories -->
+          <div class="my-5">
+            <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.categories") %></span>
+            <ul class="pl-1 font-bold list-disc list-inside">
+              <% expert.categories.each do |category| %>
+                <li class="list-item"><%= category.name %></li>
+              <% end %>
+            </ul>
+          </div>
+
+          <!-- Expert Hourly Rate -->
+          <div class="my-5">
+            <span class="block text-xs text-neutral-400"><%= t("activerecord.attributes.expert.hourly_rate") %></span>
+            <span class="block font-bold"><%= number_to_currency(expert.hourly_rate) %></span>
+          </div>
+        </div>
+
+          <!-- Add button only after last expert -->
+          <% if current_user.role == "employee" && index == @project.experts.length - 1 %>
+            <div class="inner-container add-container" id="add-container-experts"
+                style="width: 48%; padding: 10px; margin-right: 2%; margin-bottom: 20px; border: 1px solid #ddd; background: #fff; border-radius: 5px; display: flex; justify-content: center; align-items: center;"
+                data-project-id="<%= @project.id %>">
+              <button class="btn add-btn">
+                <%= t("actions.add") %>
+              </button>
+            </div>
+          <% end %>
+         <% end %>
+
+        <!-- If no experts, show the "Add" button in the first container -->
+        <% if current_user.role == "employee" && @project.experts.empty? %>
+          <div class="inner-container add-container" id="add-container-experts"
+              style="width: 48%; padding: 10px; margin-right: 2%; margin-bottom: 20px; border: 1px solid #ddd; background: #fff; border-radius: 5px; display: flex; justify-content: center; align-items: center;"
+              data-project-id="<%= @project.id %>">
+            <button class="btn add-btn">
+              <%= t("actions.add") %>
+            </button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

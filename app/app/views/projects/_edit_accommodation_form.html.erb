@@ -1,0 +1,272 @@
+<%
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+%>
+
+<!-- Outer Container Div -->
+<div style="padding: 10px; background: #fff; border-radius: 5px; width: 100%; margin: 0 auto;">
+  <%= form_with model: @accommodation, url: save_accommodation_project_path(@project, accommodation_id: @accommodation.id), method: :post, remote: true, html: { data: { remote: true } } do |form| %>
+    <%= hidden_field_tag :accommodation_id, @accommodation.id %>
+      <% if accommodation.errors.any? %>
+        <div id="activerecord.error_explanation" class="py-2 px-3 mb-3 font-medium text-red-500 bg-red-50 rounded-lg" style="border: 1px solid #D40031;">
+          <h2 class="heading-sub"><%= t("activerecord.errors.models.accommodation.header") %></h2>
+        </div>
+      <% end %>
+      <!-- Accommodation Name (Required Field) -->
+    <div class="flex-1 gap-2 my-3">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :name, "#{t("activerecord.attributes.accommodation.name")}*", 
+              style: "color: #{accommodation.errors[:name].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+      </div>  
+      <%= form.text_field :name,
+        style: "border: 1px solid #{accommodation.errors[:name].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;", 
+        class: "w-full" %>
+      
+      <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+        <% if accommodation.errors[:name].any? %>
+          <%= accommodation.errors[:name].first %>
+        <% end %>
+      </div>
+    </div>
+    <!-- Accommodation Status (Required Field) -->
+    <div class="flex-1 gap-2 my-3">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :status, "#{t("activerecord.attributes.accommodation.status")}*", 
+              style: "color: #{accommodation.errors[:status].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+      </div>
+      <%= form.select :status, 
+        options_for_select([
+          ["in Bearbeitung", "in Bearbeitung"], 
+          ["angefragt", "angefragt"], 
+          ["gebucht", "gebucht"]], 
+          "in Bearbeitung"),
+          { include_blank: t("inputfield_placeholder.choice_box_select_mandatory") }, 
+        style: "border: 1px solid #{accommodation.errors[:status].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;", 
+          class: "w-full sm:w-[50%]" %>
+
+      <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+        <% if accommodation.errors[:status].any? %>
+          <%= accommodation.errors[:status].first %>
+        <% end %>
+      </div>
+    </div>
+    <!-- Accommodation Address -->
+    <div class="flex-1 gap-2 my-3">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :address, t("activerecord.attributes.accommodation.address"), 
+              style: "color: #{accommodation.errors[:address].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+      </div>  
+      <%= form.text_field :address,
+        style: "border: 1px solid #{accommodation.errors[:address].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;", 
+        class: "w-full" %>
+    </div>
+    <!-- Accommodation Contact -->
+    <div class="flex-1 gap-2 my-3">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :contact, t("activerecord.attributes.accommodation.contact"), 
+              style: "color: #{accommodation.errors[:contact].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+      </div>  
+      <%= form.text_field :contact,
+        style: "border: 1px solid #{accommodation.errors[:contact].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;", 
+        class: "w-full" %>
+    </div>
+    <!-- Accommodation Booking Deadline -->
+    <div class="flex-1 gap-2 my-3">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :booking_deadline, t("activerecord.attributes.accommodation.booking_deadline"), 
+              style: "color: #{accommodation.errors[:booking_deadline].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+      </div>  
+      <%= form.date_field :booking_deadline,
+        style: "border: 1px solid #{accommodation.errors[:booking_deadline].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;", 
+        class: "w-full" %>
+    </div>
+    <!-- Accommodation Notes -->
+    <div class="flex-1 gap-2 my-3">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :notes, t("activerecord.attributes.accommodation.notes"), 
+              style: "color: #{accommodation.errors[:notes].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+      </div>  
+      <% max_length = 500 %>
+      <%= form.text_area :notes, 
+        style: "border: 1px solid #{accommodation.errors[:notes].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; width: 100%; outline: none; min-height: 5rem;",
+        maxlength: max_length,
+        rows: 1, 
+        oninput: "this.style.height = ''; this.style.height = this.scrollHeight + 'px';" %>
+      <div class="flex gap-2 items-center">
+        <!-- Display Character Count -->
+        <div style="font-size: 0.875rem; margin-top: 0.25rem;">
+          <% current_length = form.object.notes.present? ? form.object.notes.length : 0 %>
+          <% if current_length == 0 %>
+            <%= "max. #{max_length}" %>
+          <% else %>
+            <%= "#{current_length} / " "#{max_length}" %>
+          <% end %>
+        </div>
+        <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+          <% if accommodation.errors[:notes].any? %>
+            <%= accommodation.errors[:notes].first %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <!-- Quotation Document Section -->
+    <div class="my-5">
+      <div><strong><%= "#{t("activerecord.attributes.tab_docs.quotation_document")}:" %></strong></div>
+      <div class="flex gap-8 items-center">
+        <% if accommodation.quotation_document.attached? %>
+          <%= link_to "#{truncate(File.basename(accommodation.quotation_document.filename.to_s, File.extname(accommodation.quotation_document.filename.to_s)), length: 14, omission: '...')}#{File.extname(accommodation.quotation_document.filename.to_s)}",
+                    rails_blob_path(accommodation.quotation_document, disposition: "attachment", cache_buster: Time.now.to_i),
+                    title: accommodation.quotation_document.filename.to_s %>
+          <!-- View document button -->
+          <%= link_to rails_blob_path(accommodation.quotation_document, disposition: "inline"),
+                      target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                      data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+            <%= image_tag("svg/open-eye.svg") %>
+            <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+          <% end %>
+          <!-- Download document button -->
+          <%= link_to rails_blob_path(accommodation.quotation_document, disposition: "attachment"),
+                      class: "btn flex items-center justify-between w-auto",
+                      data: { cache_buster: Time.now.to_i }, title: t("actions.download") do %>
+            <%= image_tag("svg/doc-download.svg") %>
+            <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+          <% end %>
+          <!-- Delete document button -->
+          <button type="button" class="flex justify-between items-center w-auto btn"
+              onclick="if (confirm('<%= t('actions.confirm_delete_doc', document: accommodation.quotation_document.filename) %>')) { 
+                        window.location.href = '<%= remove_accommodation_document_project_path(accommodation_id: accommodation.id, document_type: 'quotation_document') %>'; 
+                      }"
+              title="<%= t('actions.delete') %>">
+            <%= image_tag('svg/delete.svg') %>
+            <span class="hidden ml-2 sm:inline"><%= t('actions.delete') %></span>
+          </button>
+        <% else %>
+            <span class="font-bold"><%= t("inputfield_placeholder.document_no_upload") %></span>
+        <% end %>
+      </div>
+      <!-- Invoice  Upload -->
+      <div class="flex-1 my-5">
+        <!-- File Input Field -->
+        <%= form.file_field :quotation_document, 
+          style: "border: 1px solid #D1D5DB; border-radius: 0.375rem; padding: 0.325rem; outline: none;", 
+          class: "w-full mb-2" %>
+      </div>
+    </div>
+    <!-- Invoice Document Section -->
+    <div class="my-5">
+      <div><strong><%= "#{t("activerecord.attributes.tab_docs.invoice_document")}:" %></strong></div>
+      <div class="flex gap-8 items-center">    
+        <% if accommodation.invoice_document.attached? %>
+          <%= link_to "#{truncate(File.basename(accommodation.invoice_document.filename.to_s, File.extname(accommodation.invoice_document.filename.to_s)), length: 14, omission: '...')}#{File.extname(accommodation.invoice_document.filename.to_s)}",
+                    rails_blob_path(accommodation.invoice_document, disposition: "attachment", cache_buster: Time.now.to_i),
+                    title: accommodation.invoice_document.filename.to_s %>
+          <!-- View document button -->
+          <%= link_to rails_blob_path(accommodation.invoice_document, disposition: "inline"),
+                      target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                      data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+            <%= image_tag("svg/open-eye.svg") %>
+            <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+          <% end %>
+          <!-- Download document button -->
+          <%= link_to rails_blob_path(accommodation.invoice_document, disposition: "attachment"),
+                      class: "btn flex items-center justify-between w-auto",
+                      data: { cache_buster: Time.now.to_i }, title: t("actions.download") do %>
+            <%= image_tag("svg/doc-download.svg") %>
+            <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+          <% end %>
+          <!-- Delete document button -->
+          <button type="button" class="flex justify-between items-center w-auto btn"
+                onclick="if (confirm('<%= t('actions.confirm_delete_doc', document: accommodation.invoice_document.filename) %>')) { 
+                          window.location.href = '<%= remove_accommodation_document_project_path(accommodation_id: accommodation.id, document_type: 'invoice_document') %>'; 
+                        }"
+                title="<%= t('actions.delete') %>">
+            <%= image_tag('svg/delete.svg') %>
+            <span class="hidden ml-2 sm:inline"><%= t('actions.delete') %></span>
+          </button>
+        <% else %>
+            <span class="font-bold"><%= t("inputfield_placeholder.document_no_upload") %></span>
+        <% end %>
+      </div>
+      <!-- Invoice  Upload -->
+      <div class="flex-1 my-5">
+        <!-- File Input Field -->
+        <%= form.file_field :invoice_document, 
+          style: "border: 1px solid #D1D5DB; border-radius: 0.375rem; padding: 0.325rem; outline: none;", 
+          class: "w-full mb-2" %>
+      </div>
+    </div>
+    <!-- Save and Cancel Buttons -->
+    <div class="my-3" style="display: flex; justify-content: flex-end;">
+      <button type="button" class="btn cancel-btn" onclick="cancelForm('accommodation-item-<%= accommodation.id %>', 'edit')" 
+              style="font-size: 12px; padding: 5px 10px; margin-right: 8px;">
+        <%= t("actions.cancel") %>
+      </button>
+      <button type="submit" class="btn btn-save" id="accommodation-save-btn" 
+              style="font-size: 12px; padding: 5px 10px;">
+        <%= t("actions.save") %>
+      </button>
+    </div>
+  <% end %>
+</div>
+<script>
+  window.addEventListener('resize', adjustFilenames);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    adjustFilenames();
+  });
+
+  function getExtension(filename) {
+    return filename.slice((filename.lastIndexOf('.') - 1 >>> 0) + 2);
+  }
+
+  function getBaseFilename(filename, extension) {
+      return filename.substring(0, filename.length - extension.length);
+  }
+
+  function truncateFilename(linkId, maxLength) {
+      var link = document.getElementById(linkId);
+      if (link) {
+          var fullFilename = link.title;
+          var extension = getExtension(fullFilename);
+          var baseFilename = getBaseFilename(fullFilename, extension);
+
+          var truncatedBaseFilename = baseFilename.length > maxLength ? baseFilename.substring(0, maxLength) + '...' : baseFilename;
+
+          link.textContent = truncatedBaseFilename + extension;
+      }
+  }
+
+  function adjustFilenames() {
+      var maxLength = window.innerWidth < 768 ? 10 : 30;
+
+      ['quotation_document_link', 'invoice_document_link'].forEach(linkId => {
+          truncateFilename(linkId, maxLength);
+      });
+  }
+</script>

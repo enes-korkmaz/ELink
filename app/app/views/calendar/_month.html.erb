@@ -1,0 +1,69 @@
+<%
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+%>
+
+<div class="flex flex-row justify-center items-center mb-3 space-y-4 space-x-4 w-full">
+  <%= link_to calendar_month_path(date: @date - 1.month), class: "btn w-[20%] sm:w-[10%] flex justify-center items-center" do %>
+    <%= image_tag("svg/chevron-left-white.svg") %>
+  <% end %>
+  <%= link_to t("date.today"), calendar_month_path, class: "btn w-[20%]" %>
+  <%= link_to calendar_month_path(date: @date + 1.month), class: "btn w-[20%] sm:w-[10%] flex justify-center items-center" do %>
+    <%= image_tag("svg/chevron-right-white.svg") %>
+  <% end %>
+</div>
+<div class="container-second">
+  <h2 class="text-center heading"><%= I18n.l(@date, format: :month_and_year) %></h2>
+
+  <div class="grid grid-cols-7">
+    <% Date::ABBR_DAYNAMES.rotate.each do |weekday| %>
+      <div class="font-bold text-center"><%= I18n.t("weekdays.abbr.#{weekday}") %></div>
+    <% end %>
+
+    <% month_offset(@date).times do %>
+      <div class="empty-day"></div>
+    <% end %>
+
+    <% @date.all_month.each do |day| %>
+      <div class="border min-h-24 p-2 <%= today_class(day) %>">
+        <div class="font-bold date-label"><%= l(day, format: :day_only) %></div>
+
+        <% if @events[day].present? %>
+          <div class="overflow-y-auto max-h-24 events-container">
+            <% @events[day].each do |event| %>
+              <% if event[:tab].nil? %>
+                <%= link_to project_path(event[:project]) do %>
+                  <div class="p-2 mt-1 bg-green-200 rounded-md hover:bg-green-400">
+                    <strong><%= truncate(event[:name], length: 27) %></strong>
+                    <p><%= truncate(event[:detail], length: 27) %></p>
+                  </div>
+                <% end %>
+              <% else %>
+                <%= link_to project_path(event[:project], tab: event[:tab]) do %>
+                  <div class="p-2 mt-1 bg-blue-200 rounded-md hover:bg-blue-400">
+                    <strong><%= truncate(event[:project].project_name, length: 27) %></strong>
+                    <p><%= truncate(event[:name], length: 27) %></p>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

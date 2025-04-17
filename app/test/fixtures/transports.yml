@@ -1,0 +1,17 @@
+transport_one:
+  project: project_one
+  transport_type: "Öffentliche Verkehrsmittel"
+  company_name: "Berlin Transit Co."
+  status: "gebucht"
+  booking_deadline: 2023-12-15 10:00:00
+  contact: 'contact@transit.co'
+  notes: "Ticket covers all attendees"
+
+transport_two:
+  project: project_two
+  transport_type: "Taxi"
+  company_name: "Shenzhen Cabs"
+  status: "angefragt"
+  booking_deadline: 2024-01-20 20:00:00
+  contact: 'support@cabs.cn'
+  notes: "Waiting for quote"

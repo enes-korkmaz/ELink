@@ -1,0 +1,40 @@
+<%
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+%>
+
+<div class="container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2 class="heading"><%= t("actions.title") %></h2>
+    <% if current_user.role == "employee" %>
+      <div class="actions-container">
+      <a href="/experts/new" class="relative btn">
+        <%= image_tag("svg/new.svg", class: "absolute left-4") %><%= t("homepage.create_new_expert") %>
+      </a>
+      <a href="/projects/new" class="relative btn">
+        <%= image_tag("svg/new.svg", class: "absolute left-4") %><%= t("homepage.create_new_project") %>
+      </a>
+    </div>
+    <% end %>
+  </div>
+  <div class="flex-[3]">
+    <div class="flex-[40%] w-full">
+      <%= render "form", category: @category %>
+    </div>
+  </div>
+</div>

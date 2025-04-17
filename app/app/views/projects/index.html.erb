@@ -1,0 +1,84 @@
+<%
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+%>
+
+<%= javascript_include_tag "filter_table", defer: true %>
+<%= javascript_include_tag "sort", async: true %>
+
+<div class="container">
+    <!-- placeholder sidebar will be changed to filter -->
+    <div class="sidebar">
+        <!-- Actions section first -->
+        <% if current_user.role == "employee" %>
+            <h3 class="heading"><%= t("actions.title") %></h3>
+            <!-- Create button -->
+            <%= link_to new_project_path, class: "btn relative create-btn" do %>
+                <%= image_tag("svg/new.svg", class: "absolute left-4") %>
+                <%= t("actions.create") %>
+            <% end %>
+        <% end %>
+
+        <!-- Now comes the Filter section -->
+        <h2 class="heading" style="mt-4">Filter</h2>
+        <div class="filter_table" data-for="projects_table"></div>
+    </div>
+
+    <!-- Table that holds project data -->
+    <div class="md:w-1 container-second">
+        <div class="overflow-hidden max-w-full">
+            <div class="overflow-x-auto overflow-y-auto shadow-md sm:rounded-lg max-h-[88vh]" style="width: 100%">
+                <table class="w-full text-left table-auto" id="projects_table">
+                    <thead>
+                        <tr>
+                            <th class="text-center cursor-pointer hover:text-red-700" onclick="orderBy(this)">#</th>
+                            <th class="cursor-pointer hover:text-red-700" onclick="orderBy(this)"><%= t("index.project_name") %></th>
+                            <th class="cursor-pointer hover:text-red-700" onclick="orderBy(this)"><%= t("activerecord.attributes.project.schedule") %></th>
+                            <th class="cursor-pointer hover:text-red-700" onclick="orderBy(this)"><%= t("activerecord.attributes.project.key_topic") %></th>
+                            <th class="cursor-pointer hover:text-red-700" onclick="orderBy(this)"><%= t("index.adress") %></th>
+
+                          <!-- This is for the icon column with no text -->
+                            <th class=""></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @projects.each_with_index do |project, index| %>
+                            <tr class="border-b border-gray-700" onclick="window.location='<%= project_path(project) %>'">
+
+                            <td class="text-center"><%= index + 1 %></td>
+                            <td>
+                                <%= truncate(project.project_name, length: 35) %>
+                            </td>
+                              <td>
+                                <%= project.project_date_from.strftime('%d.%m.%Y') if project.project_date_from %> -
+                                <%= project.project_date_to.strftime('%d.%m.%Y') if project.project_date_to %>
+                              </td>
+                            <td>
+                                <%= project.key_topic %>
+                            </td>
+                            <td>
+                                <%= truncate(project.execution_locations, length: 50) %>
+                            </td>
+                            <td class="item-center"><%= image_tag("svg/chevron-right.svg", class: "w-4 aspect-square block max-w-none") %></td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

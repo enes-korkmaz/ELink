@@ -1,0 +1,139 @@
+# This is needed for expert tests, do not change, if not for test purposes
+one:
+  user_id: <%= ActiveRecord::FixtureSet.identify(:expert_one) %>
+  first_name: "Max"
+  last_name: "Mustermann"
+  email: "max.mustermann@example.com"
+  phone_number: "+491701234567"
+  current_location: "Hier"
+  extra_skills: "Leadership, Networking"
+  nationality: "German"
+  salutation: "mr"
+  title: "Dr."
+  hourly_rate: 70
+  daily_rate: 560
+  travel_willingness_online: true
+  travel_willingness_germany: false
+  travel_willingness_china: false
+  spontaneous: "2 Wochen"
+  has_china_reference: true
+  china_reference: "Halbes Jahr dort."
+  has_institution: true
+  institution_name: "Tech University Berlin"
+  cooperation_options: "MyString"
+  free_text: "Experte im Bereich Finanzrecht"
+  language: language_one
+  languages:
+    - language_one
+    - language_two
+  categories:
+    - category_two
+
+# This is needed for expert tests, do not change, if not for test purposes
+thriteen:
+  user_id: <%= ActiveRecord::FixtureSet.identify(:expert_thriteen) %>
+  salutation: "mr"
+
+  title: "Dr."
+
+  first_name: "All"
+
+  last_name: "Attributes"
+
+  nationality: "German"
+
+  phone_number: "+44 123456789"
+
+  email: "all.attributes@example.com"
+
+  current_location: "Germany, Münich"
+  # Communication language (between expert and employee)
+  language: language_one
+  # Languages of instruction (expert)
+  languages:
+    - language_one
+    - language_two
+    - language_three
+
+  hourly_rate: 60
+  daily_rate: 600
+
+  extra_skills: "Allrounder, Maker"
+  # at least one has to be true (12.12.24)
+  travel_willingness_online: true
+  travel_willingness_germany: true
+  travel_willingness_china: true
+
+  travel_willingness_text: "Globally available"
+
+  spontaneous: "Atleast 2 weeks notice."
+
+  has_china_reference: true
+
+  china_reference: "Past employment at Tencent as a manager for 7 years."
+
+  categories:
+    - category_one
+    - category_two
+    - category_three
+    - category_four
+
+  has_institution: true
+  institution_name: "MIT - Massachusetts Institute of Technology"
+  cooperation_options: "Student tour's"
+  free_text: "Top-tier science and mathematics programs."
+  # pseudo projects
+  projects:
+    - project_one
+
+# This is needed for expert tests, do not change, if not for test purposes
+fourteen:
+  user_id: <%= ActiveRecord::FixtureSet.identify(:expert_fourteen) %>
+  salutation: "ms"
+
+  title: ""
+
+  first_name: "Not All"
+
+  last_name: "Attributes"
+
+  nationality: "China"
+
+  phone_number: "+86 987654321"
+
+  email: "not.all.attributes@example.com"
+
+  current_location: "China, Hongkong"
+  # Communication language (between expert and employee)
+  language: language_two
+  # Languages of instruction (expert)
+  languages:
+    - language_two
+    - language_three
+
+  hourly_rate: 120
+  daily_rate: 1200
+
+  extra_skills: ""
+  # at least one has to be true (12.12.24)
+  travel_willingness_online: true
+  travel_willingness_germany: false
+  travel_willingness_china: true
+
+  travel_willingness_text: ""
+
+  spontaneous: "Atleast 4 weeks notice."
+
+  has_china_reference: true
+
+  china_reference: "Employment at Tencent as a manager for 22 years."
+
+  categories:
+    - category_one
+    - category_two
+
+  has_institution: false
+  institution_name: ""
+  cooperation_options: ""
+  free_text: ""
+  # pseudo projects

@@ -1,0 +1,17 @@
+accommodation_one:
+  project: project_one
+  name: "Grand Hotel"
+  status: "gebucht"
+  booking_deadline: 2023-12-31 12:00:00
+  address: 'Max-Planck-Strasse 39, 74081 Heilbronn'
+  contact: 'hotel@example.com'
+  notes: "Booked for keynote speakers"
+
+accommodation_two:
+  project: project_one
+  name: "City Lodge"
+  status: "angefragt"
+  booking_deadline: 2024-01-15 18:00:00
+  address: 'Max-Planck-Strasse 32, 74081 Heilbronn'
+  contact: 'citylodge@example.com'
+  notes: "Pending confirmation"

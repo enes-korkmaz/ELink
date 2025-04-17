@@ -1,0 +1,17 @@
+one:
+  type_name: Delegation visit
+
+two:
+  type_name: Faculty training
+
+three:
+  type_name: Professional development
+
+four:
+  type_name: Summer school
+
+five:
+  type_name: Technology
+
+six:
+  type_name: Research

@@ -1,0 +1,715 @@
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+---
+en:
+  simple_calendar:
+    previous: "<<"
+    next: ">>"
+    week: Week
+
+  weekdays:
+    abbr:
+      Mon: Mon
+      Tue: Tue
+      Wed: Wed
+      Thu: Thu
+      Fri: Fri
+      Sat: Sat
+      Sun: Sun
+
+  date:
+    span: "Span"
+    today: "Today"
+    formats:
+      day_only: "%d"
+      month_and_year: "%B %Y"
+
+  inputfield_placeholder:
+    choice_box_select: "Please select"
+    choice_box_select_mandatory: "Please select*"
+    document_no_upload: "No document available."
+    no_specification: "No information provided."
+    no_schedule: "No Schedule"
+    add_term: "Add a term"
+    choose_term: "Choose a term"
+
+  optinal_tag: "(optinal)"
+
+  tabs:
+    details: "Details"
+    schedule: "Schedule"
+    partners: "Partners"
+    accommodations: "Accommodations"
+    catering: "Catering"
+    transport: "Transport"
+    experts: "Experts"
+
+  login:
+    forgot_password: "Forgot password?"
+    create_new_account: "Create new account"
+    user: "User"
+    username: "Username/E-Mail"
+    password: "Password"
+    password_repeat: "Repeat passwort"
+    sign_in: "Sign in"
+    register: "Register"
+    welcome_expert: "Welcome to your profile, %{username}!"
+    welcome_role: "Welcome, %{role}!"
+    invalid_credentials: "Invalid username or password"
+    logged_out: "Logged out successfully!"
+    remember_me: "Remember me"
+
+  flash:
+    login_required: "You must be logged in to access this section"
+    access_denied: "Access denied"
+    access_denied2: "Access denied. You do not have permission to view this page."
+    expert_created: "Expert was successfully created"
+    expert_updated: "Expert was successfully updated"
+    expert_destroyed: "Expert was successfully destroyed"
+    settings_saved: "Settings have been saved."
+    profile_updated: "Profile was successfully updated."
+    category_created: "Category was successfully created."
+    category_updated: "Category was successfully updated."
+
+  nav_bar:
+    homepage: "Home"
+    settings: "Settings"
+    logout: "Log Out"
+    experts: "Experts"
+    projects: "Projects"
+    documentation: "Documentation"
+    admin: "Admin Panel"
+    categories: "Fields"
+    calendar: "Calendar"
+
+  homepage:
+    create_new_expert: "Create expert"
+    create_new_project: "Create project"
+    copy_invite_link: Copy invite link
+    expert_browser: "Expert list"
+    project_browser: "Projects list"
+    projekt_overview: "Projects overview"
+    recently_invoked: "Recently invoked"
+    recently_added: "Recently added"
+    in_planing: "In planning"
+    recently_finished: "Recently finished"
+    experts_overview: "Experts overview"
+    recently_registered: "Recently registered"
+    recently_updated: "Recently updated"
+    no_recent: "No changes"
+
+  index:
+    name_contact: "Name - Contact"
+    rates: "Rates"
+    mobility: "Mobility"
+    spontaneity: "Spontaneity"
+    china_reference: "China - reference"
+    categories: "Categories"
+    languages: "Languages"
+    project_name: "Project Name"
+    customer: "Customer"
+    type: "Type"
+    adress: "Address"
+    date_created: "Date Created"
+    project_date_from: "From"
+    project_date_to: "To"
+    more: "(more)"
+    select: "Select"
+
+  language_names:
+    german: "German"
+    english: "English"
+    chinese: "Chinese"
+
+  actions:
+    add: "Add"
+    title: "Actions"
+    edit: "Edit"
+    back: "Back"
+    update: "Update"
+    delete: "Delete"
+    cancel: "Cancel"
+    save: "Save"
+    create: "Create"
+    download: "Download"
+    view: "View"
+    suche: "Search"
+    unassign: "Unassign"
+    add_to_project: "Add to Project"
+    expert_overview: "Expert overview"
+    project_overview: "Project overview"
+    confirm_delete: "Are you sure you want to delete this item?"
+    project:
+      confirm_delete: "Are you sure you want to permanently delete this project? This action cannot be undone."
+      confirm_cancel:
+        creating: "Are you sure you want to cancel creating this project? All unsaved changes will be lost."
+        editing: "Are you sure you want to stop editing this project? All unsaved changes will be lost."
+      confirm_unassign: "Are you sure you want to unassign this expert?"
+    expert:
+      confirm_delete: "Are you sure you want to permanently delete this expert? This action cannot be undone."
+      confirm_cancel:
+        creating: "Are you sure you want to cancel creating this profile? All unsaved changes will be lost."
+        editing: "Are you sure you want to stop editing this profile? All unsaved changes will be lost."
+    confirm_delete_doc: "Are you sure you want to delete this document - %{document}?"
+    creating_a_new_expert: "Creating a new expert"
+    editing_expert_profile: "Editing Expert Profile"
+    editing_project: "Editing Project"
+    creating_a_new_project: "Creating a new project"
+    duplicate: "Duplicate"
+
+  notices:
+    delete_success: "The document %{document} was deleted."
+    delete_failed: "The document %{document} could not be deleted."
+    update_success: "The project was updated successfully."
+    update_failed: "The project could not be updated."
+    project_created_success: "The project was successfully created."
+    project_destroy: "Project was successfully destroyed."
+    expert_created_success: "The expert was successfully created."
+    profile_saved: "Profile changes have been saved."
+    expert_update_failed: "Experte cloud not be updated."
+    no_changes_detected: "No changes where detected."
+
+  projects:
+    index:
+      title: "Projektübersicht"
+
+  short_answers:
+    positive: "Yes"
+    negative: "No"
+
+  currency:
+    hourly: "€/h"
+    daily: "€/d"
+
+  activerecord:
+    models:
+      expert: "Expert"
+      project: "Project"
+
+    attributes:
+      project:
+        project_status: "Project Status"
+        project_name: "Project Name"
+        key_topic: "Key Topics"
+        project_client: "Client"
+        execution_location: "Execution Location"
+        certificate_status: "Certificate Status"
+        invitation_status: "Invitation Status"
+        project_type: "Project Type"
+        project_date_from: "From"
+        project_date_to: "To"
+        project_details: "Project Details"
+        target_audience: "Target Audience"
+        flight_data: "Flight Data"
+        schedule: "Schedule"
+        partner: "Partner"
+        accommodations: "Accommodations"
+        catering: "Catering"
+        transport: "Transport"
+        new_project_type: "Add a new Project Type"
+        new_key_topic: "Add a new Key Topic"
+
+        documents:
+          participant_list: "Participants List"
+          invitation_document: "Invitation"
+          certificate_document: "Certificate"
+
+        certificate_statuses:
+          in_progress: "In Progress"
+          sent: "Sent"
+
+        invitation_statuses:
+          in_progress: "In Progress"
+          sent: "Sent"
+
+        project_statuses:
+          planning: "in planning"
+          in_progress: "in progress"
+          blocked: "Blocked"
+          review: "Review"
+          completed: "Completed"
+          cancelled: "Cancelled"
+        workflow: "workflow"
+
+        sections:
+          required_info: "General Information"
+          additional_info: "Additional Information"
+          documents: "Documents"
+
+      info_project:
+        project_status: "Please provide the current status of the project (required)."
+        project_name: "Please provide the name of the project that describes it clearly (required)."
+        key_topic: "Select the key topics of the project from the list or create new ones (see info below) (required)."
+        project_client: "Please provide the name of the client or organization for which the project is being carried out (required)."
+        execution_location: "Please provide the location(s) or address(es) where the project will take place. If applicable: e.g. Online, in Teams (required)."
+        documents: "Click 'Select File' to upload a new document. After submitting the form by clicking 'Update or Create', the document will be permanently saved. If applicable, the existing file will be replaced."
+        invitation_status: "Please provide the current status of the invitation(s) (required)."
+        certificate_status: "Please provide the status of the certificate(s) (required)."
+        project_type: "Select the project type(s) from the list or create new ones (see info below) (required)."
+        new_project_type: "To add a new project type, enter the term in the text field and click the '+' button (or 'Add'). The new project type will be added to the list and will remain permanently."
+        new_key_topic: "To add a new key topic, enter the term in the text field and click the '+' button (or 'Add'). The new key topic will be added to the list and will remain permanently."
+        project_date_from: "Please provide the start date of the project."
+        project_date_to: "Please provide the end date of the project."
+        target_audience: "Please provide the target audience(s) of the project."
+        flight_data: "Please provide general information about the flight."
+
+      tab_docs:
+        quotation_document: "Quotation"
+        invoice_document: "Invoice"
+
+      schedule:
+        flight_details: "Flight Details"
+        accompanying_person: "Accompanying Person"
+
+      partner:
+        location_name: "Location Name"
+        address: "Location Address"
+        contact: "Contact"
+        deadline: "Project Deadline"
+        notes: "Additional Notes"
+
+        info:
+          location_name: "The location name identifying the partners company or facility, e.g., Headquarters Munich."
+          address: "The physical address of the location."
+          contact: "Details of the contact person or contact information, such as phone or email."
+          deadline: "Project-related deadlines affecting the partner, such as submission deadlines."
+          notes: "General notes or important additional information not fitting into other categories, such as special conditions or requirements."
+
+
+      accommodation:
+        location_name: "Location Name"
+        name: "Establishment Name"
+        status: "Booking Status"
+        address: "Establishment Address"
+        contact: "Contact"
+        booking_deadline: "Booking Deadline"
+        notes: "Additional Notes"
+
+        info:
+          location_name: "The location name that describes the geographical area or specific designation of the accommodation, e.g., Milan Center."
+          name: "The name of the accommodation, such as Galleria Vik Milano."
+          status: "The current booking status."
+          address: "The complete address of the accommodation."
+          contact: "Details of the contact person or general contact information of the accommodation, such as phone number or email."
+          booking_deadline: "The deadline for booking the accommodation."
+          notes: "Important notes or additional information about the accommodation, such as Company covers costs, Breakfast included, or Room category."
+
+      catering:
+        location_name: "Establishment Name"
+        status: "Booking Status"
+        booking_deadline: "Booking Deadline"
+        address: "Catering Address"
+        contact: "Contact"
+        notes: "Additional Notes"
+
+        info:
+          location_name: "The specific area or venue where the catering service is provided."
+          status: "The current status of the catering arrangements."
+          booking_deadline: "The deadline for confirming the catering service."
+          address: "The complete address associated with the catering provider or event location."
+          contact: "Details of the catering service contact, such as phone number or email."
+          notes: "Additional information or special requirements related to the catering, e.g., Vegetarian options required."
+
+      transport:
+        transport_type: "Transport Type"
+        company_name: "Company Name"
+        status: "Status"
+        booking_deadline: "Booking Deadline"
+        contact: "Contact"
+        notes: "Additional Notes"
+
+        info:
+          transport_type: "The type of transport, such as Taxi, Bus shuttle, Rental car."
+          company_name: "The name of the transport company or provider."
+          status: "The current status of the transport booking."
+          booking_deadline: "The deadline for booking the transport."
+          contact: "Contact details for the transport company or responsible person (e.g., phone number, email)."
+          notes: "Important notes or additional information about the transport, such as Pick-up at the airport, Vehicle size."
+
+      expert:
+        name: "Name"
+        institution: "Institution"
+        salutation: "Salutation"
+        title: "Title"
+        first_name: "First Name"
+        last_name: "Last Name"
+        email: "Email"
+        phone_number: "Phone Number"
+        current_location: "Your Location"
+        nationality: "Nationality"
+        travel_willingness: "Travel Willingness"
+        travel_willingness_text: "Travel Willingness Note"
+        has_institution: "Institution"
+        institution_name: "Institution Name"
+        cooperation_options: "Cooperation Opportunities"
+        hourly_rate: "Hourly Rate"
+        daily_rate: "Daily Rate"
+        language: "Correspondence Language"
+        languages: "Languages"
+        categories: "Areas of Expertise"
+        extra_skills: "Extra Skills"
+        new_extra_skills: "Add a new Skill"
+        free_text: "Free Text"
+        spontaneous: "Spontaneity"
+        china_reference: "China Reference"
+        editing_expert_profile: "Editing Expert Profile"
+
+        salutations:
+          mr: "Mr."
+          ms: "Ms."
+          mx: "Not Specified"
+
+        travel_willingness_options:
+          online: "Online"
+          germany: "Germany"
+          china: "China"
+
+        sections:
+          personal_information: "Personal-Information"
+          professionall_detail: "Professional-Details"
+          travel_preferences: "Travel-Preferences"
+          additional_detail: "Additional-Details"
+          documents: "Documents"
+
+        questions:
+          institution_question: "Are you affiliated with an institution?"
+          spontaneous_question: "Minimum notice period?"
+          china_reference_question: "Do you have professional experience in or with China?"
+
+        documents:
+          profile_picture: "Profile Picture"
+          resume: "Resume"
+          certificates: "Certificates"
+
+        reference: "(See details below.)"
+
+      info_expert:
+        salutation: "Select the appropriate salutation for you, such as Mrs., Mr., or another option. (Required)"
+        title: "Provide your academic or professional title, if applicable. This will be used in official documents and correspondence."
+        first_name: "Enter your first name. If desired, you can also include any additional first names as they appear in your official documents (Required)"
+        last_name: "Enter your last name. This is required for formal correspondence. (Required)"
+        email: "Provide a valid email address, e.g., max.mustermann@example.com. It will be used for communication. (Required)"
+        phone_number: "Provide your phone number, including the country code (e.g., +49 for Germany or +86 for China). (Required)"
+        current_location: "Enter your current place of residence (country and city) to better assess your travel availability. (Required)"
+        nationality: "Provide your nationality/citizenship(s). This information is required for travel and visa purposes. (Required)"
+        hourly_rate: "Provide your proposed hourly rate. Enter the amount in EURO without specifying the currency, e.g., 50 (0 is also possible). (Required)"
+        daily_rate: "Provide your proposed daily rate. Enter the amount in EURO without specifying the currency, e.g., 400 (0 is also possible). (Required)"
+        categories: "Select the fields of expertise in which you offer your services. (Required)"
+        extra_skills: "List any additional skills or specializations. These may include soft skills, technical knowledge, or industry-specific experience."
+        new_extra_skill: "To add a new skill, enter the term in the text field and click the '+' button (or 'Add'). The new skill will be added to the list if it consists of letters, numbers, and spaces only, and is no longer than 30 characters. You can add up to 20 skills."
+        language: "Select the language in which you wish to communicate with us in the future. (Required)"
+        languages: "Provide the language(s) in which you can offer your services. (Required)"
+        travel_willingness: "Indicate whether you are willing to offer your services regionally, nationally, internationally, or online. (Required)"
+        travel_willingness_text: "Describe your travel preferences in more detail, if desired."
+        spontaneous: "Indicate how soon you are available for new projects, e.g., in 2 weeks. (Required)"
+        has_institution: "Are you a member of an institution or company? Please check the box if applicable. Further questions will then be displayed."
+        institution_name: "Provide the name of the institution or company. (Required)"
+        cooperation_options: "Explain any potential cooperation opportunities that may be relevant for you or your company. For example: factory tours or other forms of collaboration."
+        has_china_reference: "Do you have professional or private experience in or related to China? Please check the box if applicable. Further questions will then be displayed."
+        china_reference: "Provide your professional or private experience in or related to China. Examples may include previous projects, positions, or employers in China. (Required)"
+        free_text: "Use this field to add any additional relevant information about yourself, your expertise, or other aspects that have not been specifically asked for."
+        documents: "Click 'Select File' to upload a new document. After submitting the form by clicking 'Update or Create', the document will be permanently saved. If applicable, the existing file will be replaced."
+        documents_multi: "Click 'Choose File' to upload new documents. You can select and add multiple files. After submitting the form by clicking 'Update or Create,' the documents will be permanently saved. If a file with the same name is uploaded, the existing file will be replaced."
+        travel_willingness_options:
+          online: "Online"
+          germany: "Germany"
+          china: "China"
+
+        sections:
+          personal_information: "Personal-Information"
+          professionall_detail: "Professional-Details"
+          travel_preferences: "Travel-Preferences"
+          additional_detail: "Additional-Details"
+          documents: "Documents"
+
+        questions:
+          institution_question: "Are you affiliated with an institution?"
+          spontaneous_question: "Minimum notice period?"
+          china_reference_question: "Do you have professional experience in or with China?"
+
+        documents:
+          profile_picture: "Profile Picture"
+          resume: "Resume"
+          certificates: "Certificates"
+
+        reference: "(See details below.)"
+
+      info_expert:
+        salutation: "Select the appropriate salutation for you, such as Mrs., Mr., or another option. (Required)"
+        title: "Provide your academic or professional title, if applicable. This will be used in official documents and correspondence."
+        first_name: "Enter your first name. If desired, you can also include any additional first names as they appear in your official documents (Required)"
+        last_name: "Enter your last name. This is required for formal correspondence. (Required)"
+        email: "Provide a valid email address, e.g., max.mustermann@example.com. It will be used for communication. (Required)"
+        phone_number: "Provide your phone number, including the country code (e.g., +49 for Germany or +86 for China). (Required)"
+        current_location: "Enter your current place of residence (country and city) to better assess your travel availability. (Required)"
+        nationality: "Provide your nationality/citizenship(s). This information is required for travel and visa purposes. (Required)"
+        hourly_rate: "Provide your proposed hourly rate. Enter the amount in EURO without specifying the currency, e.g., 50 (0 is also possible). (Required)"
+        daily_rate: "Provide your proposed daily rate. Enter the amount in EURO without specifying the currency, e.g., 400 (0 is also possible). (Required)"
+        categories: "Select the fields of expertise in which you offer your services. (Required)"
+        extra_skills: "List any additional skills or specializations. These may include soft skills, technical knowledge, or industry-specific experience."
+        new_extra_skill: "To add a new skill, enter the term in the text field and click the '+' button (or 'Add'). The new skill will be added to the list if it consists of letters, numbers, and spaces only, and is no longer than 30 characters. You can add up to 20 skills."
+        language: "Select the language in which you wish to communicate with us in the future. (Required)"
+        languages: "Provide the language(s) in which you can offer your services. (Required)"
+        travel_willingness: "Indicate whether you are willing to offer your services regionally, nationally, internationally, or online. (Required)"
+        travel_willingness_text: "Describe your travel preferences in more detail, if desired."
+        spontaneous: "Indicate how soon you are available for new projects, e.g., in 2 weeks. (Required)"
+        has_institution: "Are you a member of an institution or company? Please check the box if applicable. Further questions will then be displayed."
+        institution_name: "Provide the name of the institution or company. (Required)"
+        cooperation_options: "Explain any potential cooperation opportunities that may be relevant for you or your company. For example: factory tours or other forms of collaboration."
+        has_china_reference: "Do you have professional or private experience in or related to China? Please check the box if applicable. Further questions will then be displayed."
+        china_reference: "Provide your professional or private experience in or related to China. Examples may include previous projects, positions, or employers in China. (Required)"
+        free_text: "Use this field to add any additional relevant information about yourself, your expertise, or other aspects that have not been specifically asked for."
+        documents: "Click 'Select File' to upload a new document. After submitting the form by clicking 'Update or Create', the document will be permanently saved. If applicable, the existing file will be replaced."
+        documents_multi: "Click 'Choose File' to upload new documents. You can select and add multiple files. After submitting the form by clicking 'Update or Create,' the documents will be permanently saved. If a file with the same name is uploaded, the existing file will be replaced."
+
+      category:
+        list: "List of existing categories"
+        skill_list: "List of existing skills"
+        new_category: "Add new category"
+        update_category: "Update category"
+
+        sections:
+          categories: "Manage Categories"
+          extra_skills: "Expert Additional Skills"
+
+        info:
+          list: "Terms are sorted by most recently updated."
+          skill_list: "To save a skill as a category, select the corresponding term and click the '+' button (or 'Add'). Skills that are already assigned to a category will no longer appear in this list. The terms are sorted by frequency of occurrence and alphabetically."
+          new_category: "To add a new category, type the term in the text field and click the '+' button (or 'Add'). The new category will be added to the beginning of the list if it consists only of letters, numbers, and spaces, and is no longer than 30 characters."
+          update_category: "To change a category, click on the term in the list. The term will appear in the text field, where it can be edited. Click the save icon (or 'Save') to store the changes. The updated version will appear at the beginning of the list."
+
+    errors:
+      models:
+        project:
+          header: "Missing or incorrect information in the highlighted input fields."
+          attributes:
+            project_status:
+              blank: "Please select the projekt status."
+            project_name:
+              blank: "Please enter a project name."
+            project_client:
+              blank: "Please enter a client name."
+            execution_locations:
+              blank: "Please select an execution location."
+            invitation_status:
+              blank: "Please select the invitation status."
+            certificate_status:
+              blank: "Please select the certificate status."
+            project_type:
+              blank: "Please select at least one project type."
+              max_types: "You can only add up to %{max_types} types."
+              too_many_types: "The number of types exceeds 15. Please deselect %{count} type(s)."
+              too_short_or_too_long: "Each term must be between 2 and 30 characters long. Please deselect the affected terms."
+              invalid: "Invalid input, only letters, numbers, and spaces are allowed. Please deselect the affected terms."
+              format: "Please remove any extra commas by deselecting the affected terms and adding them without commas."
+            key_topic:
+              blank: "Please select at least one key topic."
+              max_topics: "You can only add up to %{max_topics} topics."
+              too_many_topics: "The number of topics exceeds 15. Please deselect %{count} topic(s)."
+              too_short_or_too_long: "Each term must be between 2 and 30 characters long. Please deselect the affected terms."
+              invalid: "Invalid input, only letters, numbers, and spaces are allowed. Please deselect the affected terms."
+              format: "Please remove any extra commas by deselecting the affected terms and adding them without commas."
+
+        expert:
+          header: "Missing or incorrect information in the highlighted input fields:"
+          attributes:
+            first_name:
+              blank: "Please enter a first name."
+            last_name:
+              blank: "Please enter a last name."
+            email:
+              blank: "Please enter an email address."
+              invalid: "Please enter a valid email address."
+            phone_number:
+              blank: "Please enter a phone number."
+              invalid: "Please choose a valid phone number format, e.g., +49 170 1234567 for Germany."
+            current_location:
+              blank: "Please enter your current location."
+            nationality:
+              blank: "Please enter your nationality."
+            travel_willingness:
+              blank: "Please specify your travel willingness."
+            institution_name:
+              blank: "Please specify the name of the institution you belong to."
+            hourly_rate:
+              blank: "Please specify an hourly rate."
+              not_a_number: "The hourly rate must be a number."
+              greater_than_or_equal_to: "The hourly rate must not be negative."
+            daily_rate:
+              blank: "Please specify a daily rate."
+              not_a_number: "The daily rate must be a number."
+              greater_than_or_equal_to: "The daily rate must not be negative."
+            spontaneous:
+              blank: "Please specify if you are willing to work spontaneously."
+            china_reference:
+              blank: "Please specify if you have a reference in China."
+              too_long: "The input exceeds the maximum character limit."
+            language:
+              blank: "Please choose a communication language."
+            languages:
+              blank: "At least one language must be selected."
+            categories:
+              blank: "At least one category must be selected."
+            salutation:
+              blank: "Please choose a salutation."
+            extra_skills:
+              max_skills: "You can only add up to %{max_skills} skills."
+              too_many_skills: "The number of skills exceeds 20. Please remove %{count} skill(s)."
+              too_short_or_too_long: "Each term must be between 2 and 30 characters long. Please remove the affected terms."
+              invalid: "Invalid input, only letters, numbers, and spaces are allowed. Please remove the affected terms."
+              format: "Please remove any extra commas by deleting the affected terms and adding them again without commas."
+            travel_willingness_text:
+              too_long: "The input exceeds the maximum character limit."
+            cooperation_options:
+              too_long: "The input exceeds the maximum character limit."
+            free_text:
+              too_long: "The input exceeds the maximum character limit."
+            profile_picture:
+              invalid: "The profile picture must be a %{types} file."
+              size: "The profile picture must be smaller than %{size} MB."
+              dimension: "The profile picture must have dimensions between %{min_width}x%{min_height} and %{max_width}x%{max_height}."
+
+            resume:
+              blank: "Please submit your resume in PDF format."
+              invalid: "The resume must be uploaded as a %{type} file."
+              size: "The resume must be smaller than %{size} MB."
+
+            certificates:
+              invalid: "Certificates must be uploaded as %{types} or %{pdf} files."
+              limit: "You can only upload up to %{max_files} certificates."
+              total_size: "The total size of the certificates must not exceed %{max_size} MB."
+
+
+        partner:
+          header: "Missing or incorrect information in the highlighted input fields."
+          attributes:
+            location_name:
+              blank: "Please provide the location name."
+            notes:
+              too_long: "The input exceeds the maximum character limit."
+
+        accommodation:
+          header: "Missing or incorrect information in the highlighted input fields."
+          attributes:
+            name:
+              blank: "Please provide the name of the accommodation."
+            status:
+              blank: "Please select the booking status. Otherwise, In Progress will be set as the default."
+              inclusion: "Please select a valid booking status."
+            notes:
+              too_long: "The input exceeds the maximum character limit."
+
+        catering:
+          header: "Missing or incorrect information in the highlighted input fields."
+          attributes:
+            location_name:
+              blank: "Please provide the location name."
+            status:
+              blank: "Please select the booking status. Otherwise, In Progress will be set as the default."
+              inclusion: "Please select a valid booking status."
+            notes:
+              too_long: "The input exceeds the maximum character limit."
+
+        transport:
+          header: "Missing or incorrect information in the highlighted input fields."
+          attributes:
+            transport_type:
+              blank: "Please provide the transport type."
+            company_name:
+              blank: "Please provide the company name."
+            status:
+              blank: "Please select the booking status. Otherwise, In Progress will be set as the default."
+              inclusion: "Please select a valid booking status."
+            notes:
+              too_long: "The input exceeds the maximum character limit."
+            extra_skills:
+              max_skills: "You can only add up to %{max_skills} skills."
+              too_many_skills: "The number of skills exceeds 20. Please remove %{count} skill(s)."
+              too_short_or_too_long: "Each term must be between 2 and 30 characters long. Please remove the affected terms."
+              invalid: "Invalid input, only letters, numbers, and spaces are allowed. Please remove the affected terms."
+              format: "Please remove any extra commas by deleting the affected terms and adding them again without commas."
+            travel_willingness_text:
+              too_long: "The input exceeds the maximum character limit."
+            cooperation_options:
+              too_long: "The input exceeds the maximum character limit."
+            free_text:
+              too_long: "The input exceeds the maximum character limit."
+            profile_picture:
+              invalid: "The profile picture must be a %{types} file."
+              size: "The profile picture must be smaller than %{size} MB."
+              dimension: "The profile picture must have dimensions between %{min_width}x%{min_height} and %{max_width}x%{max_height}."
+
+            resume:
+              blank: "Please submit your resume in PDF format."
+              invalid: "The resume must be uploaded as a %{type} file."
+              size: "The resume must be smaller than %{size} MB."
+
+            certificates:
+              invalid: "Certificates must be uploaded as %{types} or %{pdf} files."
+              limit: "You can only upload up to %{max_files} certificates."
+              total_size: "The total size of the certificates must not exceed %{max_size} MB."
+
+
+        partner:
+          header: "Missing or incorrect information in the highlighted input fields."
+          attributes:
+            location_name:
+              blank: "Please provide the location name."
+            notes:
+              too_long: "The input exceeds the maximum character limit."
+
+        accommodation:
+          header: "Missing or incorrect information in the highlighted input fields."
+          attributes:
+            name:
+              blank: "Please provide the name of the accommodation."
+            status:
+              blank: "Please select the booking status. Otherwise, In Progress will be set as the default."
+              inclusion: "Please select a valid booking status."
+            notes:
+              too_long: "The input exceeds the maximum character limit."
+
+        catering:
+          header: "Missing or incorrect information in the highlighted input fields."
+          attributes:
+            location_name:
+              blank: "Please provide the location name."
+            status:
+              blank: "Please select the booking status. Otherwise, In Progress will be set as the default."
+              inclusion: "Please select a valid booking status."
+            notes:
+              too_long: "The input exceeds the maximum character limit."
+
+        transport:
+          header: "Missing or incorrect information in the highlighted input fields."
+          attributes:
+            transport_type:
+              blank: "Please provide the transport type."
+            company_name:
+              blank: "Please provide the company name."
+            status:
+              blank: "Please select the booking status. Otherwise, In Progress will be set as the default."
+              inclusion: "Please select a valid booking status."
+            notes:
+              too_long: "The input exceeds the maximum character limit."
+
+        category:
+          header: "Missing or incorrect information in the highlighted input fields."
+          attributes:
+            name:
+              blank: "Please enter a term."
+              invalid: "Invalid input. Only letters, numbers, and spaces are allowed (minimum 2 and maximum 30 characters)."

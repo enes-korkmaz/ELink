@@ -1,0 +1,21 @@
+project_one:
+  project_name: "Project Alpha"
+  key_topic: 'Renewable Energy, Sustainability'
+  project_date_from: 2024-01-01
+  project_date_to: 2024-06-30
+  project_type: 'Research'
+  project_client: "Client A"
+  execution_locations: 'Germany, USA'
+  target_audience: "Scientists"
+  flight_data: "Flight info here"
+
+project_two:
+  project_name: "Project Beta"
+  key_topic: 'AI, Robotics'
+  project_date_from: 2024-03-01
+  project_date_to: 2024-09-30
+  project_type: 'Technology'
+  project_client: "Client B"
+  execution_locations: 'China'
+  target_audience: "Engineers"
+  flight_data: "Flight info here"

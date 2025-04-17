@@ -1,0 +1,44 @@
+<%
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+%>
+
+<div class="container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2 class="heading"><%= t("actions.title") %></h2>
+    <% if current_user.role == "employee" %>
+      <%= link_to projects_path, 
+            class: "btn relative", 
+            id: "project_new_cancel_button", 
+            onclick: "return confirm('#{I18n.t("actions.project.confirm_cancel.creating")}')" do %>
+        <%= image_tag("svg/cancel.svg", class: "absolute left-4") %>
+        <%= t("actions.cancel") %>
+      <% end %>
+      <a href="#" class="inline-block relative btn"
+         onclick="document.getElementById('create_project_form').submit(); return false;">
+        <%= image_tag("svg/new.svg", class: "absolute left-4") %>
+        <%= t("actions.create") %>
+      </a>
+    <% end %>
+  </div>
+  <div class="w-full md:w-auto flex-[3]">
+    <div class="flex-[40%] w-full">
+      <%= render "form_detail", project: @project %>
+    </div>
+  </div>
+</div>

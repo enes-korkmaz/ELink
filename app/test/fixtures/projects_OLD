@@ -1,0 +1,112 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+project_one:
+  project_name: "Rechtsformen - finanziellen Strukturen"
+  client: "Finance Institute"
+  execution_location: "china"
+  execution_address: "Beijing, International Financial District"
+  invitation_status: "sent"
+  certificate_status: "in_progress"
+  project_type: two
+  categories:
+    - category_two
+
+project_two:
+  project_name: "Project B"
+  client: "Client Y"
+  execution_location: "china"
+  execution_address: "456 Shanghai Road, Shanghai"
+  invitation_status: "sent"
+  certificate_status: "sent"
+  project_type: two
+  categories:
+    - category_two
+
+project_three:
+  project_name: "Project C"
+  client: "Client Z"
+  execution_location: "online"
+  execution_address: "Virtual"
+  invitation_status: "in_progress"
+  certificate_status: "in_progress"
+  project_type: three
+  categories:
+    - category_one
+    - category_two
+
+project_four:
+  project_name: "Regulierung auf EU-Finanzmärkte"
+  client: "European Banking Association"
+  execution_location: "germany"
+  execution_address: "Frankfurt, Mainzer Landstraße 123"
+  invitation_status: "in_progress"
+  certificate_status: "sent"
+  project_type: one
+  categories:
+    - category_two
+
+project_five:
+  project_name: "Automotive IT-Innovationen"
+  client: "CarTech AG"
+  execution_location: "germany"
+  execution_address: "Stuttgart, Daimlerstraße 1"
+  invitation_status: "sent"
+  certificate_status: "in_progress"
+  project_type: four
+  categories:
+    - category_one
+
+project_six:
+  project_name: "Healthcare - Digital Transformation"
+  client: "HealthTech Solutions"
+  execution_location: "online"
+  execution_address: "Virtual"
+  invitation_status: "in_progress"
+  certificate_status: "in_progress"
+  project_type: four
+  categories:
+    - category_four
+
+project_seven:
+  project_name: "Fintech Expansion"
+  client: "Asia FinTech Group"
+  execution_location: "china"
+  execution_address: "Hong Kong, Central District"
+  invitation_status: "sent"
+  certificate_status: "sent"
+  project_type: two
+  categories:
+    - category_two
+
+project_eight:
+  project_name: "Educational Reform"
+  client: "European Union"
+  execution_location: "germany"
+  execution_address: "Berlin, EU Headquarters"
+  invitation_status: "in_progress"
+  certificate_status: "sent"
+  project_type: three
+  categories:
+    - category_three
+
+project_nine:
+  project_name: "Health Innovations"
+  client: "Global Health Alliance"
+  execution_location: "germany"
+  execution_address: "München, Zentraler Business District"
+  invitation_status: "sent"
+  certificate_status: "in_progress"
+  project_type: four
+  categories:
+    - category_four
+
+project_ten:
+  project_name: "Tech-Enabled Learning"
+  client: "EdTech Corp"
+  execution_location: "online"
+  execution_address: "Zoom Meeting"
+  invitation_status: "sent"
+  certificate_status: "sent"
+  project_type: three
+  categories:
+    - category_three

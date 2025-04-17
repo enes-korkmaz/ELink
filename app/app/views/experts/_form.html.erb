@@ -1,0 +1,1357 @@
+<%
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+%>
+
+<!-- This is to isolate sertain input fields (values under those field are not submited) -->
+<form id="extra_skill_form">
+</form>
+
+<%= form_with(model: expert, class: "contents", id: "create_expert_form") do |form| %>
+  <% if expert.errors.any? %>
+    <div id="activerecord.error_explanation" class="py-2 px-3 mb-3 font-medium text-red-500 bg-red-50 rounded-lg" style="border: 1px solid #D40031;">
+      <h2 class="heading-sub"><%= t("activerecord.errors.models.expert.header") %></h2>
+    </div>
+  <% end %>
+  <!-- variables for max char length in text areas -->
+  <% length_1 = 125 %>
+  <% length_2 = 500 %>
+  <!-- Personal Information -->
+  <div class="mb-3 container-second">
+    <h3 class="heading"><%= t("activerecord.attributes.expert.sections.personal_information") %></h3>
+
+    <div class="flex flex-col gap-2 m-5 sm:flex-row">
+      <!-- Salutation -->
+      <div class="flex-1">
+        <div class="flex items-center">
+          <strong>
+            <%= form.label :salutation, "#{t('activerecord.attributes.expert.salutation')}*",
+              style: "color: #{expert.errors[:salutation].any? ? '#D40031' : 'inherit'};" %>
+          </strong>
+          <button popovertarget="salutation-popover" class="ml-2">
+            <%= image_tag("svg/circle-info.svg") %>
+          </button>
+
+          <div popover id="salutation-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+            <button popovertarget="salutation-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+              <%= image_tag("svg/x-mark-red.svg") %>
+            </button>
+            <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.salutation") %></p>
+            <p class="p-2 max-w-xs text-gray-600 rounded-md">
+              <%= t("activerecord.attributes.info_expert.salutation") %>
+            </p>
+          </div>
+        </div>
+
+        <%= form.select :salutation,
+          Expert.salutations.keys.map { |salutation| [I18n.t("activerecord.attributes.expert.salutations.#{salutation}"), salutation] },
+          { include_blank: t("inputfield_placeholder.choice_box_select") },
+        style: "border: 1px solid #{expert.errors[:salutation].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;",
+          class: "w-full sm:w-[80%]" %>
+
+        <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+          <% if expert.errors[:salutation].any? %>
+            <%= expert.errors[:salutation].first %>
+          <% end %>
+        </div>
+      </div>
+      <!-- Title -->
+      <div class="flex-1">
+        <div class="flex items-center">
+          <strong>
+            <%= form.label :title, t("activerecord.attributes.expert.title") %>
+          </strong>
+          <button popovertarget="title-popover" class="ml-2">
+            <%= image_tag("svg/circle-info.svg") %>
+          </button>
+
+          <div popover id="title-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+            <button popovertarget="title-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+              <%= image_tag("svg/x-mark-red.svg") %>
+            </button>
+            <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.title") %></p>
+            <p class="p-2 max-w-xs text-gray-600 rounded-md">
+              <%= t("activerecord.attributes.info_expert.title") %>
+            </p>
+          </div>
+        </div>
+        <%= form.text_field :title,
+          style: "border: 1px solid #D1D5DB; border-radius: 0.375rem; padding: 0.5rem; outline: none;",
+          class: "w-full sm:w-[80%]" %>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-2 m-5 sm:flex-row">
+      <!-- First name -->
+      <div class="flex-1">
+        <div class="flex items-center">
+          <strong>
+            <%= form.label :first_name, "#{t("activerecord.attributes.expert.first_name")}*",
+                style: "color: #{expert.errors[:first_name].any? ? '#D40031' : 'inherit'};" %>
+          </strong>
+          <button popovertarget="first_name-popover" class="ml-2">
+            <%= image_tag("svg/circle-info.svg") %>
+          </button>
+
+          <div popover id="first_name-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+            <button popovertarget="first_name-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+              <%= image_tag("svg/x-mark-red.svg") %>
+            </button>
+            <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.first_name") %></p>
+            <p class="p-2 max-w-xs text-gray-600 rounded-md">
+              <%= t("activerecord.attributes.info_expert.first_name") %>
+            </p>
+          </div>
+        </div>
+        <%= form.text_field :first_name,
+          style: "border: 1px solid #{expert.errors[:first_name].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;",
+          class: "w-full sm:w-[80%]" %>
+
+        <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+          <% if expert.errors[:first_name].any? %>
+            <%= expert.errors[:first_name].first %>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Last name -->
+      <div class="flex-1">
+        <div class="flex items-center">
+          <strong>
+            <%= form.label :last_name, "#{t("activerecord.attributes.expert.last_name")}*",
+                style: "color: #{expert.errors[:last_name].any? ? '#D40031' : 'inherit'};" %>
+          </strong>
+          <button popovertarget="last_name-popover" class="ml-2">
+            <%= image_tag("svg/circle-info.svg") %>
+          </button>
+
+          <div popover id="last_name-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+            <button popovertarget="last_name-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+              <%= image_tag("svg/x-mark-red.svg") %>
+            </button>
+            <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.last_name") %></p>
+            <p class="p-2 max-w-xs text-gray-600 rounded-md">
+              <%= t("activerecord.attributes.info_expert.last_name") %>
+            </p>
+          </div>
+        </div>
+        <%= form.text_field :last_name,
+          style: "border: 1px solid #{expert.errors[:last_name].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;",
+          class: "w-full sm:w-[80%]" %>
+
+        <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+          <% if expert.errors[:last_name].any? %>
+            <%= expert.errors[:last_name].first %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-2 m-5 sm:flex-row">
+      <!-- Phone Number -->
+      <div class="flex-1">
+        <div class="flex items-center">
+          <strong>
+            <%= form.label :phone_number, "#{t("activerecord.attributes.expert.phone_number")}*",
+                style: "color: #{expert.errors[:phone_number].any? ? '#D40031' : 'inherit'};" %>
+          </strong>
+          <button popovertarget="phone_number-popover" class="ml-2">
+            <%= image_tag("svg/circle-info.svg") %>
+          </button>
+
+          <div popover id="phone_number-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+            <button popovertarget="phone_number-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+              <%= image_tag("svg/x-mark-red.svg") %>
+            </button>
+            <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.phone_number") %></p>
+            <p class="p-2 max-w-xs text-gray-600 rounded-md">
+              <%= t("activerecord.attributes.info_expert.phone_number") %>
+            </p>
+          </div>
+        </div>
+        <%= form.text_field :phone_number,
+          style: "border: 1px solid #{expert.errors[:phone_number].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;",
+          class: "w-full sm:w-[80%]" %>
+
+        <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+          <% if expert.errors[:phone_number].any? %>
+            <%= expert.errors[:phone_number].first %>
+          <% end %>
+        </div>
+      </div>
+      <!-- E Mail -->
+      <div class="flex-1">
+        <div class="flex items-center">
+          <strong>
+            <%= form.label :email, "#{t("activerecord.attributes.expert.email")}*",
+                style: "color: #{expert.errors[:email].any? ? '#D40031' : 'inherit'};" %>
+          </strong>
+          <button popovertarget="email-popover" class="ml-2">
+            <%= image_tag("svg/circle-info.svg") %>
+          </button>
+
+          <div popover id="email-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+            <button popovertarget="email-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+              <%= image_tag("svg/x-mark-red.svg") %>
+            </button>
+            <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.email") %></p>
+            <p class="p-2 max-w-xs text-gray-600 rounded-md">
+              <%= t("activerecord.attributes.info_expert.email") %>
+            </p>
+          </div>
+        </div>
+        <%= form.text_field :email,
+          style: "border: 1px solid #{expert.errors[:email].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;",
+          class: "w-full sm:w-[80%]" %>
+
+        <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+          <% if expert.errors[:email].any? %>
+            <%= expert.errors[:email].first %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-2 m-5 sm:flex-row">
+      <!-- Location -->
+      <div class="flex-1">
+        <div class="flex items-center">
+          <strong>
+            <%= form.label :current_location, "#{t("activerecord.attributes.expert.current_location")}*",
+              style: "color: #{expert.errors[:current_location].any? ? '#D40031' : 'inherit'};" %>
+          </strong>
+          <button popovertarget="current_location-popover" class="ml-2">
+            <%= image_tag("svg/circle-info.svg") %>
+          </button>
+
+          <div popover id="current_location-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+            <button popovertarget="current_location-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+              <%= image_tag("svg/x-mark-red.svg") %>
+            </button>
+            <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.current_location") %></p>
+            <p class="p-2 max-w-xs text-gray-600 rounded-md">
+              <%= t("activerecord.attributes.info_expert.current_location") %>
+            </p>
+          </div>
+        </div>
+          <%= form.text_field :current_location,
+            placeholder: "",
+            style: "border: 1px solid #{expert.errors[:current_location].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;",
+          class: "w-full sm:w-[80%]" %>
+
+        <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+          <% if expert.errors[:current_location].any? %>
+            <%= expert.errors[:current_location].first %>
+          <% end %>
+        </div>
+      </div>
+      <!-- Nationality -->
+      <div class="flex-1">
+        <div class="flex items-center">
+          <strong>
+            <%= form.label :nationality, "#{t("activerecord.attributes.expert.nationality")}*",
+              style: "color: #{expert.errors[:nationality].any? ? '#D40031' : 'inherit'};" %>
+          </strong>
+          <button popovertarget="nationality-popover" class="ml-2">
+            <%= image_tag("svg/circle-info.svg") %>
+          </button>
+
+          <div popover id="nationality-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+            <button popovertarget="nationality-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+              <%= image_tag("svg/x-mark-red.svg") %>
+            </button>
+            <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.nationality") %></p>
+            <p class="p-2 max-w-xs text-gray-600 rounded-md">
+              <%= t("activerecord.attributes.info_expert.nationality") %>
+            </p>
+          </div>
+        </div>
+        <%= form.text_field :nationality,
+          placeholder: "",
+          style: "border: 1px solid #{expert.errors[:nationality].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;",
+          class: "w-full sm:w-[80%]" %>
+
+        <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+          <% if expert.errors[:nationality].any? %>
+            <%= expert.errors[:nationality].first %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Professional Details -->
+  <div class="mb-3 container-second">
+    <h3 class="heading"><%= t("activerecord.attributes.expert.sections.professionall_detail") %></h3>
+    <!-- Hourly rate -->
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :hourly_rate, "#{t("activerecord.attributes.expert.hourly_rate")}*",
+            style: "color: #{expert.errors[:hourly_rate].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+        <span style="white-space: nowrap; color: #6B7280; font-size: 0.875rem;"><%= "(in #{t("currency.hourly")})" %></span>
+        <button popovertarget="hourly_rate-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="hourly_rate-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+          <button popovertarget="hourly_rate-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.hourly_rate") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.info_expert.hourly_rate") %>
+          </p>
+        </div>
+      </div>
+      <%= form.number_field :hourly_rate,
+        style: "border: 1px solid #{expert.errors[:hourly_rate].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;",
+        class: "w-full sm:w-[40%]" %>
+
+      <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+        <% if expert.errors[:hourly_rate].any? %>
+          <%= expert.errors[:hourly_rate].first %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Daily rate -->
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :daily_rate, "#{t("activerecord.attributes.expert.daily_rate")}*",
+          style: "color: #{expert.errors[:daily_rate].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+        <span style="white-space: nowrap; color: #6B7280; font-size: 0.875rem;"><%= "(in #{t("currency.daily")})" %></span>
+        <button popovertarget="daily_rate-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="daily_rate-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+          <button popovertarget="daily_rate-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.daily_rate") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.info_expert.daily_rate") %>
+          </p>
+        </div>
+      </div>
+      <%= form.number_field :daily_rate,
+        style: "border: 1px solid #{expert.errors[:hourly_rate].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;",
+        class: "w-full sm:w-[40%]" %>
+
+      <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+        <% if expert.errors[:daily_rate].any? %>
+          <%= expert.errors[:daily_rate].first %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Communication language -->
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :language, "#{t("activerecord.attributes.expert.language")}*",
+              style: "color: #{expert.errors[:language].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+        <button popovertarget="language-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="language-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+          <button popovertarget="language-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.language") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.info_expert.language") %>
+          </p>
+        </div>
+      </div>
+      <%= form.select :language_id,
+        Language.all.map { |language| [t("language_names.#{language.language.downcase}"), language.id] },
+        { include_blank: t("inputfield_placeholder.choice_box_select") },
+        style: "border: 1px solid #{expert.errors[:language].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;",
+          class: "w-full sm:w-[40%]" %>
+
+      <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+        <% if expert.errors[:language].any? %>
+          <%= expert.errors[:language].second %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Languages of instruction Checkboxes -->
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :languages, "#{t("activerecord.attributes.expert.languages")}*",
+            style: "color: #{expert.errors[:languages].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+        <button popovertarget="languages-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="languages-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+          <button popovertarget="languages-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.languages") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.info_expert.languages") %>
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-wrap">
+        <% Language.all.each do |language| %>
+          <div class="flex items-center py-1 px-3 m-1 bg-gray-200 rounded-full">
+            <%= check_box_tag "expert[language_ids][]", language.id, expert.languages.include?(language), id: "language_#{language.id}", class: "h-5 w-5" %>
+            <%= label_tag "language_#{language.id}", t("language_names.#{language.language.downcase}"), class: "ml-2" %>
+          </div>
+        <% end %>
+      </div>
+      <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+        <% if expert.errors[:languages].any? %>
+          <%= expert.errors[:languages].first %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Categories Checkboxes -->
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :categories, "#{t("activerecord.attributes.expert.categories")}*",
+            style: "color: #{expert.errors[:categories].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+        <button popovertarget="categories-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="categories-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+          <button popovertarget="categories-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.categories") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.info_expert.categories") %>
+          </p>
+        </div>
+      </div>
+      <div class="flex overflow-y-auto flex-wrap min-w-full max-h-72">
+        <% Category.all.each do |category| %>
+          <div class="flex items-center py-1 px-3 m-1 bg-gray-200 rounded-full">
+            <%= check_box_tag "expert[category_ids][]", category.id, expert.categories.include?(category), id: "category_#{category.id}", class: "h-5 w-5" %>
+            <%= label_tag "category_#{category.id}",category.name, class: "ml-2" %>
+          </div>
+        <% end %>
+      </div>
+      <div style="color: #D40031; font-size: 0.875rem; margin-left: 0.25rem;">
+        <% if expert.errors[:categories].any? %>
+          <%= expert.errors[:categories].first %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Extra Skills -->
+    <!-- Might be better to implement this as tags that can be added instead of text - would make filtering for extra skills easier -->
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :extra_skills, t("activerecord.attributes.expert.extra_skills"),
+            style: "color: #{expert.errors[:extra_skills].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+        <button popovertarget="extra_skills-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="extra_skills-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+          <button popovertarget="extra_skills-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.extra_skills") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.info_expert.extra_skills") %>
+          </p>
+        </div>
+      </div>
+      <div class="flex overflow-y-auto flex-wrap min-w-full max-h-20" id="extra_skill_tags">
+        <% skills = expert.extra_skills.nil? ? [] : expert.extra_skills.split(", ").map(&:strip) %>
+        <% skills.each_with_index do |skill, index| %>
+          <div class="flex items-center py-1 px-3 m-1 bg-gray-200 rounded-full">
+            <span class="ml-2"><%= skill %></span>
+            <%= image_tag("svg/x-mark-red.svg", class: "extra_skill_tag h-5 w-5 ml-2 cursor-pointer", id: "delete_extra_skill_#{index}", data: { skill_name: skill }) %>
+          </div>
+        <% end %>
+      </div>
+      <%= form.hidden_field :extra_skills, id: "extra_skill_text_field" %>
+      <!-- Adding new Extra Skills -->
+      <div class="flex-1">
+        <div class="flex items-center">
+          <strong> <%= "#{t("activerecord.attributes.expert.new_extra_skills")} " "#{t("optinal_tag")}"%></strong>
+          <button popovertarget="new_extra_skill-popover" class="ml-2">
+            <%= image_tag("svg/circle-info.svg") %>
+          </button>
+
+          <div popover id="new_extra_skill-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border border-red-600 shadow-lg">
+            <button popovertarget="new_extra_skill-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+              <%= image_tag("svg/x-mark-red.svg") %>
+            </button>
+            <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.new_extra_skills") %></p>
+            <p class="p-2 max-w-xs text-gray-600 rounded-md"><%= t("activerecord.attributes.info_expert.new_extra_skill") %></p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:gap-4 item-center">
+          <input form="extra_skill_form" type="text"
+                id="new_extra_skill_field"
+                placeholder="<%= t('inputfield_placeholder.add_term') %>"
+                pattern="^[a-zA-ZäöüÄÖÜß0-9][a-zA-ZäöüÄÖÜß0-9 ]{1,30}$"
+                required= "true"
+                style="border: 1px solid #D1D5DB; border-radius: 0.375rem; padding: 0.5rem; outline: none;"
+                class="w-full sm:w-[50%]">
+
+          <button type="button"
+            id="add_extra_skill_button"
+            class="btn flex items-center justify-center box-border sm:mt-0 w-[30%] sm:w-[20%]">
+              <%= image_tag("svg/new.svg") %>
+            <span class="hidden ml-2 sm:inline">
+              <%= t("actions.add") %>
+            </span>
+          </button>
+        </div>
+
+        <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+          <% if expert.errors[:extra_skills].any? %>
+            <%= expert.errors[:extra_skills].first %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Travel Preferences or Organisatory Prefenrences -->
+  <div class="mb-3 container-second">
+    <h2 class="heading"><%= t("activerecord.attributes.expert.sections.travel_preferences") %></h2>
+    <% fields = { travel_willingness_online: "online", travel_willingness_germany: "germany", travel_willingness_china: "china" } %>
+
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong>
+          <%= label :travel_willingness, "#{t("activerecord.attributes.expert.travel_willingness")}*",
+              style: "color: #{expert.errors[:base].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+        <button popovertarget="travel_willingness-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="travel_willingness-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+          <button popovertarget="travel_willingness-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.travel_willingness") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.info_expert.travel_willingness") %>
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-wrap">
+        <% fields.each do |field, label| %>
+          <%= form.label field, class: "flex items-center bg-gray-200 rounded-full px-3 py-1 m-1" do %>
+            <%= form.check_box field,
+            {
+              class: "h-5 w-5"
+            } %>
+            <%= label_tag label, t("activerecord.attributes.expert.travel_willingness_options.#{label}"), class: "ml-2" %>
+          <% end %>
+        <% end %>
+      </div>
+      <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+        <% if expert.errors[:base].any?  %>
+          <%= expert.errors[:base].first %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :spontaneous, "#{t("activerecord.attributes.expert.questions.spontaneous_question")}*",
+            style: "color: #{expert.errors[:spontaneous].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+        <button popovertarget="spontaneous-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="spontaneous-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+          <button popovertarget="spontaneous-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.questions.spontaneous_question") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.info_expert.spontaneous") %>
+          </p>
+        </div>
+      </div>
+      <%= form.text_field :spontaneous,
+        style: "border: 1px solid #{expert.errors[:spontaneous].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;",
+        class: "w-full sm:w-[40%]" %>
+
+      <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+        <% if expert.errors[:spontaneous].any? %>
+          <%= expert.errors[:spontaneous].first %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :travel_willingness_text, t("activerecord.attributes.expert.travel_willingness_text"),
+            style: "color: #{expert.errors[:travel_willingness_text].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+        <button popovertarget="travel_willingness_text-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="travel_willingness_text-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+          <button popovertarget="travel_willingness_text-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.travel_willingness_text") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.info_expert.travel_willingness_text") %>
+          </p>
+        </div>
+      </div>
+      <%= form.text_area :travel_willingness_text,
+        style: "border: 1px solid #{expert.errors[:travel_willingness_text].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; width: 100%; outline: none; overflow: hidden; min-height: 5rem;",
+        maxlength: length_1,
+        class: "char-count" %>
+      <div class="flex gap-2 items-center">
+        <div class="mt-1 text-sm text-gray-500 char-count-display">
+          <span class="current-count">0</span><%= " / #{length_1}" %>
+        </div>
+        <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+          <% if expert.errors[:travel_willingness_text].any? %>
+            <%= expert.errors[:travel_willingness_text].first %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Additional Details -->
+  <div class="mb-3 container-second">
+    <h2 class="heading"><%= t("activerecord.attributes.expert.sections.additional_detail") %></h2>
+    <!-- Institution Question -->
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong class="mr-2">
+          <%= form.label :has_institution, t("activerecord.attributes.expert.questions.institution_question") %>
+        </strong>
+        <div class="flex items-center py-1 px-3 m-1 bg-gray-200 rounded-full">
+          <%= form.check_box :has_institution, { class: "h-5 w-5", id: "has_institution_checkbox" } %>
+        </div>
+        <button popovertarget="has_institution-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="has_institution-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+          <button popovertarget="has_institution-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.questions.institution_question") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.info_expert.has_institution") %>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div id="institution_details" style="display: none;">
+      <!-- Institution Name -->
+      <div class="flex-1 gap-2 m-5">
+        <div class="flex items-center">
+          <strong>
+            <%= form.label :institution_name, "#{t("activerecord.attributes.expert.institution_name")}*",
+                style: "color: #{expert.errors[:institution_name].any? ? '#D40031' : 'inherit'};" %>
+          </strong>
+          <button popovertarget="institution_name-popover" class="ml-2">
+            <%= image_tag("svg/circle-info.svg") %>
+          </button>
+
+          <div popover id="institution_name-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+            <button popovertarget="institution_name-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+              <%= image_tag("svg/x-mark-red.svg") %>
+            </button>
+            <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.institution_name") %></p>
+            <p class="p-2 max-w-xs text-gray-600 rounded-md">
+              <%= t("activerecord.attributes.info_expert.institution_name") %>
+            </p>
+          </div>
+        </div>
+        <%= form.text_field :institution_name,
+          style: "border: 1px solid #{expert.errors[:institution_name].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; outline: none;",
+          class: "w-full sm:w-[40%]" %>
+
+        <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+          <% if expert.errors[:institution_name].any? %>
+            <%= expert.errors[:institution_name].first %>
+          <% end %>
+        </div>
+      </div>
+      <!-- Cooperation options -->
+      <div class="flex-1 gap-2 m-5">
+        <div class="flex items-center">
+          <strong>
+            <%= form.label :cooperation_options, t("activerecord.attributes.expert.cooperation_options") %>
+          </strong>
+          <button popovertarget="cooperation_options-popover" class="ml-2">
+            <%= image_tag("svg/circle-info.svg") %>
+          </button>
+
+          <div popover id="cooperation_options-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+            <button popovertarget="cooperation_options-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+              <%= image_tag("svg/x-mark-red.svg") %>
+            </button>
+            <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.cooperation_options") %></p>
+            <p class="p-2 max-w-xs text-gray-600 rounded-md">
+              <%= t("activerecord.attributes.info_expert.cooperation_options") %>
+            </p>
+          </div>
+        </div>
+        <%= form.text_area :cooperation_options,
+          style: "border: 1px solid #{expert.errors[:cooperation_options].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; width: 100%; outline: none; overflow: hidden; min-height: 5rem;",
+          maxlength: 125,
+          class: "char-count" %>
+        <div class="flex gap-2 items-center">
+          <div class="mt-1 text-sm text-gray-500 char-count-display">
+            <span class="current-count">0</span><%= " / #{length_1}" %>
+          </div>
+          <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+            <% if expert.errors[:cooperation_options].any? %>
+              <%= expert.errors[:cooperation_options].first %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- China Reference Question -->
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong class="mr-2">
+          <%= form.label :has_china_reference, t("activerecord.attributes.expert.questions.china_reference_question") %>
+        </strong>
+        <div class="flex items-center py-1 px-3 m-1 bg-gray-200 rounded-full">
+          <%= form.check_box :has_china_reference, { class: "h-5 w-5", id: "has_china_reference_checkbox" } %>
+        </div>
+        <button popovertarget="has_china_reference-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="has_china_reference-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+          <button popovertarget="has_china_reference-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.questions.china_reference_question") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.info_expert.has_china_reference") %>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div id="china_reference_details" style="display: none;">
+      <!-- China Reference -->
+      <div class="flex-1 gap-2 m-5">
+        <div class="flex items-center">
+          <strong>
+            <%= form.label :china_reference, "#{t("activerecord.attributes.expert.china_reference")}*",
+              style: "color: #{expert.errors[:china_reference].any? ? '#D40031' : 'inherit'};" %>
+          </strong>
+          <button popovertarget="china_reference-popover" class="ml-2">
+            <%= image_tag("svg/circle-info.svg") %>
+          </button>
+
+          <div popover id="china_reference-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+            <button popovertarget="china_reference-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+              <%= image_tag("svg/x-mark-red.svg") %>
+            </button>
+            <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.china_reference") %></p>
+            <p class="p-2 max-w-xs text-gray-600 rounded-md">
+              <%= t("activerecord.attributes.info_expert.china_reference") %>
+            </p>
+          </div>
+        </div>
+        <%= form.text_area :china_reference, style: "border: 1px solid #{expert.errors[:china_reference].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; width: 100%; outline: none; overflow: hidden; min-height: 5rem;",
+          maxlength: length_1,
+          class: "char-count" %>
+        <div class="flex gap-2 items-center">
+          <div class="mt-1 text-sm text-gray-500 char-count-display">
+            <span class="current-count">0</span><%= " / #{length_1}" %>
+          </div>
+          <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+            <% if expert.errors[:china_reference].any? %>
+              <%= expert.errors[:china_reference].first %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Free Text -->
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :free_text, t("activerecord.attributes.expert.free_text"),
+            style: "color: #{expert.errors[:free_text].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+        <button popovertarget="free_text-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="free_text-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+          <button popovertarget="free_text-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.free_text") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.info_expert.free_text") %>
+          </p>
+        </div>
+      </div>
+      <%= form.text_area :free_text, style: "border: 1px solid #{expert.errors[:free_text].present? ? '#D40031' : '#D1D5DB'}; border-radius: 0.375rem; padding: 0.5rem; width: 100%; outline: none; overflow: hidden; min-height: 5rem;",
+          maxlength: length_2,
+          class: "char-count" %>
+      <div class="flex gap-2 items-center">
+        <div class="mt-1 text-sm text-gray-500 char-count-display">
+          <span class="current-count">0</span><%= " / #{length_2}" %>
+        </div>
+        <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+          <% if expert.errors[:free_text].any? %>
+            <%= expert.errors[:free_text].first %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Document section -->
+  <div class="container-second">
+    <h3 class="heading"><%= t("activerecord.attributes.expert.sections.documents") %></h3>
+    <!-- Profile Picture -->
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :profile_picture, "#{t("activerecord.attributes.expert.documents.profile_picture")}:",
+              style: "color: #{expert.errors[:profile_picture].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+        <button popovertarget="profile_picture-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="profile_picture-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border border-red-600 shadow-lg">
+          <button popovertarget="profile_picture-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.documents.profile_picture") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.info_expert.documents") %>
+          </p>
+        </div>
+      </div>
+      <div class="flex gap-5 items-center">
+        <% if expert.profile_picture.attached? && expert.profile_picture.persisted? %>
+          <strong>
+            <!-- we do this to see the file extension when the file name is relativly long -->
+            <%= link_to truncate(File.basename(expert.profile_picture.filename.to_s, File.extname(expert.profile_picture.filename.to_s)),
+                        length: 14, omission: '...') + File.extname(expert.profile_picture.filename.to_s),
+                        rails_blob_path(expert.profile_picture, disposition: "attachment", cache_buster: Time.now.to_i),
+                        title: expert.profile_picture.filename.to_s,
+                        id: 'profile_picture_link' %>
+          </strong>
+          <!-- View document button -->
+          <%= link_to rails_blob_path(expert.profile_picture, disposition: "inline"),
+                      target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                      data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+            <%= image_tag("svg/open-eye.svg") %>
+            <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+          <% end %>
+          <!-- Download document button -->
+          <%= link_to rails_blob_path(expert.profile_picture, disposition: "attachment"),
+                      class: "btn flex items-center justify-between w-auto",
+                      data: { cache_buster: Time.now.to_i }, title: t("actions.download")  do %>
+            <%= image_tag("svg/doc-download.svg") %>
+            <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+          <% end %>
+          <!-- Delete document button -->
+          <button class="flex justify-between items-center w-auto btn"
+                  onclick="removeDocumentAndSubmit('expert[remove_profile_picture]',
+                  '<%= t('actions.confirm_delete_doc', document: expert.profile_picture.filename) %>');"
+                  title="<%=  t("actions.delete") %>">
+            <%= image_tag("svg/delete.svg") %>
+            <span class="hidden ml-2 sm:inline"><%= t("actions.delete") %></span>
+          </button>
+        <% else %>
+          <%= t("inputfield_placeholder.document_no_upload") %>
+        <% end %>
+      </div>
+      <!-- Profile Picture Upload -->
+      <div class="my-5">
+        <%= form.file_field :profile_picture,
+            accept: 'image/png, image/jpg, image/jpeg',
+            style: "border: 1px solid #D1D5DB; border-radius: 0.375rem; padding: 0.325rem; outline: none;",
+            class: "w-full sm:w-[50%]" %>
+      </div>
+      <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+        <% if expert.errors[:profile_picture].any? %>
+          <%= expert.errors[:profile_picture].first %>
+        <% end %>
+      </div>
+    </div>
+    <!-- Resume -->
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :resume, "#{t("activerecord.attributes.expert.documents.resume")}*:",
+              style: "color: #{expert.errors[:resume].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+        <button popovertarget="resume-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="resume-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border border-red-600 shadow-lg">
+          <button popovertarget="resume-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.documents.resume") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.info_expert.documents") %>
+          </p>
+        </div>
+      </div>
+      <div class="flex gap-5 items-center">
+        <% if expert.resume.attached? && expert.resume.persisted? %>
+          <strong>
+            <!-- we do this to see the file extension when the file name is relativly long -->
+            <%= link_to truncate(File.basename(expert.resume.filename.to_s, File.extname(expert.resume.filename.to_s)),
+                        length: 14, omission: '...') + File.extname(expert.resume.filename.to_s),
+                        rails_blob_path(expert.resume, disposition: "attachment", cache_buster: Time.now.to_i),
+                        title: expert.resume.filename.to_s,
+                        id: 'resume_link' %>
+          </strong>
+          <!-- View document button -->
+          <%= link_to rails_blob_path(expert.resume, disposition: "inline"),
+                      target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                      data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+            <%= image_tag("svg/open-eye.svg") %>
+            <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+          <% end %>
+          <!-- Download document button -->
+          <%= link_to rails_blob_path(expert.resume, disposition: "attachment"),
+                      class: "btn flex items-center justify-between w-auto",
+                      data: { cache_buster: Time.now.to_i }, title: t("actions.download")  do %>
+            <%= image_tag("svg/doc-download.svg") %>
+            <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+          <% end %>
+          <!-- Delete document button -->
+          <button class="flex justify-between items-center w-auto btn"
+                  onclick="removeDocumentAndSubmit('expert[remove_resume]',
+                  '<%= t('actions.confirm_delete_doc', document: expert.resume.filename) %>');"
+                  title="<%=  t("actions.delete") %>">
+            <%= image_tag("svg/delete.svg") %>
+            <span class="hidden ml-2 sm:inline"><%= t("actions.delete") %></span>
+          </button>
+        <% else %>
+          <%= t("inputfield_placeholder.document_no_upload") %>
+        <% end %>
+      </div>
+      <!-- Resume Upload -->
+      <div class="my-5">
+        <%= form.file_field :resume,
+            accept: 'application/pdf',
+            style: "border: 1px solid #D1D5DB; border-radius: 0.375rem; padding: 0.325rem; outline: none;",
+            class: "w-full sm:w-[50%]" %>
+      </div>
+      <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+        <% if expert.errors[:resume].any? %>
+          <%= expert.errors[:resume].first %>
+        <% end %>
+      </div>
+    </div>
+    <!-- Certificates -->
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong>
+          <%= form.label :certificates, "#{t("activerecord.attributes.expert.documents.certificates")}:",
+              style: "color: #{expert.errors[:certificates].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+        <button popovertarget="certificates-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="certificates-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border border-red-600 shadow-lg">
+          <button popovertarget="certificates-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.expert.documents.certificates") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.info_expert.documents_multi") %>
+          </p>
+        </div>
+      </div>
+      <div class="flex gap-5 items-center">
+        <% if expert.certificates.attached? %>
+          <% expert.certificates.each do |certificate| %>
+            <%= form.hidden_field :certificates, multiple: true, value: certificate.signed_id, id: "all_certificates_field" %>
+            <strong>
+              <!-- Truncate the file name with its extension -->
+              <%= link_to truncate(File.basename(certificate.filename.to_s, File.extname(certificate.filename.to_s)),
+                          length: 14, omission: '...') + File.extname(certificate.filename.to_s),
+                          rails_blob_path(certificate, disposition: "attachment", cache_buster: Time.now.to_i),
+                          title: certificate.filename.to_s,
+                          id: "certificates_link_#{certificate.id}" %>
+            </strong>
+            <!-- View document button -->
+            <%= link_to rails_blob_path(certificate, disposition: "inline"),
+                        target: "_blank", rel: "noopener noreferrer", class: "btn flex items-center justify-between w-auto",
+                        data: { cache_buster: Time.now.to_i }, title: t("actions.view") do %>
+              <%= image_tag("svg/open-eye.svg") %>
+              <span class="hidden ml-2 sm:inline"><%= t("actions.view") %></span>
+            <% end %>
+            <!-- Download document button -->
+            <%= link_to rails_blob_path(certificate, disposition: "attachment"),
+                        class: "btn flex items-center justify-between w-auto",
+                        data: { cache_buster: Time.now.to_i }, title: t("actions.download")  do %>
+              <%= image_tag("svg/doc-download.svg") %>
+              <span class="hidden ml-2 sm:inline"><%= t("actions.download") %></span>
+            <% end %>
+            <button class="flex justify-between items-center w-auto btn"
+                    type="button"
+                    onclick="removeCertificate('certificate_#{certificate.id}',
+                    '<%= t('actions.confirm_delete_doc', document: certificate.filename) %>');"
+                    title="<%= t('actions.delete') %>">
+              <%= image_tag("svg/delete.svg") %>
+              <span class="hidden ml-2 sm:inline"><%= t('actions.delete') %></span>
+            </button>
+          <% end %>
+        <% else %>
+          <%= t("inputfield_placeholder.document_no_upload") %>
+        <% end %>
+      </div>
+      <!-- Certificates Upload -->
+      <div class="my-5">
+        <%= form.file_field :certificates,
+          accept: 'image/png, image/jpg, image/jpeg, application/pdf',
+          multiple: true,
+          style: "border: 1px solid #D1D5DB; border-radius: 0.375rem; padding: 0.325rem; outline: none;",
+          class: "w-full sm:w-[50%]" %>
+      </div>
+      <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+        <% if expert.errors[:certificates].any? %>
+          <%= expert.errors[:certificates].first %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<script>
+  window.addEventListener('resize', adjustFilenames);
+
+  document.addEventListener('turbo:load', () => {
+    adjustFilenames();
+    toggleDetails();
+    togglePopover();
+    charCounter();
+    handleExtraSkills();
+  });
+
+  function removeCertificate(hiddenFieldId, confirmMessage) {
+    // Prompt for confirmation before deletion
+    if (confirm(confirmMessage)) {
+      const form = document.getElementById('create_expert_form');
+
+      if (form) {
+        let hiddenField = document.getElementById('all_certificates_field');
+        var currentValues = hiddenField.value.split(',');
+        if (hiddenField && hiddenField.value)
+        // Remove the signed_id that corresponds to the certificate being deleted
+        var valueToRemove = hiddenField.value;
+        currentValues = currentValues.filter(function(value) {
+          return value !== valueToRemove;
+        });
+        // Update the hidden field with the new value (without the deleted certificate ID)
+        hiddenField.value = currentValues.join(',');
+
+        form.submit();
+      }
+    }
+  }
+
+
+  function removeDocumentAndSubmit(paramName, confirmText) {
+    if (confirm(confirmText)) {
+      const form = document.getElementById('create_expert_form');
+      if (form) {
+        let hiddenField = document.querySelector(`input[name="${paramName}"]`);
+        if (!hiddenField) {
+          hiddenField = document.createElement('input');
+          hiddenField.type = 'hidden';
+          hiddenField.name = paramName;
+          hiddenField.value = 'true';
+          form.appendChild(hiddenField);
+        }
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+          form.submit();
+        });
+      }
+    }
+  }
+
+  function getExtension(filename) {
+    return filename.slice((filename.lastIndexOf('.') - 1 >>> 0) + 2);
+  }
+
+  function getBaseFilename(filename, extension) {
+      return filename.substring(0, filename.length - extension.length);
+  }
+
+  function truncateFilename(linkId, maxLength) {
+      var link = document.getElementById(linkId);
+      if (link) {
+          var fullFilename = link.title;
+          var extension = getExtension(fullFilename);
+          var baseFilename = getBaseFilename(fullFilename, extension);
+
+          var truncatedBaseFilename = baseFilename.length > maxLength ? baseFilename.substring(0, maxLength) + '...' : baseFilename;
+
+          link.textContent = truncatedBaseFilename + extension;
+      }
+  }
+
+  function adjustFilenames() {
+    var maxLength = window.innerWidth < 768 ? 10 : 30;
+
+    var links = document.querySelectorAll('.filename-link');
+    links.forEach(link => {
+      truncateFilename(link, maxLength);
+    });
+  }
+
+  function toggleDetails() {
+    const institutionCheckbox = document.getElementById("has_institution_checkbox");
+    const institutionDetails = document.getElementById("institution_details");
+    const chinaCheckbox = document.getElementById("has_china_reference_checkbox");
+    const chinaDetails = document.getElementById("china_reference_details");
+
+    if (institutionCheckbox && institutionDetails) {
+        institutionDetails.style.display = institutionCheckbox.checked ? "block" : "none";
+
+        institutionCheckbox.addEventListener("change", function() {
+            institutionDetails.style.display = institutionCheckbox.checked ? "block" : "none";
+            institutionDetails.scrollIntoView({ behavior: "smooth" });
+
+        });
+    }
+
+    if (chinaCheckbox && chinaDetails) {
+        chinaDetails.style.display = chinaCheckbox.checked ? "block" : "none";
+
+        chinaCheckbox.addEventListener("change", function() {
+            chinaDetails.style.display = chinaCheckbox.checked ? "block" : "none";
+            chinaDetails.scrollIntoView({ behavior: "smooth" });
+        });
+    }
+  }
+
+  function togglePopover() {
+    const popoverButtons = document.querySelectorAll('[popovertarget]');
+    let currentlyOpenPopover = null; // Variable to track the currently open popover
+
+    popoverButtons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        // Prevent form submission when button is clicked
+        event.preventDefault();
+
+        const targetPopoverId = button.getAttribute('popovertarget');
+        const popover = document.getElementById(targetPopoverId);
+
+        // If there's a currently open popover and it's not the one being clicked
+        if (currentlyOpenPopover && currentlyOpenPopover !== popover) {
+          currentlyOpenPopover.style.display = 'none';
+        }
+
+        // Toggle visibility of the clicked popover
+        if (popover.style.display === 'none' || popover.style.display === '') {
+          popover.style.display = 'block';
+          currentlyOpenPopover = popover;
+        } else {
+          popover.style.display = 'none';
+          currentlyOpenPopover = null;
+        }
+      });
+    });
+
+    // Close popover when clicking outside
+    document.addEventListener('click', (event) => {
+        if (currentlyOpenPopover && !currentlyOpenPopover.contains(event.target) && !Array.from(popoverButtons).some(button => button.contains(event.target))) {
+            currentlyOpenPopover.style.display = 'none';
+            currentlyOpenPopover = null;
+        }
+    });
+  }
+
+  function charCounter() {
+    const textAreas = document.querySelectorAll('.char-count');
+
+    textAreas.forEach(textArea => {
+      const charCountDisplay = textArea.nextElementSibling ? textArea.nextElementSibling.querySelector('.current-count') : null;
+      const maxLength = textArea.getAttribute('maxlength');
+
+      // Function to adjust the height of the text area and update character count
+      const adjustHeightAndCount = () => {
+        textArea.style.height = 'auto'; // Reset height to auto to calculate new height
+        textArea.style.height = `${textArea.scrollHeight}px`; // Set height to scrollHeight
+        if (charCountDisplay) {
+          charCountDisplay.textContent = textArea.value.length; // Update character count
+        }
+      };
+
+      // Event listener for input
+      textArea.addEventListener('input', adjustHeightAndCount);
+
+      // Initial adjustment
+      adjustHeightAndCount();
+    });
+  }
+
+  // Reinitialize on form submission
+  document.querySelector('form').addEventListener('submit', (event) => {
+    charCounter();
+  });
+
+  var maxSkillsMessage = "<%= I18n.t('activerecord.errors.models.expert.attributes.extra_skills.max_skills') %>";
+  function handleExtraSkills() {
+    newExtraSkillField = document.getElementById('new_extra_skill_field');
+    const addExtraSkillButton = document.getElementById('add_extra_skill_button');
+    const extraSkillTextField = document.getElementById('extra_skill_text_field');
+    const extraSkillTagsContainer = document.getElementById('extra_skill_tags');
+    const maxSkills = 20;
+
+    // Ensure elements exist
+    if (!extraSkillTextField || !newExtraSkillField || !addExtraSkillButton || !extraSkillTagsContainer) return;
+
+      let currentSkills = extraSkillTextField.value.split(', ').filter(Boolean);
+
+      // Add new extra skill to the list
+      addExtraSkillButton.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        // Recompute currentSkills to ensure it's up-to-date
+        currentSkills = extraSkillTextField.value.split(', ').filter(Boolean);
+
+        if (currentSkills.length >= maxSkills) {
+          alert(maxSkillsMessage.replace('%{max_skills}', maxSkills));
+          return; // Stop further execution
+        }
+
+        const newSkill = newExtraSkillField.value.trim();
+
+        if (newSkill && !currentSkills.includes(newSkill)) {
+          // Add the new skill to the list
+          currentSkills.push(newSkill);
+
+          // Create the new tag
+          const skillTag = document.createElement('div');
+          skillTag.className = 'flex items-center py-1 px-3 m-1 bg-gray-200 rounded-full';
+          skillTag.id = `extra_skill_tag_${newSkill}`;
+
+          // Skill text
+          const skillText = document.createElement('span');
+          skillText.className = 'ml-2';
+          skillText.textContent = newSkill;
+
+          // Delete button (X)
+          const deleteBtn = document.createElement('img');
+          deleteBtn.src = '/assets/svg/x-mark-red.svg';
+          deleteBtn.className = 'ml-2 w-5 h-5 cursor-pointer extra_skill_tag';
+          deleteBtn.dataset.skillName = newSkill;
+          deleteBtn.addEventListener('click', function () {
+            // Remove the tag from the DOM
+            skillTag.remove();
+
+            // Update the current skills list and the text field
+            currentSkills = currentSkills.filter(skill => skill !== newSkill);
+            extraSkillTextField.value = currentSkills.join(', ');
+          });
+
+          // Append the skill text and delete button to the skill tag container
+          skillTag.appendChild(skillText);
+          skillTag.appendChild(deleteBtn);
+          extraSkillTagsContainer.appendChild(skillTag);
+
+          // Update the text field with the current skills list
+          extraSkillTextField.value = currentSkills.join(', ');
+
+          // Clear input field
+          newExtraSkillField.value = '';
+        }
+      });
+    }
+
+  // Handle deletion of initial extra skill tags
+  document.addEventListener('DOMContentLoaded', function () {
+    const extraSkillsContainer = document.getElementById('extra_skill_tags');
+    const extraSkillTextField = document.getElementById('extra_skill_text_field');
+
+    if (!extraSkillsContainer || !extraSkillTextField) return;
+
+    // Initialize delete buttons for existing skills
+    extraSkillsContainer.querySelectorAll('.extra_skill_tag').forEach(deleteButton => {
+      deleteButton.addEventListener('click', function() {
+        const skillName = deleteButton.dataset.skillName;
+
+        // Remove the skill tag from the DOM
+        deleteButton.closest('.flex').remove();
+
+        // Update the current skills list and the text field
+        let currentSkills = extraSkillTextField.value.split(', ').filter(Boolean);
+        currentSkills = currentSkills.filter(skill => skill !== skillName);
+        extraSkillTextField.value = currentSkills.join(', ');
+    });
+  });
+
+  // Adding event listener for dynamically created delete buttons
+  extraSkillsContainer.addEventListener('click', function(event) {
+    if (event.target.classList.contains('extra_skill_tag') || event.target.classList.contains('extra_skill_tag')) {
+      const deleteButton = event.target.closest('.flex').querySelector('.extra_skill_tag');
+      const skillName = deleteButton.dataset.skillName;
+
+      if (deleteButton) {
+        // Remove the skill tag from DOM
+        deleteButton.remove();
+
+        // Update the current skills list and the text field
+        let currentSkills = extraSkillTextField.value.split(', ').filter(Boolean);
+        currentSkills = currentSkills.filter(skill => skill !== skillName);
+        extraSkillTextField.value = currentSkills.join(', ');
+      }
+      }
+    });
+  });
+</script>

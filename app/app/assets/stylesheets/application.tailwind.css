@@ -1,0 +1,153 @@
+/*
+ * Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+ *
+ * This file is part of Elink.
+ *
+ * Elink is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Elink is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with Elink. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    @apply bg-neutral-100 text-neutral-900 overflow-x-clip;
+    color: #333;
+}
+
+:root {
+    accent-color: #d40032;
+}
+
+[type="checkbox"],
+[type="radio"] {
+    @apply text-red-700;
+}
+
+@layer components {
+    label.input {
+        @apply text-neutral-500;
+    }
+
+    label.input > input,
+    label.input > textarea,
+    input.input,
+    textarea.input {
+        @apply block border border-solid border-neutral-300 px-2 py-1 text-black outline-none focus:border-neutral-500;
+    }
+
+    .btn {
+        @apply block w-full px-4 py-2 mt-3 bg-neutral-700 text-white border-none rounded-lg text-sm text-center cursor-pointer no-underline transition-transform duration-200 ease-in-out hover:bg-red-700 hover:scale-105;
+    }
+
+    .container {
+        @apply flex flex-col md:flex-row gap-3 p-3 items-center md:items-stretch max-w-full w-full;
+    }
+
+    .container-second,
+    .sidebar {
+        @apply bg-white p-4 rounded-lg shadow-md border border-solid border-neutral-300;
+    }
+
+    .container-second {
+        @apply flex-[40%] w-full;
+    }
+
+    .sidebar {
+        @apply sticky block top-3 flex-none basis-1/5 w-full md:w-auto h-fit;
+    }
+
+    .container-row {
+        grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+        @apply grid gap-2 justify-between flex-wrap;
+    }
+
+    .heading {
+        @apply text-lg text-neutral-700 border-b-4 border-red-700 font-bold mb-3;
+    }
+
+    .heading-sub {
+        @apply font-bold text-red-700;
+    }
+
+    .footer {
+        @apply bg-white text-center text-xs shadow;
+    }
+
+    /* Expert/Project table */
+    thead {
+        @apply sticky top-0 z-10 bg-gray-300 px-6 py-4 text-lg font-medium text-black border-b border-gray-700;
+    }
+
+    tbody tr {
+        @apply bg-white hover:bg-red-100 cursor-pointer;
+    }
+
+    th,
+    td {
+        @apply px-6 py-4 text-left whitespace-nowrap;
+    }
+
+    thead th[data-sort-mode="-1"],
+    thead th[data-sort-mode="1"] {
+        @apply relative text-red-700;
+    }
+    thead th[data-sort-mode="-1"]::after,
+    thead th[data-sort-mode="1"]::after {
+        @apply absolute left-2 top-4 inline-block aspect-square w-4 h-4 bg-contain bg-no-repeat bg-center;
+    }
+    thead th[data-sort-mode="1"]::after {
+        content: "\2191";
+    }
+    thead th[data-sort-mode="-1"]::after {
+        content: "\2193";
+    }
+
+    ol.breadcrumbs {
+        @apply text-neutral-500 block;
+    }
+    ol.breadcrumbs > li {
+        @apply inline;
+    }
+    ol.breadcrumbs::before,
+    ol.breadcrumbs > li:not(:last-child)::after {
+        content: "›";
+        @apply text-neutral-500 mx-2;
+    }
+    ol.breadcrumbs > li:last-child {
+        @apply font-bold;
+    }
+    ol.breadcrumbs a {
+        @apply hover:text-red-700 underline;
+    }
+}
+/* This pattern: "^(?!\s*$)[a-zA-ZäöüÄÖÜß0-9 ]{2,30}$" and required: true */
+#new_key_topic_field:invalid ~ #add_key_topic_button,
+#new_project_type_field:invalid ~ #add_project_type_button,
+#new_extra_skill_field:invalid ~ #add_extra_skill_button,
+#new_category_field:invalid ~ #add_category_button,
+#edit_category_name:invalid ~ #save_category_button {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+#new_key_topic_field:valid ~ #add_key_topic_button,
+#new_project_type_field:valid ~ #add_project_type_button,
+#new_extra_skill_field:valid ~ #add_extra_skill_button,
+#new_category_field:valid ~ #add_category_button,
+#edit_category_name:valid ~ #save_category_button {
+    background-color: #10b981;
+    cursor: pointer;
+    pointer-events: auto;
+}

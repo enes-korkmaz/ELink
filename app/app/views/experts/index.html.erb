@@ -1,0 +1,110 @@
+<%
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+%>
+
+<%= javascript_include_tag "filter_table", defer: true %>
+<%= javascript_include_tag "sort", async: true %>
+<%= javascript_include_tag "add_to_project", async: true %>
+
+<div class="container">
+    <div class="sidebar">
+        <% if current_user.role == "employee" %>
+            <!-- Actions section first -->
+            <h3 class="heading"><%= t("actions.title") %></h3>
+            <!-- Create button -->
+            <%= link_to new_expert_path, class: "btn relative create-btn" do %>
+                <%= image_tag("svg/new.svg", class: "absolute left-4") %>
+                <%= t("actions.create") %>
+            <% end %>
+        <% end %>
+
+        <!-- Add to Project button, hidden by default -->
+        <button class="hidden btn add-btn"><%= t("actions.add_to_project") %></button>
+
+        <!-- Now comes the Filter section -->
+        <h2 class="heading" style="mt-4">Filter</h2>
+        <div class="filter_table" data-for="experts_table"></div>
+    </div>
+
+
+
+    <div class="md:w-1 container-second">
+        <div class="overflow-hidden max-w-full">
+            <div class="overflow-x-auto overflow-y-auto shadow-md sm:rounded-lg max-h-[88vh]" style="width: 100%">
+                <table class="w-full text-left table-auto" id="experts_table">
+                    <thead>
+                        <tr>
+                            <th class="text-center cursor-pointer hover:text-red-700" onclick="orderBy(this, Number.parseInt)">#</th>
+                            <th class="cursor-pointer hover:text-red-700" onclick="orderBy(this)"><%= t("index.name_contact") %></th>
+                            <th class="cursor-pointer hover:text-red-700" onclick="orderBy(this)"><%= t("index.categories") %></th>
+                            <th class="text-right cursor-pointer hover:text-red-700" onclick="orderBy(this, Number.parseInt)" data-filter-type="number"><%= t("activerecord.attributes.expert.hourly_rate") %></th>
+                            <th class="text-right cursor-pointer hover:text-red-700" onclick="orderBy(this, Number.parseInt)" data-filter-type="number"><%= t("activerecord.attributes.expert.daily_rate") %></th>
+                            <!-- This is for the icon column with no text -->
+                            <th class=""></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @experts.each_with_index do |expert, index| %>
+
+                            <tr class="border-b border-gray-400" data-expert-id="<%= expert.id %>" onclick="window.location='<%= expert_path(expert) %>'">
+
+                                <td class="text-center"><%= index + 1 %></td>
+
+                                <td>
+                                    <div>
+                                        <!-- no_value gets filterd, because the String value is not nothing -->
+                                        <% unless expert.salutation == "mx" %>
+                                        <%= "#{t("activerecord.attributes.expert.salutations.#{expert.salutation}")} " %>
+                                        <% end %>
+                                        <%= truncate("#{expert.title} #{expert.last_name}, #{expert.first_name} ", length: 24) %>
+                                    </div>
+                                    <div><%= truncate(expert.email, length: 25) %></div>
+                                </td>
+
+                                <!-- Up to 5 categories can easily be rendered everything above will need adjustments in the view -->
+                                <td >
+                                    <% categories = expert.categories.map(&:name) %>
+
+                                    <% if categories.length == 1 %>
+                                        <%= categories.first %>
+                                    <% elsif categories.length == 2 %>
+                                        <%= categories.join(" & ") %>
+                                    <% else %>
+                                        <!-- [0..-2] - This will get all items until the second last -->
+                                        <%= categories[0..-2].join(", ") %> <br>& <%= categories.last %> <br>
+                                    <% end %>
+                                </td>
+
+
+
+                                <td class="text-right">
+                                    <%= number_to_currency(expert.hourly_rate, unit: t("currency.hourly")) %>
+                                </td>
+                                <td class="text-right">
+                                  <%= number_to_currency(expert.daily_rate, unit: t("currency.daily")) %>
+                                </td>
+
+                                <td class="item-center"><%= image_tag("svg/chevron-right.svg", class: "w-4 aspect-square block max-w-none") %></td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

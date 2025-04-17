@@ -1,0 +1,166 @@
+<%
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+%>
+
+<div class="container">
+  <!-- Sidebar -->
+  <% if current_user.role == "employee" %>
+    <div class="sidebar">
+      <h2 class="mt-0.5 heading"><%= t("actions.title") %></h2>
+      <div class="actions-container">
+        <a href="/experts/new" class="relative btn">
+          <%= image_tag("svg/new.svg", class: "absolute left-4") %><%= t("homepage.create_new_expert") %>
+        </a>
+        <a href="/projects/new" class="relative btn">
+          <%= image_tag("svg/new.svg", class: "absolute left-4") %><%= t("homepage.create_new_project") %>
+        </a>
+        <button
+          class="relative btn"
+          data-link="<%= register_url(User.generate_registration_token) %>"
+          onclick="navigator.clipboard.writeText(this.dataset.link).then(()=>{this.innerHTML = this.innerHTML.substring(0, this.innerHTML.length - 1) + '✓'}).catch((err)=>{this.innerHTML = this.innerHTML.substring(0, this.innerHTML.length - 1) + '✗'; alert(err)})"
+        >
+          <%= image_tag("svg/copy.svg", class: "absolute left-4 h-4") %><%= t("homepage.copy_invite_link") + " " %>
+        </button>
+      </div>
+    </div>
+  <% end %>
+  <div class="w-full h-full md:w-auto flex-[3]">
+    <div class="p-5 mb-3 bg-white rounded-lg border border-gray-300 shadow-sm">
+      <div>
+        <h2 class="heading"><%= t("homepage.projekt_overview") %></h2>
+        <div class="container-row">
+          <div class="container-second">
+            <h3 class="heading-sub"><%= t("homepage.recently_updated") %></h3>
+            <div class="overflow-y-auto max-h-40">
+              <table class="min-w-full border-collapse table-auto">
+                <tbody class="bg-gray-100">
+                  <% @recently_invoked.each do |project| %>
+                    <tr class="border-b hover:bg-red-200">
+                      <td class="py-2 px-4">
+                        <%= link_to project_path(project), class: "block py-2 px-4 w-full text-neutral-700  hover:underline" do %>
+                          <%= project.project_name %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        <div class="container-second">
+          <h3 class="heading-sub"><%= t("homepage.recently_added") %></h3>
+          <div class="overflow-y-auto max-h-40">
+            <table class="min-w-full border-collapse table-auto">
+              <tbody class="bg-gray-100">
+                <% @recently_added.each do |project| %>
+                  <tr class="border-b hover:bg-red-200">
+                    <td class="py-2 px-4">
+                      <%= link_to project_path(project), class: "block py-2 px-4 w-full text-neutral-700  hover:underline" do %>
+                        <%= project.project_name %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+       <div class="container-second">
+          <h3 class="heading-sub"><%= t("homepage.in_planing") %></h3>
+          <div class="overflow-y-auto max-h-40">
+            <table class="min-w-full border-collapse table-auto">
+              <tbody class="bg-gray-100">
+                <% @in_planing.each do |project| %>
+                  <tr class="border-b hover:bg-red-200">
+                    <td class="py-2 px-4">
+                      <%= link_to project_path(project), class: "block py-2 px-4 w-full text-neutral-700 hover:underline" do %>
+                        <%= project.project_name %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="container-second">
+          <h3 class="heading-sub"><%= t("homepage.recently_finished") %></h3>
+          <div class="overflow-y-auto max-h-40">
+            <table class="min-w-full border-collapse table-auto">
+              <tbody class="bg-gray-100">
+                <% @recently_finished.each do |project| %>
+                  <tr class="border-b hover:bg-red-200">
+                    <td class="py-2 px-4">
+                      <%= link_to project_path(project), class: "block py-2 px-4 w-full text-neutral-700  hover:underline" do %>
+                        <%= project.project_name %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="p-5 bg-white rounded-lg border border-gray-300 shadow-sm">
+  <div>
+    <h2 class="heading"><%= t("homepage.experts_overview") %></h2>
+    <div class="container-row">
+      <div class="container-second">
+        <h3 class="heading-sub"><%= t("homepage.recently_updated") %></h3>
+        <div class="overflow-y-auto max-h-40">
+          <table class="min-w-full border-collapse table-auto">
+            <tbody class="bg-gray-100">
+              <% @recently_updated.each do |expert| %>
+                <tr class="border-b hover:bg-red-200">
+                  <td class="py-2 px-4">
+                    <%= link_to expert_path(expert), class: "block py-2 px-4 w-full text-neutral-700  hover:underline" do %>
+                      <%= truncate("#{expert.title} #{expert.last_name}, #{expert.first_name} ", length: 20) %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="container-second">
+        <h3 class="heading-sub"><%= t("homepage.recently_registered") %></h3>
+        <div class="overflow-y-auto max-h-40">
+          <table class="min-w-full border-collapse table-auto">
+            <tbody class="bg-gray-100">
+              <% @recently_registered.each do |expert| %>
+                <tr class="border-b hover:bg-red-200">
+                  <td class="py-2 px-4">
+                    <%= link_to expert_path(expert), class: "block py-2 px-4 w-full text-neutral-700  hover:underline" do %>
+                      <%= truncate("#{expert.title} #{expert.last_name}, #{expert.first_name} ", length: 20) %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

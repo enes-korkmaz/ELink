@@ -1,0 +1,315 @@
+<%
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+%>
+
+<%= form_with(model: category, class: "contents", id: "create_category_form") do |form| %>
+  <% if category.errors.any? %>
+    <div id="activerecord.error_explanation" class="py-2 px-3 mb-3 font-medium text-red-500 bg-red-50 rounded-lg" style="border: 1px solid #D40031;">
+      <h2><%= t("activerecord.errors.models.category.header") %></h2>
+    </div>
+  <% end %>
+  <div class="mb-3 container-second">
+    <h2 class="heading"><%= t("activerecord.attributes.category.sections.categories") %></h2>
+    <!-- Category -->
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong> 
+          <%= form.label :category, t("activerecord.attributes.category.list"), 
+              style: "color: #{category.errors[:category].any? ? '#D40031' : 'inherit'};" %>
+        </strong>
+        <button popovertarget="category-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+
+        <div popover id="category-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border border-red-600 shadow-lg">
+          <button popovertarget="category-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.category.list") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.category.info.list") %>
+          </p>
+        </div>
+      </div>
+      <div class="flex overflow-y-auto flex-wrap my-5 min-w-full max-h-72" id="category_tags">
+        <% Category.order(updated_at: :desc).each do |category| %>
+          <!-- No I18N because adding new categories does not support it -->
+          <label for="category_<%= category.id %>" class="flex items-center py-1 px-3 m-1 bg-gray-200 rounded-full cursor-pointer" onclick="onClickEdit(this)">
+             <span id="category_<%= category.id %>" 
+                class="ml-2" 
+                data-name="<%= category.name %>" 
+                data-id="<%= category.id %>">
+                <%= category.name %>
+              </span>
+              <%= image_tag("svg/edit-black.svg", class: "h-5 w-5 ml-2 cursor-pointer") %>
+          </label>
+        <% end %>
+      </div>
+
+      <!-- Creating new Category -->
+      <div class="flex-1">
+        <div class="flex items-center">
+          <strong> <%= t("activerecord.attributes.category.new_category") %></strong>
+          <button popovertarget="new_category-popover" class="ml-2">
+            <%= image_tag("svg/circle-info.svg") %>
+          </button>
+
+          <div popover id="new_category-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border border-red-600 shadow-lg">
+            <button popovertarget="new_category-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+              <%= image_tag("svg/x-mark-red.svg") %>
+            </button>
+            <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.category.new_category") %></p>
+            <p class="p-2 max-w-xs text-gray-600 rounded-md"><%= t("activerecord.attributes.category.info.new_category") %></p>
+          </div>
+        </div>
+                
+        <div class="flex flex-col sm:flex-row sm:gap-4 item-center">
+          <%= form.text_field :name,
+            id: "new_category_field",
+            placeholder: t("inputfield_placeholder.add_term"), 
+            pattern: "^(?!\s*$)[a-zA-ZäöüÄÖÜß0-9 ]{2,30}$",
+            required: "true",
+            style: "border: 1px solid #D1D5DB; border-radius: 0.375rem; padding: 0.5rem; outline: none;", 
+            class: "w-full sm:w-[50%]" %>
+
+          <button name="button" 
+            id="add_category_button" 
+            class="btn flex items-center justify-center box-border sm:mt-0 w-[30%] sm:w-[20%]">
+              <%= image_tag("svg/new.svg") %>
+            <span class="hidden ml-2 sm:inline">
+              <%= t("actions.add") %>
+            </span>
+          </button>
+        </div>
+      </div>
+      <div style="color: #D40031; font-size: 0.875rem; margin-top: 0.25rem;">
+        <% if category.errors[:name].any? %>
+          <%= category.errors[:name].first %>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex-1">
+        <div class="flex items-center">
+          <strong> <%= t("activerecord.attributes.category.update_category") %></strong>
+          <button popovertarget="update_category-popover" class="ml-2">
+            <%= image_tag("svg/circle-info.svg") %>
+          </button>
+
+          <div popover id="update_category-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border border-red-600 shadow-lg">
+            <button popovertarget="update_category-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+              <%= image_tag("svg/x-mark-red.svg") %>
+            </button>
+            <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.category.update_category") %></p>
+            <p class="p-2 max-w-xs text-gray-600 rounded-md"><%= t("activerecord.attributes.category.info.update_category") %></p>
+          </div>
+        </div>
+        <div id="edit_category_container" class="flex flex-col sm:flex-row sm:gap-4 item-center">
+          <input type="text" form="update_category_form",
+            id="edit_category_name",
+            pattern="^(?!\s*$)[a-zA-ZäöüÄÖÜß0-9 ]{2,30}$",
+            required="true",
+            placeholder= '<%= t("inputfield_placeholder.choose_term") %>', 
+            style="border: 1px solid #D1D5DB; border-radius: 0.375rem; padding: 0.5rem; outline: none;", 
+            class="w-full sm:w-[50%]">
+
+          <button type="button" 
+            id="save_category_button" 
+            class="btn flex items-center justify-center box-border sm:mt-0 w-[30%] sm:w-[20%]"
+            >
+            <%= image_tag("svg/save.svg") %>
+            <span class="hidden ml-2 sm:inline">
+              <%= t("actions.save") %>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-second">
+    <h2 class="heading"><%= t("activerecord.attributes.category.sections.extra_skills") %></h2>
+    <div class="flex-1 gap-2 m-5">
+      <div class="flex items-center">
+        <strong>
+          <%=  t("activerecord.attributes.category.skill_list") %>
+        </strong>
+        <button popovertarget="extra_skills-popover" class="ml-2">
+          <%= image_tag("svg/circle-info.svg") %>
+        </button>
+        <button name="button" 
+          id="add_skill_to_categories_button" 
+          class="btn flex items-center justify-center box-border sm:mt-0 ml-auto w-[30%] sm:w-[20%]"
+          onclick="addSkillToTextField()">
+            <%= image_tag("svg/new.svg") %>
+          <span class="hidden ml-2 sm:inline">
+            <%= t("actions.add") %>
+          </span>
+        </button>
+        <div popover id="extra_skills-popover" popoverpositioning="auto" hidden class="p-6 max-w-xs bg-white rounded-lg border-2 border-red-600 shadow-lg">
+          <button popovertarget="extra_skills-popover" popovertargetaction="hide" class="absolute top-4 right-4">
+            <%= image_tag("svg/x-mark-red.svg") %>
+          </button>
+          <p class="font-bold text-neutral-700"><%= t("activerecord.attributes.category.skill_list") %></p>
+          <p class="p-2 max-w-xs text-gray-600 rounded-md">
+            <%= t("activerecord.attributes.category.info.skill_list") %>
+          </p>
+        </div>
+      </div>
+     <div class="flex overflow-y-auto flex-wrap my-5 min-w-full max-h-32" id="category_tags">
+        <% 
+          # Gather and process extra_skills
+          all_skills = Expert.pluck(:extra_skills).compact.flat_map { |skills| 
+            skills.split(',').map(&:strip) 
+          }
+
+          # Count occurrences of each unique skill
+          skill_counts = all_skills.each_with_object(Hash.new(0)) { |skill, counts| counts[skill] += 1 }
+          
+          # Fetch existing categories
+          category_names = Category.pluck(:name).map(&:strip)
+
+          # Validation regex
+          valid_skill_regex = /^(?!\s*$)[a-zA-ZäöüÄÖÜß0-9 ]{2,30}$/
+          
+          # Exclude skills matching category names and apply regex validation
+          valid_skills = skill_counts.reject { |skill, _| category_names.include?(skill) || !skill.match?(valid_skill_regex) }
+
+          # Sort by count (high to low) and then alphabetically
+          sorted_skills = valid_skills.sort_by { |skill, count| [-count, skill.downcase] }
+        %>
+        <% sorted_skills.each do |skill, count| %>
+          <label class="flex items-center py-1 px-3 m-1 bg-gray-200 rounded-full cursor-pointer">
+            <%= check_box_tag "selected_skill", skill, false, class: "h-5 w-5", id: "checkbox_#{skill.parameterize}", data: { skill_name: skill }, onclick: "ensureSingleCheck(this)" %>
+            <span class="ml-2"><%= "#{skill} | #{count}" %></span>
+          </label>
+        <% end %>
+      </div>
+    </div>
+
+<!-- This is to isolate sertain input fields (values under those field are not submited) -->
+<form id="update_category_form">
+</form>
+<script> 
+  document.addEventListener('DOMContentLoaded', () => {
+    togglePopover();
+    addingCategory();
+  });
+
+  function addingCategory() {
+    const button = document.getElementById("add_category_button");
+    const field = document.getElementById("new_category_field");
+    const form = document.getElementById("category_form");
+
+    button.addEventListener("click", function () {
+      if (field.value.trim() !== "") {
+        const nameInput = document.querySelector("input[name='category[name]']");
+        nameInput.value = field.value.trim();
+
+        form.submit();
+      }
+    });
+  }
+
+  function togglePopover() {
+    const popoverButtons = document.querySelectorAll('[popovertarget]');
+    let currentlyOpenPopover = null; // Variable to track the currently open popover
+
+    popoverButtons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        // Prevent form submission when button is clicked
+        event.preventDefault();
+
+        const targetPopoverId = button.getAttribute('popovertarget');
+        const popover = document.getElementById(targetPopoverId);
+
+        // If there's a currently open popover and it's not the one being clicked
+        if (currentlyOpenPopover && currentlyOpenPopover !== popover) {
+          currentlyOpenPopover.style.display = 'none';
+        }
+
+        // Toggle visibility of the clicked popover
+        if (popover.style.display === 'none' || popover.style.display === '') {
+          popover.style.display = 'block';
+          currentlyOpenPopover = popover;
+        } else {
+          popover.style.display = 'none';
+          currentlyOpenPopover = null;
+        }
+      });
+    });
+    
+    // Close popover when clicking outside
+    document.addEventListener('click', (event) => {
+        if (currentlyOpenPopover && !currentlyOpenPopover.contains(event.target) && !Array.from(popoverButtons).some(button => button.contains(event.target))) {
+            currentlyOpenPopover.style.display = 'none';
+            currentlyOpenPopover = null;
+        }
+    });
+  }
+
+  function onClickEdit(label) {
+    const categorySpan = label.querySelector("span");
+    const categoryName = categorySpan.dataset.name;
+    const categoryId = categorySpan.dataset.id;
+
+    // Populate the edit category name input field
+    const editCategoryNameField = document.getElementById("edit_category_name");
+    editCategoryNameField.value = categoryName;
+
+    // Update the save button click action
+    const saveButton = document.getElementById("save_category_button");
+    saveButton.onclick = function () {
+      const newName = editCategoryNameField.value;
+
+      if (newName.trim() !== "") {
+        updateCategoryName(categoryId, newName);
+      } else {
+        alert("Category name cannot be empty.");
+      }
+    };
+  }
+
+  async function updateCategoryName(categoryId, newName) {
+    try {
+      const response = await fetch(`/categories/${categoryId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ category: { name: newName } })
+      });
+      console.log('Response received:', response);
+    } finally {
+      location.reload();
+    }
+  }
+
+  function addSkillToTextField() {
+      const selectedSkillCheckbox = document.querySelector('input[type="checkbox"]:checked');
+
+      if (selectedSkillCheckbox) {
+        const skillName = selectedSkillCheckbox.getAttribute("data-skill-name");
+
+        document.getElementById("new_category_field").value = skillName;
+
+        document.querySelector("form").submit();
+      }
+  }
+</script>

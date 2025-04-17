@@ -1,0 +1,76 @@
+<%
+# Copyright (C) 2025 Frank Mayer, Enes Korkmaz, Jascha Sonntag, Andreas Rothaler, Eray Akyazililar, Jan Magister
+#
+# This file is part of Elink.
+#
+# Elink is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Elink is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with Elink. If not, see <http://www.gnu.org/licenses/>.
+%>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "App" %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="csrf-token" content="<%= form_authenticity_token %>">
+
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/creativetimofficial/tailwind-starter-kit/tailwind.css">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <% unless controller_name == 'sessions' && action_name == 'new' %>
+    <%= render 'home/header' %>
+    <% end %>
+    <main class="px-4 w-full">
+      <!-- Flash alerts start -->
+      <% flash.each_with_index do |(type, messages), index| %>
+        <% Array(messages).each do |message| %>
+          <div class="block fixed top-5 left-[50vw] -translate-x-1/2 mb-4 p-4 rounded animate-fadeOut
+                      <%= type == 'alert' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700' %>"
+                      style="animation-delay: <%= (index * 3)%>s;" id="flash-message-<%= index %>">
+            <%= message %>
+          </div>
+
+          <script>
+            // Delay clearing the flash after animation
+            const flashMessageElement = document.getElementById('flash-message-<%= index %>');
+            if (flashMessageElement) {
+              flashMessageElement.addEventListener('animationend', function() {
+                // After animation ends, completely remove the message from the DOM
+                flashMessageElement.remove();
+              });
+            }
+          </script>
+        <% end %>
+      <% end %>
+      <!-- Flash alerts end -->
+
+      <%= yield %>
+    </main>
+    <% unless controller_name == 'sessions' && action_name == 'new' %>
+    <%= render 'home/footer' %>
+    <% end %>
+  </body>
+</html>

@@ -1,9 +1,9 @@
 # ∃Link – Project and Expert Management Platform
-```
+
 ∃Link is a web application designed for managing projects and keeping track of expert profiles. It enables invited experts to maintain their profiles and be booked for projects that match their qualifications. Developed as part of the "Laboratory for Software Development and Project Skills" course (4th semester), this project focused on real-world usability, and team-based agile development.
  
 - ∃Link was developed on behalf of the non-profit organization **Fiti e. V.** as the project stakeholder.
-```
+
 
 ## Documentation
 

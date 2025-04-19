@@ -47,6 +47,8 @@ Listens on `http://localhost:3000`
 docker compose --profile bash run bash
 ```
 
+Use Rails without instalation, e.g. `rails db:migrate`.
+
 In bash shell run `rubocop -a` to auto-correct linting errors.
 Add one or more paths to only check those files or directories.
 

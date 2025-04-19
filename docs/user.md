@@ -1,4 +1,4 @@
-# Tabel of content
+# Table of content
 
 - [1 Introduction](/docs/user#introduction) 
 - [2. General Information](/docs/user#general-information)

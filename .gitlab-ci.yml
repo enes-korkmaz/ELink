@@ -1,0 +1,160 @@
+---
+# NOTE:
+# This file is used exclusively by GitLab CI/CD.
+# It has no effect on GitHub and will be ignored there.
+# (Included for documentation purposes)
+
+stages:
+  - mr-deploy
+  - test
+  - deploy
+  - mr-end
+
+variables:
+  ARCHIVE_NAME: "project_archive.tar.gz"
+  TARGET_DIR: "/home/labswps/expertlink"
+
+check-localization-keys:
+  image: ruby:latest
+  stage: test
+  only:
+    - merge_requests
+    - main
+  script:
+    - cd app/
+    - gem install yaml
+    - ruby scripts/check_locale_keys.rb
+
+test-job:
+  image: ghcr.io/tsukinoko-kun/rails-chrome-webdriver:114
+  stage: test
+  only:
+    - merge_requests
+    - main
+  variables:
+    SECRET_KEY_BASE: "super_secret_key"
+  artifacts:
+    paths:
+      - app/tmp/capybara/
+    expire_in: 1 week
+  script:
+    - cd app/
+    - gem update --system
+    - bundle install
+    - rubocop
+    - bundle exec rake db:create db:schema:load db:migrate db:fixtures:load
+    - bundle exec rails assets:precompile
+    - bundle exec rake test:system
+    - bundle exec rake test
+
+deploy-prod:
+  stage: deploy
+  only:
+    - main
+  script:
+    - apk add --no-cache sshpass openssh git
+    - git archive -o $ARCHIVE_NAME HEAD
+    - |
+      sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=accept-new $SSH_USERNAME@$SSH_HOST << EOF
+        mkdir -p $TARGET_DIR
+      EOF
+    - sshpass -p "$SSH_PASSWORD" scp $ARCHIVE_NAME $SSH_USERNAME@$SSH_HOST:$TARGET_DIR
+    - |
+      sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USERNAME@$SSH_HOST << EOF
+        cd $TARGET_DIR
+        rm -rf $TARGET_DIR/app
+        tar -xzf $ARCHIVE_NAME
+        rm $ARCHIVE_NAME
+        cd app
+        docker compose down
+        docker compose up -d --build
+      EOF
+
+preview-deploy:
+  stage: mr-deploy
+  only:
+    - merge_requests
+  when: always
+  allow_failure: true
+  script:
+    - apk add --no-cache sshpass openssh tar gzip curl
+    - |
+      cat <<EOF > app/docker-compose.yml
+      ---
+      services:
+        expertlink-mr-$CI_COMMIT_REF_SLUG:
+          build: .
+          volumes:
+            - .:/app
+            - /app/storage
+          tmpfs:
+            - /app/tmp
+          entrypoint: /bin/sh -c "rails db:migrate && rails db:fixtures:load && rails tailwindcss:build && rails assets:precompile && rails server -b 0.0.0.0 -e production"
+          environment:
+            SECRET_KEY_BASE: your_generated_secret_key
+            RAILS_ENV: production
+          restart: unless-stopped
+          healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:3000"]
+            interval: 30s
+            retries: 3
+            timeout: 5s
+          labels:
+            - traefik.enable=true
+            - traefik.http.routers.expertlink-$CI_COMMIT_REF_SLUG.rule=Host(\`$CI_COMMIT_REF_SLUG.expertlink.frankmayer.dev\`)
+            - traefik.http.services.expertlink-$CI_COMMIT_REF_SLUG.loadbalancer.server.port=3000
+            - traefik.http.routers.expertlink-$CI_COMMIT_REF_SLUG.entrypoints=websecure
+            - traefik.http.routers.expertlink-$CI_COMMIT_REF_SLUG.tls=true
+            - traefik.http.routers.expertlink-$CI_COMMIT_REF_SLUG.tls.certresolver=letsencrypt
+            - traefik.docker.network=traefik_network
+          networks:
+            - traefik_network
+      networks:
+        traefik_network:
+          external: true
+      EOF
+    - tar -czf $ARCHIVE_NAME ./app
+    - |
+      sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=accept-new $SSH_USERNAME@$SSH_HOST << EOF
+        mkdir -p $TARGET_DIR-mr-$CI_COMMIT_REF_SLUG
+      EOF
+    - sshpass -p "$SSH_PASSWORD" scp $ARCHIVE_NAME $SSH_USERNAME@$SSH_HOST:$TARGET_DIR-mr-$CI_COMMIT_REF_SLUG
+    - |
+      sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USERNAME@$SSH_HOST << EOF
+        cd $TARGET_DIR-mr-$CI_COMMIT_REF_SLUG
+        rm -rf $TARGET_DIR-mr-$CI_COMMIT_REF_SLUG/app
+        tar -xzf $ARCHIVE_NAME
+        rm $ARCHIVE_NAME
+        cd app
+        docker compose down
+        docker compose up -d --build
+      EOF
+    - |
+      API_URL="$CI_SERVER_URL/api/v4/projects/$CI_PROJECT_ID/merge_requests/$CI_MERGE_REQUEST_IID/notes"
+      COMMENT_MESSAGE="Preview Deployment: http://$CI_COMMIT_REF_SLUG.expertlink.frankmayer.dev"
+      curl --request POST --header "PRIVATE-TOKEN: $PAT" \
+        --header "Content-Type: application/json" \
+        --data "{\"body\": \"$COMMENT_MESSAGE\"}" \
+        "$API_URL"
+
+preview-cleanup:
+  stage: mr-end
+  rules:
+    - if: '$CI_MERGE_REQUEST_STATE == "merged"'
+    - if: '$CI_MERGE_REQUEST_STATE == "closed"'
+  script:
+    - apk add --no-cache sshpass openssh
+    - |
+      sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=accept-new $SSH_USERNAME@$SSH_HOST << EOF
+        cd /home/labswps/
+        for dir in ${TARGET_DIR}-*; do
+          # Check if the directory is older than one week
+          if [ $(find "$dir" -maxdepth 0 -type d -mtime +7 2>/dev/null) ]; then
+            cd "$dir/app"
+            docker compose down --volumes
+            docker image prune -f
+            cd ../../
+            rm -rf "$dir"
+          fi
+        done
+      EOF
